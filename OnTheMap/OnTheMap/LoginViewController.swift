@@ -1,5 +1,5 @@
 //
-//  LoginScreenViewController.swift
+//  LoginViewController.swift
 //  OnTheMap
 //
 //  Created by ÅF Jacob Taxén on 2017-03-22.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginScreenViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

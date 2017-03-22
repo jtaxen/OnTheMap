@@ -12,9 +12,9 @@
 		A062D8B31E82AF4700CA71FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A062D8B21E82AF4700CA71FF /* Assets.xcassets */; };
 		A062D8B61E82AF4700CA71FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A062D8B41E82AF4700CA71FF /* LaunchScreen.storyboard */; };
 		A062D8C01E82B24E00CA71FF /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8BF1E82B24E00CA71FF /* Keys.swift */; };
-		A062D8C51E82B5DB00CA71FF /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8C41E82B5DB00CA71FF /* ParseClient.swift */; };
-		A062D8C81E82B63B00CA71FF /* ParseClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8C71E82B63B00CA71FF /* ParseClientConstants.swift */; };
-		A062D8CA1E82C5B200CA71FF /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8C91E82C5B200CA71FF /* LoginScreenViewController.swift */; };
+		A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8CE1E82CB1800CA71FF /* ParseClient.swift */; };
+		A062D8D11E82CB1800CA71FF /* ParseClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8CF1E82CB1800CA71FF /* ParseClientConstants.swift */; };
+		A062D8D31E82D5D100CA71FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8D21E82D5D100CA71FF /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,9 +26,9 @@
 		A062D8B71E82AF4700CA71FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A062D8BF1E82B24E00CA71FF /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Keys.swift; path = OnTheMap/Keys/Keys.swift; sourceTree = "<group>"; };
 		A062D8C21E82B3E000CA71FF /* OnThePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OnThePlayground.playground; sourceTree = "<group>"; };
-		A062D8C41E82B5DB00CA71FF /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
-		A062D8C71E82B63B00CA71FF /* ParseClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClientConstants.swift; sourceTree = "<group>"; };
-		A062D8C91E82C5B200CA71FF /* LoginScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
+		A062D8CE1E82CB1800CA71FF /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseClient.swift; path = OnTheMap/Model/ParseClient.swift; sourceTree = "<group>"; };
+		A062D8CF1E82CB1800CA71FF /* ParseClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseClientConstants.swift; path = OnTheMap/Model/ParseClientConstants.swift; sourceTree = "<group>"; };
+		A062D8D21E82D5D100CA71FF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +110,8 @@
 		A062D8C61E82B5E000CA71FF /* Parse */ = {
 			isa = PBXGroup;
 			children = (
-				A062D8C41E82B5DB00CA71FF /* ParseClient.swift */,
-				A062D8C71E82B63B00CA71FF /* ParseClientConstants.swift */,
+				A062D8CE1E82CB1800CA71FF /* ParseClient.swift */,
+				A062D8CF1E82CB1800CA71FF /* ParseClientConstants.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 		A062D8CB1E82C5C500CA71FF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A062D8C91E82C5B200CA71FF /* LoginScreenViewController.swift */,
+				A062D8D21E82D5D100CA71FF /* LoginViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -197,10 +197,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A062D8C81E82B63B00CA71FF /* ParseClientConstants.swift in Sources */,
-				A062D8C51E82B5DB00CA71FF /* ParseClient.swift in Sources */,
+				A062D8D11E82CB1800CA71FF /* ParseClientConstants.swift in Sources */,
+				A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */,
 				A062D8AC1E82AF4700CA71FF /* AppDelegate.swift in Sources */,
-				A062D8CA1E82C5B200CA71FF /* LoginScreenViewController.swift in Sources */,
+				A062D8D31E82D5D100CA71FF /* LoginViewController.swift in Sources */,
 				A062D8C01E82B24E00CA71FF /* Keys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +365,7 @@
 				A062D8BC1E82AF4700CA71FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
