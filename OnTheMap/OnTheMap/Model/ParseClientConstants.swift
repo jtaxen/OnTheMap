@@ -33,6 +33,8 @@ extension ParseClient {
 		static let CreatedAt = "createdAt"
 		static let UpdatedAt = "updatedAt"
 		static let ACL = "ACL"
+		
+		
 	}
 	
 }
