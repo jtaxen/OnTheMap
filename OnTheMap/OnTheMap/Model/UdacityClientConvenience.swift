@@ -10,10 +10,11 @@ import Foundation
 
 extension UdacityClient {
 	
-	private func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: String?) -> Void ) {
+	func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: NSError?) -> Void ) {
 		
 		let parameters = [ParameterKeys.Username: username,
 		                  ParameterKeys.Password: password]
+		print("Input parameters: \(parameters)")
 		
 		let _ = taskForPOST(parameters: parameters as [String : AnyObject]) { (results, error) in
 			
@@ -21,16 +22,21 @@ extension UdacityClient {
 				completionHandler(false, nil, error)
 				return
 			}
-			
 			if let session = results?["session"] as? [String: AnyObject] {
-				if let sessionID = session["id"] as? String {
-					completionHandler(true, sessionID, nil)
+				if let id = session["id"] as? String {
+					print("Session ID acquired: \(id)")
+					completionHandler(true, id, nil)
 				} else {
-					completionHandler(false, nil, "Error: could not find \"id\" key in JSON results")
+					let userInfo = [NSLocalizedDescriptionKey: "Error: key id not found in results"]
+					completionHandler(false, nil, NSError(domain: "keyMissingInResult", code: 6, userInfo: userInfo))
 				}
 			} else {
-				completionHandler(false, nil, "Error: could not find \"session\" key in JSON results")
+				let userInfo = [NSLocalizedDescriptionKey: "Error: key session not found in results"]
+				completionHandler(false, nil, NSError(domain: "keyMissingInResult", code: 5, userInfo: userInfo))
 			}
+			
+			
+			
 		}
 	}
 }
