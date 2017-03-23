@@ -10,13 +10,21 @@ import Foundation
 
 extension UdacityClient {
 
-	private func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: String?) -> Void ){
+	private func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: String?) -> Void ) {
 		
-		let udacityPair = [username: password]
 		let parameters = [ParameterKeys.Username: username,
 		                  ParameterKeys.Password: password]
 		
-		let _ = 
+		let _ = taskForPOST(parameters: parameters as [String : AnyObject]) { (results, error) in
+			
+			guard error == nil else {
+				completionHandler(false, nil, error)
+				return
+			}
+			
+			if let session = results["session"] as [String, AnyObject]
+		
+			
 		
 		
 		

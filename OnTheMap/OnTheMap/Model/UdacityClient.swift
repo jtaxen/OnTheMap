@@ -10,9 +10,9 @@ import Foundation
 
 class UdacityClient: NSObject {
 	
+	var sessionID: String?
 	
-	
-	func taskForPOST(parameters: [String: AnyObject], jsonBody: String, completionHandler: @escaping (_ results: AnyObject?, _ error: String?) -> Void ) {
+	func taskForPOST(parameters: [String: AnyObject], completionHandler: @escaping (_ results: [String: AnyObject]?, _ error: String?) -> Void ) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
 		let username = parameters[ParameterKeys.Username]
@@ -32,28 +32,50 @@ class UdacityClient: NSObject {
 		/* 4. Make request */
 		let session = URLSession.shared
 		let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-
+			
+			// Check to see if an error was returned
 			guard error != nil else {
-				print("There was an error")
+				completionHandler(nil, error as! String?)
 				return
 			}
 			
+			// Make sure the server returns a 200-status code
 			guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-				print("Server returned status code other than 2xx")
+				completionHandler(nil, "Error: Server returned status code other than 2xx")
 				return
 			}
 			
+			// Make sure data was returned
 			guard let data = data else {
-				print("No data was returned")
+				completionHandler(nil, "Error: no data was returned")
 				return
 			}
 		
 		/* 5/6. Parse data */
-			
+			self.parseData(data) { (results, error) in
+				if error != nil {
+					completionHandler(nil, error?.localizedDescription)
+				} else {
+					completionHandler(results, nil)
+				}
+			}
 		}
 		/* 7. Start request */
 		task.resume()
 		return task
 	}
+	
+	private func parseData(_ data: Data, completionHandler: (_ results: [String: AnyObject]?, _ error: NSError?) -> Void) {
+	
+		var parsedData: [String: AnyObject]? = nil
+		do {
+			parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
+		} catch {
+			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed"]
+			completionHandler(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))
+		}
+		completionHandler(parsedData, nil)
+	}
+	
 	
 }
