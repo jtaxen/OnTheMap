@@ -12,4 +12,10 @@ import Foundation
 
 class ParseClient: NSObject {
 
+	private func createParseURL(_ parameters: [String: AnyObject], withStringExtension: String? = nil) -> Void {
+	
+		var components = URLComponents()
+		
+	}
+	
 }

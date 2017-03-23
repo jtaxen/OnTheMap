@@ -1,14 +1,14 @@
 //
-//  LoginViewController.swift
+//  MapViewController.swift
 //  OnTheMap
 //
-//  Created by ÅF Jacob Taxén on 2017-03-22.
+//  Created by ÅF Jacob Taxén on 2017-03-23.
 //  Copyright © 2017 Jacob Taxén. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
