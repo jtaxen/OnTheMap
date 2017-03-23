@@ -9,7 +9,7 @@
 import Foundation
 
 extension UdacityClient {
-
+	
 	private func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: String?) -> Void ) {
 		
 		let parameters = [ParameterKeys.Username: username,
@@ -22,18 +22,15 @@ extension UdacityClient {
 				return
 			}
 			
-			if let session = results["session"] as [String, AnyObject]
-		
-			
-		
-		
-		
+			if let session = results?["session"] as? [String: AnyObject] {
+				if let sessionID = session["id"] as? String {
+					completionHandler(true, sessionID, nil)
+				} else {
+					completionHandler(false, nil, "Error: could not find \"id\" key in JSON results")
+				}
+			} else {
+				completionHandler(false, nil, "Error: could not find \"session\" key in JSON results")
+			}
+		}
 	}
-
-
-
-
-
-
-
 }

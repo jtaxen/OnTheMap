@@ -10,8 +10,6 @@ import Foundation
 
 class UdacityClient: NSObject {
 	
-	var sessionID: String?
-	
 	func taskForPOST(parameters: [String: AnyObject], completionHandler: @escaping (_ results: [String: AnyObject]?, _ error: String?) -> Void ) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
