@@ -12,10 +12,6 @@ class MapViewController: UIViewController {
 	
 	var appDelegate: AppDelegate!
 	
-	@IBOutlet weak var navBar: CommonNavBar!
-	
-	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
