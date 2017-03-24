@@ -18,10 +18,34 @@ extension ParseClient {
 		// MARK: Keys
 		static let ApplicationID = Keys.ParseApplicationID
 		static let APIKey = Keys.ParseRESTAPIKey
+		
+		// MARK: Method URL
+		static let Scheme = "https"
+		static let Host = "parse.udacity.com"
+		static let Path = "/parse/classes/StudemtLocation/"
+		
+	}
+	
+	
+	
+	// MARK: Parameter keys
+	struct ParameterKeys {
+		
+		// MARK: GET parameters
+		static let Limit = "limit"
+		static let Skip = "skip"
+		static let Order = "order"
+		static let Where = "where"
+		
+		//MARK: PUT parameters
+		static let ObjectID = "objectId"
+		
 	}
 	
 	// MARK: StudentLocation object keys
-	struct StudentLocationParameterKeys {
+	// These are used as parameter value for parameter key "Order"
+	// Negative sign in front of the value indicates reverse order
+	struct StudentLocationKeys {
 		static let ObjectID = "objectId"
 		static let UniqueKey = Keys.UniqueKey
 		static let FirstName = "firstName"
