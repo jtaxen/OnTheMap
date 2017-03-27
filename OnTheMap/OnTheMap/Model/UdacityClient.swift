@@ -50,6 +50,44 @@ class UdacityClient: NSObject {
 		return task
 	}
 	
+	func taskForDELETE(completionHandler: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionTask {
+		
+		/* 1. No parameters */
+		
+		/* 2. Build URL */
+		let url = URL(string: Constants.Scheme + "://" + Constants.Host + Constants.Path)
+		let request = NSMutableURLRequest(url: url!)
+		
+		/* 3. Configure request */
+		request.httpMethod = "DELETE"
+		
+		var xsrfCookie: HTTPCookie? = nil
+		let sharedCookieStorage = HTTPCookieStorage.shared
+		for cookie in sharedCookieStorage.cookies! {
+			if cookie.name == "XSRF-TOKEN" {
+				xsrfCookie = cookie
+			}
+		}
+		if let xsrfCookie = xsrfCookie {
+			request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSFR-TOKEN")
+		}
+		
+		/* 4. Make request */
+		let session = URLSession.shared
+		let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+			
+			let returnedError = self.appDelegate.checkRequestResultsForError(data, response, error)
+			guard returnedError == nil else {
+				completionHandler(nil, returnedError)
+				return
+			}
+			
+			self.appDelegate.parseData(data!, isUdacityData: true, completionHandlerForParsedData: completionHandler)
+		}
+		task.resume()
+		return task
+	}
+	
 
 	
 	// MARK: Shared instance

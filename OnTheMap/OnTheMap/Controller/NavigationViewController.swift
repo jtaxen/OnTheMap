@@ -10,6 +10,8 @@ import UIKit
 
 class NavigationViewController: UINavigationController {
 	
+	let udacityClient = UdacityClient()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -27,10 +29,9 @@ class NavigationViewController: UINavigationController {
 		]
 		
 		// Logout button
-		let logoutButton = UIBarButtonItem()
-		
+		let logoutButton = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(endSession))
 		logoutButton.setTitleTextAttributes(textAttributes, for: .normal)
-		logoutButton.title = "Log out"
+		
 		
 		// Refresh button
 		let refreshButton = UIBarButtonItem()
@@ -44,5 +45,22 @@ class NavigationViewController: UINavigationController {
 		navigationItem.rightBarButtonItems = [refreshButton, addPinButton]
 		return [navigationItem]
 		
+	}
+	
+	func endSession() {
+		udacityClient.endSession() { (success, results, error) in
+			
+			guard error == nil else {
+				print(error?.localizedDescription ?? "An error was detected while trying to end session.")
+				return
+			}
+			if success {
+				print("Logout was successful.")
+				
+				let storyboard = UIStoryboard(name: "Main", bundle: nil)
+				let controller = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+				controller.present(controller, animated: true, completion: nil)
+			}
+		}
 	}
 }

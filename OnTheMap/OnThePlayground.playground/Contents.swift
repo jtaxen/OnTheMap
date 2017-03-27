@@ -37,7 +37,7 @@ let task = session.dataTask(with: request as URLRequest) { data, response, error
 print(data)
 }
 task.resume()*/
-
+/*
 let s1 = "hej"
 let s2 = "Hej \(s1), hemskt mycket \(s1)"
-print(s2)
+print(s2)*/
