@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A0025CD01E890AAA00019E52 /* ParseClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0025CCF1E890AAA00019E52 /* ParseClientConvenience.swift */; };
+		A059CB711E89540E00A60C0C /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A059CB701E89540E00A60C0C /* UsersTableViewController.swift */; };
 		A062D8AC1E82AF4700CA71FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8AB1E82AF4700CA71FF /* AppDelegate.swift */; };
 		A062D8B11E82AF4700CA71FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A062D8AF1E82AF4700CA71FF /* Main.storyboard */; };
 		A062D8B31E82AF4700CA71FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A062D8B21E82AF4700CA71FF /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		A0025CCF1E890AAA00019E52 /* ParseClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseClientConvenience.swift; path = OnTheMap/Model/ParseClientConvenience.swift; sourceTree = "<group>"; };
+		A059CB701E89540E00A60C0C /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsersTableViewController.swift; path = Controller/UsersTableViewController.swift; sourceTree = "<group>"; };
 		A062D8A81E82AF4700CA71FF /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A062D8AB1E82AF4700CA71FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A062D8B01E82AF4700CA71FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		A062D8CB1E82C5C500CA71FF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A059CB701E89540E00A60C0C /* UsersTableViewController.swift */,
 				A0FE62EB1E854EFE0003D8D8 /* NavigationViewController.swift */,
 				A0DC7D811E83B0EE00C058AE /* MapViewController.swift */,
 				A062D8D21E82D5D100CA71FF /* LoginViewController.swift */,
@@ -233,6 +236,7 @@
 			files = (
 				A062D8D11E82CB1800CA71FF /* ParseClientConstants.swift in Sources */,
 				A0FE62EC1E854EFE0003D8D8 /* NavigationViewController.swift in Sources */,
+				A059CB711E89540E00A60C0C /* UsersTableViewController.swift in Sources */,
 				A0DC7D821E83B0EE00C058AE /* MapViewController.swift in Sources */,
 				A0025CD01E890AAA00019E52 /* ParseClientConvenience.swift in Sources */,
 				A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */,
