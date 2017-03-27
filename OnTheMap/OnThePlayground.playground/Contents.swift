@@ -75,8 +75,13 @@ let task = session.dataTask(with: request as URLRequest) { data, response, error
 		let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
 	}
 	
-	let fafa = parsedData["results"]! as! [[String:AnyObject]]       //[String: AnyObject]
+	let fafa = parsedData["results"]! as! [[String:AnyObject]]
+	print(fafa[0])
+	//[String: AnyObject]
 	print(fafa[0]["mediaURL"]!)
 }
 task.resume()
+
+
+
 

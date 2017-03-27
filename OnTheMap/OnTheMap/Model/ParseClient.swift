@@ -15,6 +15,36 @@ class ParseClient: NSObject {
 	
 	let methodUrl = Constants.Scheme + "://" + Constants.Host + Constants.Path
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
+	
+	func taskForGET(completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	
+		/* 1. Set parameters */
+		
+		/* 2. Build URL */
+		let url = URL(string: methodUrl)
+		let request = NSMutableURLRequest(url: url!)
+		
+		/* 3. Setup */
+		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
+		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+		
+		print("Request being sent: \(request.url!)")
+		let session = URLSession.shared
+		let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+			
+			// Make sure no errors were returned
+			let returnedError = self.appDelegate.checkRequestResultsForError(data, response, error)
+			guard returnedError == nil else {
+				completionHandler(nil, returnedError)
+				return
+			}
+			print("Preparing to parse \(data)")
+			/* 5/6 Parse data */
+			self.appDelegate.parseLocationData(data!, completionHandlerForParsedData: completionHandler)
+		}
+		task.resume()
+		return task
+	}
 
 	func serverTask(parameters: [String: AnyObject], method: String, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
@@ -22,7 +52,7 @@ class ParseClient: NSObject {
 		var parameterString: String
 		print("Method: \(method)")
 		if method == "GET" {
-			parameterString = "?"
+			parameterString = ""
 			for (key, value) in parameters {
 				parameterString += key + "=" + (value as! String) + "&"
 			}

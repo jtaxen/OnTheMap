@@ -20,20 +20,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
-		let locations = appDelegate.hardCodedLocationData()
+		let locations = appDelegate.locationData ?? appDelegate.hardCodedLocationData()
 		
 		var annotations = [MKPointAnnotation]()
 		
 		for dictionary in locations {
-		
+			
 			let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
 			let lon = CLLocationDegrees(dictionary["longitude"] as! Double)
 			
 			let coordinate = CLLocationCoordinate2DMake(lat, lon)
 			
-			let firstName = dictionary["firstName"] as! String
-			let lastName = dictionary["lastName"] as! String
-			let mediaUrl = dictionary["mediaURL"] as! String
+			let firstName = dictionary["firstName"] as? String ?? ""
+			let lastName = dictionary["lastName"] as? String ?? ""
+			let mediaUrl = dictionary["mediaURL"] as? String ?? ""
 			
 			let annotation = MKPointAnnotation()
 			annotation.coordinate = coordinate
