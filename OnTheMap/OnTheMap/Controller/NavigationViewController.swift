@@ -11,6 +11,7 @@ import UIKit
 class NavigationViewController: UINavigationController {
 	
 	let udacityClient = UdacityClient()
+	let parseClient = ParseClient()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,8 @@ class NavigationViewController: UINavigationController {
 		
 		
 		// Refresh button
-		let refreshButton = UIBarButtonItem()
-		refreshButton.image = UIImage(named: "icon_refresh")
+		let refreshButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: .plain, target: self, action: #selector(refresh))
+		
 		
 		// Add pin button
 		let addPinButton = UIBarButtonItem()
@@ -46,7 +47,11 @@ class NavigationViewController: UINavigationController {
 		return [navigationItem]
 		
 	}
-	
+}
+
+// MARK: Button functionallity
+extension NavigationViewController {
+
 	func endSession() {
 		udacityClient.endSession() { (success, results, error) in
 			
@@ -57,10 +62,27 @@ class NavigationViewController: UINavigationController {
 			if success {
 				print("Logout was successful.")
 				
+				DispatchQueue.main.async {
 				let storyboard = UIStoryboard(name: "Main", bundle: nil)
 				let controller = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-				controller.present(controller, animated: true, completion: nil)
+				self.present(controller, animated: true, completion: nil)
+				}
 			}
 		}
 	}
+	
+	func refresh() {
+		parseClient.refresh() { (success, error) in
+			
+			guard error == nil else {
+				print(error?.localizedDescription ?? "Unable to refresh.")
+				return
+			}
+			if success {
+				print("Refreshing...")
+			}
+		}
+	}
+	
+	
 }

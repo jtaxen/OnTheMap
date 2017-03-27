@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var usernameTextField: UITextField!
 	@IBOutlet weak var passwordTextField: UITextField!
 	@IBOutlet weak var loginButton: UIButton!
+	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -26,6 +27,8 @@ class LoginViewController: UIViewController {
 		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		
+		spinner.isHidden = true
 		
 		// Set text field attributes
 		for field in [usernameTextField, passwordTextField] {
@@ -39,16 +42,22 @@ class LoginViewController: UIViewController {
 	
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
 		
+		spinner.isHidden = false
+		spinner.startAnimating()
+		
 		if let username = usernameTextField.text,
 			let password = passwordTextField.text {
 			UdacityClient.sharedInstance().getSessionID(username: username, password: password) { (success, result, error) in
 				if success {
 					self.appDelegate.sessionID = result
-					print("Login successful. Session ID: \(result!)")
+					print("Login successful.")
 					DispatchQueue.main.async {
 						self.pushToMapView()
 					}
 				} else {
+					DispatchQueue.main.async {
+						self.spinner.isHidden = true
+					}
 					print("Login unsuccessful")
 					print(error!)
 				}
@@ -57,11 +66,18 @@ class LoginViewController: UIViewController {
 	}
 	
 	func pushToMapView() {
-		
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		let controller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-		self.present(controller, animated: true, completion:  nil)
-		
+		let parseClient = ParseClient()
+		_ = parseClient.refresh() { (success, error) in
+			if success {
+				DispatchQueue.main.async {
+					let storyboard = UIStoryboard(name: "Main", bundle: nil)
+					let controller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+					self.present(controller, animated: true, completion:  nil)
+				}
+			} else {
+				print(error!.localizedDescription)
+			}
+		}
 	}
 	
 }

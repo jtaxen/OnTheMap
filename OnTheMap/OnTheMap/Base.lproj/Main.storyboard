@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZVR-7x-N5A">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -56,11 +56,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mSg-gt-bk9">
+                                <rect key="frame" x="72" y="408" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="EOO-MK-bpm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Tz-Rk-fXo"/>
                             <constraint firstAttribute="trailing" secondItem="f7T-fn-CqZ" secondAttribute="trailing" constant="20" id="8rb-jv-ISc"/>
+                            <constraint firstItem="mSg-gt-bk9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Axo-vI-Rd4"/>
                             <constraint firstItem="f7T-fn-CqZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.382" constant="-30" id="Gou-5a-Gmd"/>
                             <constraint firstItem="RBB-UR-ReV" firstAttribute="height" secondItem="f7T-fn-CqZ" secondAttribute="height" id="IXD-hl-fgL"/>
                             <constraint firstItem="f7T-fn-CqZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Moq-VC-XoD"/>
@@ -68,12 +72,14 @@
                             <constraint firstItem="RBB-UR-ReV" firstAttribute="width" secondItem="f7T-fn-CqZ" secondAttribute="width" id="O7b-w8-dxi"/>
                             <constraint firstItem="RBB-UR-ReV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="SfM-9n-903"/>
                             <constraint firstItem="RBB-UR-ReV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.382" constant="30" id="nZM-7y-jNn"/>
+                            <constraint firstItem="mSg-gt-bk9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rAU-32-Rgb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vKu-kY-rJz"/>
                     <connections>
                         <outlet property="loginButton" destination="EOO-MK-bpm" id="Bov-gc-KdH"/>
                         <outlet property="passwordTextField" destination="RBB-UR-ReV" id="YE1-fq-NOG"/>
+                        <outlet property="spinner" destination="mSg-gt-bk9" id="M1d-QE-hBz"/>
                         <outlet property="usernameTextField" destination="f7T-fn-CqZ" id="w47-hN-Gdb"/>
                     </connections>
                 </viewController>
