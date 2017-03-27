@@ -78,9 +78,6 @@ extension NavigationViewController {
 				print(error?.localizedDescription ?? "Unable to refresh.")
 				return
 			}
-			if success {
-				print("Refreshing...")
-			}
 		}
 	}
 	

@@ -22,7 +22,7 @@ extension ParseClient {
 		// MARK: Method URL
 		static let Scheme = "https"
 		static let Host = "parse.udacity.com"
-		static let Path = "/parse/classes/StudemtLocation"
+		static let Path = "/parse/classes/StudentLocation"
 		
 	}
 	

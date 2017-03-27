@@ -17,7 +17,7 @@ extension ParseClient {
 		                  Para m eterKeys.Order: StudentLocationKeys.UpdatedAt*/
 //		]
 		
-		let _ = serverTask(parameters: parameters as [String: AnyObject], method: Methods.GET) { (results, error) in
+		let _ = taskForGET() { (results, error) in
 			
 			guard error == nil else {
 				completionHandler(false, error)

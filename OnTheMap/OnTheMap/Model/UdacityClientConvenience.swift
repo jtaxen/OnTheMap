@@ -14,7 +14,6 @@ extension UdacityClient {
 		
 		let parameters = [ParameterKeys.Username: username,
 		                  ParameterKeys.Password: password]
-		print("Input parameters: \(parameters)")
 		
 		let _ = taskForPOST(parameters: parameters as [String : AnyObject]) { (results, error) in
 			
