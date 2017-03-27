@@ -26,6 +26,14 @@ extension ParseClient {
 		
 	}
 	
+	// MARK: HTTP methods
+	
+	struct Method {
+		static let GET = "GET"
+		static let POST = "POST"
+		static let PUT = "PUT"
+	}
+	
 	
 	
 	// MARK: Parameter keys

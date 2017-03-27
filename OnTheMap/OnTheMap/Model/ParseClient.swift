@@ -14,24 +14,46 @@ import UIKit
 class ParseClient: NSObject {
 	
 	let methodUrl = Constants.Scheme + "://" + Constants.Host + Constants.Path
-	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-	func taskForGET(parameters: [String: AnyObject], completionHandler: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func serverTask(parameters: [String: AnyObject], method: String, objectID: String? = nil, completionHandler: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
-		var parameterString = "?"
-		for (key, value) in parameters {
-			parameterString += "\(key)=\(value)"
+		var parameterString: String
+		if method == "GET" {
+			parameterString = "?"
+			for (key, value) in parameters {
+				parameterString += key + "=" + (value as! String)
+			}
+		} else {
+			parameterString = parameters.description
+			parameterString = parameterString.replacingOccurrences(of: "[", with: "{")
+			parameterString = parameterString.replacingOccurrences(of: "]", with: "}")
 		}
 		
 		/* 2. Build URL */
-		let url = URL(string: methodUrl + parameterString)
+		var url: URL?
+		switch method {
+		case "GET":
+			url = URL(string: methodUrl + parameterString)
+		case "POST":
+			url = URL(string: methodUrl)
+		case "PUT":
+			url = URL(string: methodUrl + objectID!)
+		default:
+			print("Error: HTTP method is not valid.")
+			break
+		}
+		
 		let request = NSMutableURLRequest(url: url!)
 		
 		/* 3. Configure request */
-		request.httpMethod = "GET"
+		request.httpMethod = method
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+		if method != "GET" {
+			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+			request.httpBody = parameterString.data(using: String.Encoding.utf8)
+		}
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")

@@ -41,3 +41,19 @@ task.resume()*/
 let s1 = "hej"
 let s2 = "Hej \(s1), hemskt mycket \(s1)"
 print(s2)*/
+
+struct g {
+	static let a = "alfa"
+	static let b = "beta"
+	static let c = "gamma"
+}
+
+let list: [String: Int] = [
+	g.a: 3,
+	g.b: 2,
+	g.c: 1
+]
+
+var st = list.description
+st = st.replacingOccurrences(of: "[", with: "{")
+print(st)
