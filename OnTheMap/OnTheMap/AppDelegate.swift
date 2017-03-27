@@ -12,35 +12,126 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
-
-
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		// Override point for customization after application launch.
-		return true
+	
+	var sessionID: String? = nil
+	var locationData: [[String:AnyObject]]? = nil
+	
+	func checkRequestResultsForError(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> NSError? {
+		
+		// Check to see if an error was returned
+		guard error == nil else {
+			return error as NSError?
+		}
+		
+		// Make sure the server returns a 200-status code
+		if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+			if statusCode < 200 || statusCode > 299 {
+				let userInfo = [NSLocalizedDescriptionKey: "Error: Server returned status code: \(statusCode)"]
+				return NSError(domain: "serverStatusCode", code: 2, userInfo: userInfo)
+			} else {
+				print("Server returned status code \(statusCode)")
+			}
+		} else {
+			let userInfo = [NSLocalizedDescriptionKey: "Error: Server did not return any status code"]
+			return NSError(domain: "serverStatusCode", code: 3, userInfo: userInfo)
+		}
+		
+		// Make sure data was returned
+		guard data != nil else {
+			let userInfo = [NSLocalizedDescriptionKey: "Error: no data was returned"]
+			return NSError(domain: "noDataReturned", code: 4, userInfo: userInfo)
+		}
+		
+		// If no errors were found
+		return nil
 	}
-
-	func applicationWillResignActive(_ application: UIApplication) {
-		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-		// Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+	
+	func parseData(_ data: Data, isUdacityData: Bool, completionHandlerForParsedData: (_ results: AnyObject?, _ error: NSError?) -> Void) {
+		
+		var newData: Data
+		
+		if isUdacityData {
+			// Remove five first characters
+			let range = Range(5 ..< data.count)
+			newData = data.subdata(in: range)
+		} else {
+			newData = data
+		}
+		
+		
+		var parsedData: AnyObject! = nil
+		do {
+			parsedData = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
+			print("Data parsing successful")
+			print(parsedData)
+		} catch {
+			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
+			completionHandlerForParsedData(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))
+		}
+		completionHandlerForParsedData(parsedData, nil)
 	}
-
-	func applicationDidEnterBackground(_ application: UIApplication) {
-		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	
+	func parseLocationData(_ data: Data, completionHandlerForParsedData: (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) {
+	
+		var parsedData: [String: AnyObject]!
+		do {
+			parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
+			print("Data: \(data) successfully parsed.")
+			completionHandlerForParsedData(parsedData["results"]! as! [[String: AnyObject]], nil)
+		} catch {
+			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
+			completionHandlerForParsedData(nil, NSError(domain: "parsedDataError", code: 8, userInfo: userInfo))
+		}
 	}
-
-	func applicationWillEnterForeground(_ application: UIApplication) {
-		// Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+	
+	func hardCodedLocationData() -> [[String : AnyObject]] {
+		return  [
+			[
+				"createdAt" : "2015-02-24T22:27:14.456Z" as AnyObject,
+				"firstName" : "Jessica" as AnyObject,
+				"lastName" : "Uelmen" as AnyObject,
+				"latitude" : 28.1461248 as AnyObject,
+				"longitude" : -82.75676799999999 as AnyObject,
+				"mapString" : "Tarpon Springs, FL" as AnyObject,
+				"mediaURL" : "www.linkedin.com/in/jessicauelmen/en" as AnyObject,
+				"objectId" : "kj18GEaWD8" as AnyObject,
+				"uniqueKey" : 872458750 as AnyObject,
+				"updatedAt" : "2015-03-09T22:07:09.593Z" as AnyObject
+			], [
+				"createdAt" : "2015-02-24T22:35:30.639Z" as AnyObject,
+				"firstName" : "Gabrielle" as AnyObject,
+				"lastName" : "Miller-Messner" as AnyObject,
+				"latitude" : 35.1740471 as AnyObject,
+				"longitude" : -79.3922539 as AnyObject,
+				"mapString" : "Southern Pines, NC" as AnyObject,
+				"mediaURL" : "http://www.linkedin.com/pub/gabrielle-miller-messner/11/557/60/en" as AnyObject,
+				"objectId" : "8ZEuHF5uX8" as AnyObject,
+				"uniqueKey" : 2256298598 as AnyObject,
+				"updatedAt" : "2015-03-11T03:23:49.582Z" as AnyObject
+			], [
+				"createdAt" : "2015-02-24T22:30:54.442Z" as AnyObject,
+				"firstName" : "Jason" as AnyObject,
+				"lastName" : "Schatz" as AnyObject,
+				"latitude" : 37.7617 as AnyObject,
+				"longitude" : -122.4216 as AnyObject,
+				"mapString" : "18th and Valencia, San Francisco, CA" as AnyObject,
+				"mediaURL" : "http://en.wikipedia.org/wiki/Swift_%28programming_language%29" as AnyObject,
+				"objectId" : "hiz0vOTmrL" as AnyObject,
+				"uniqueKey" : 2362758535 as AnyObject,
+				"updatedAt" : "2015-03-10T17:20:31.828Z" as AnyObject
+			], [
+				"createdAt" : "2015-03-11T02:48:18.321Z" as AnyObject,
+				"firstName" : "Jarrod" as AnyObject,
+				"lastName" : "Parkes" as AnyObject,
+				"latitude" : 34.73037 as AnyObject,
+				"longitude" : -86.58611000000001 as AnyObject,
+				"mapString" : "Huntsville, Alabama" as AnyObject,
+				"mediaURL" : "https://linkedin.com/in/jarrodparkes" as AnyObject,
+				"objectId" : "CDHfAy8sdp" as AnyObject,
+				"uniqueKey" : 996618664 as AnyObject,
+				"updatedAt" : "2015-03-13T03:37:58.389Z" as AnyObject
+			]
+		]
 	}
-
-	func applicationDidBecomeActive(_ application: UIApplication) {
-		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-	}
-
-	func applicationWillTerminate(_ application: UIApplication) {
-		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-	}
-
-
 }
 
