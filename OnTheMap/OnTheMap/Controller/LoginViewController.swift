@@ -27,19 +27,19 @@ class LoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = OnTheMapTools.Colors.White
+		view.backgroundColor = OnTheMapTools.Colors.Background
 		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
-		titleText.textColor = OnTheMapTools.Colors.Blue
+		titleText.textColor = OnTheMapTools.Colors.Title
 		
 		labelView.layer.cornerRadius = 10
-		labelView.backgroundColor = OnTheMapTools.Colors.Gray
+		labelView.backgroundColor = OnTheMapTools.Colors.Light
 		
 		loginButton.layer.cornerRadius = 5
-		loginButton.backgroundColor = OnTheMapTools.Colors.Gray
-		loginButton.setTitleColor(OnTheMapTools.Colors.DarkBlue, for: .normal)
+		loginButton.backgroundColor = OnTheMapTools.Colors.Dark
+		loginButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
 		
 		spinner.isHidden = true
 		

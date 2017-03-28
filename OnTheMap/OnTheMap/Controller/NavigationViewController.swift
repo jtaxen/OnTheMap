@@ -17,9 +17,9 @@ class NavigationViewController: UINavigationController {
         super.viewDidLoad()
 		
 		navigationBar.items = composeNavigationItem(title: "On the map")
-		navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: OnTheMapTools.Colors.DarkBlue]
-		view.backgroundColor = OnTheMapTools.Colors.White
-		view.layer.borderColor = OnTheMapTools.Colors.Red.cgColor
+		navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: OnTheMapTools.Colors.Title]
+		view.backgroundColor = OnTheMapTools.Colors.Background
+		view.layer.borderColor = OnTheMapTools.Colors.Dark.cgColor
 	}
 	
 	// MARK: Design navigation items
@@ -29,7 +29,7 @@ class NavigationViewController: UINavigationController {
 		
 		let textAttributes = [
 			NSFontAttributeName: UIFont(name: "Futura", size: 14),
-			NSForegroundColorAttributeName: OnTheMapTools.Colors.Blue
+			NSForegroundColorAttributeName: OnTheMapTools.Colors.Icons
 		]
 		
 		// Logout button
@@ -39,12 +39,12 @@ class NavigationViewController: UINavigationController {
 		
 		// Refresh button
 		let refreshButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: .plain, target: self, action: #selector(refresh))
-		refreshButton.tintColor = OnTheMapTools.Colors.Blue
+		refreshButton.tintColor = OnTheMapTools.Colors.Icons
 		
 		
 		// Add pin button
 		let addPinButton = UIBarButtonItem(image: UIImage(named: "icon_addpin"), style: .plain, target: self, action: #selector(addLocation))
-		addPinButton.tintColor = OnTheMapTools.Colors.Blue
+		addPinButton.tintColor = OnTheMapTools.Colors.Icons
 		
 		navigationItem.leftBarButtonItem = logoutButton
 		navigationItem.rightBarButtonItems = [refreshButton, addPinButton]
@@ -87,7 +87,7 @@ extension NavigationViewController {
 	
 	func addLocation() {
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		let controller = storyboard.instantiateViewController(withIdentifier: "AddPointNavigation")
+		let controller = storyboard.instantiateViewController(withIdentifier: "AddPointNavigation") as! UINavigationController
 		present(controller, animated: true, completion: nil)
 	}
 	

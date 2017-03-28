@@ -14,8 +14,11 @@ class UserTableViewCell: UITableViewCell {
         super.awakeFromNib()
 		
 		textLabel?.font = UIFont(name: "Futura", size: 16)
+		textLabel?.textColor = OnTheMapTools.Colors.Title
 		detailTextLabel?.font = UIFont(name: "Futura", size: 12)
+		detailTextLabel?.textColor = OnTheMapTools.Colors.Icons
 		imageView?.image = UIImage(named: "icon_pin")
+		imageView?.tintColor = OnTheMapTools.Colors.Background
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

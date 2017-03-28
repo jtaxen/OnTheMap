@@ -13,9 +13,9 @@ class CustomTabBarViewController: UITabBarController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		tabBar.tintColor = OnTheMapTools.Colors.Blue
-		tabBar.barTintColor = OnTheMapTools.Colors.White
-		tabBar.unselectedItemTintColor = OnTheMapTools.Colors.Gray
+		tabBar.tintColor = OnTheMapTools.Colors.Icons
+		tabBar.barTintColor = OnTheMapTools.Colors.Background
+		tabBar.unselectedItemTintColor = OnTheMapTools.Colors.Light
 		
 		
 		// Add delimiters bewteen tab bar items
@@ -32,7 +32,7 @@ class CustomTabBarViewController: UITabBarController {
 			if index > 0 {
 				let x = itemWidth * CGFloat(index)
 				let delimiter = UIView(frame: CGRect(x: x, y: offset, width: 1, height: height-offset))
-				delimiter.backgroundColor = OnTheMapTools.Colors.Red
+				delimiter.backgroundColor = OnTheMapTools.Colors.Dark
 				tabBar.insertSubview(delimiter, at: 1)
 			}
 		}

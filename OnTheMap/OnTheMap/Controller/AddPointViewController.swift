@@ -25,6 +25,17 @@ class AddPointViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissView))
+		
+		// UI Setup
+		view.backgroundColor = OnTheMapTools.Colors.Background
+		textFieldContainer.backgroundColor = OnTheMapTools.Colors.Light
+		textFieldContainer.layer.cornerRadius = 10
+		
+		saveButton.layer.cornerRadius = 5
+		saveButton.backgroundColor = OnTheMapTools.Colors.Dark
+		saveButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
+		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
@@ -40,6 +51,7 @@ class AddPointViewController: UIViewController {
 		}
 	}
 	
-	
-	
+	func dismissView() {
+		presentingViewController?.dismiss(animated: true, completion: nil)
+	}
 }
