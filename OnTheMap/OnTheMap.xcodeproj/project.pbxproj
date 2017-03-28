@@ -18,6 +18,8 @@
 		A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8CE1E82CB1800CA71FF /* ParseClient.swift */; };
 		A062D8D11E82CB1800CA71FF /* ParseClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8CF1E82CB1800CA71FF /* ParseClientConstants.swift */; };
 		A062D8D31E82D5D100CA71FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062D8D21E82D5D100CA71FF /* LoginViewController.swift */; };
+		A066AD7B1E8A666700D6D59B /* OnTheMapTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066AD7A1E8A666700D6D59B /* OnTheMapTools.swift */; };
+		A066AD7D1E8A898E00D6D59B /* CustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066AD7C1E8A898E00D6D59B /* CustomTabBarViewController.swift */; };
 		A06B34991E83C3A3000158EF /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B34981E83C3A3000158EF /* UdacityClient.swift */; };
 		A06B349B1E83C3D8000158EF /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B349A1E83C3D8000158EF /* UdacityClientConstants.swift */; };
 		A06B34A11E83D0E7000158EF /* UdacityClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B34A01E83D0E7000158EF /* UdacityClientConvenience.swift */; };
@@ -42,6 +44,8 @@
 		A062D8CE1E82CB1800CA71FF /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseClient.swift; path = OnTheMap/Model/ParseClient.swift; sourceTree = "<group>"; };
 		A062D8CF1E82CB1800CA71FF /* ParseClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseClientConstants.swift; path = OnTheMap/Model/ParseClientConstants.swift; sourceTree = "<group>"; };
 		A062D8D21E82D5D100CA71FF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
+		A066AD7A1E8A666700D6D59B /* OnTheMapTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnTheMapTools.swift; path = View/OnTheMapTools.swift; sourceTree = "<group>"; };
+		A066AD7C1E8A898E00D6D59B /* CustomTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTabBarViewController.swift; path = Controller/CustomTabBarViewController.swift; sourceTree = "<group>"; };
 		A06B34981E83C3A3000158EF /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClient.swift; path = OnTheMap/Model/UdacityClient.swift; sourceTree = "<group>"; };
 		A06B349A1E83C3D8000158EF /* UdacityClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClientConstants.swift; path = OnTheMap/Model/UdacityClientConstants.swift; sourceTree = "<group>"; };
 		A06B34A01E83D0E7000158EF /* UdacityClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClientConvenience.swift; path = OnTheMap/Model/UdacityClientConvenience.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 		A062D8CB1E82C5C500CA71FF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A066AD7C1E8A898E00D6D59B /* CustomTabBarViewController.swift */,
 				A0D8BC291E8A5B4800910FF9 /* EnterThingsViewController.swift */,
 				A0D8BC211E8A37AE00910FF9 /* AddPointViewController.swift */,
 				A059CB701E89540E00A60C0C /* UsersTableViewController.swift */,
@@ -166,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				A059CB721E8959A100A60C0C /* UserTableViewCell.swift */,
+				A066AD7A1E8A666700D6D59B /* OnTheMapTools.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -247,6 +253,7 @@
 				A0FE62EC1E854EFE0003D8D8 /* NavigationViewController.swift in Sources */,
 				A059CB711E89540E00A60C0C /* UsersTableViewController.swift in Sources */,
 				A0DC7D821E83B0EE00C058AE /* MapViewController.swift in Sources */,
+				A066AD7D1E8A898E00D6D59B /* CustomTabBarViewController.swift in Sources */,
 				A059CB731E8959A100A60C0C /* UserTableViewCell.swift in Sources */,
 				A0025CD01E890AAA00019E52 /* ParseClientConvenience.swift in Sources */,
 				A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */,
@@ -254,6 +261,7 @@
 				A06B34A11E83D0E7000158EF /* UdacityClientConvenience.swift in Sources */,
 				A0D8BC2A1E8A5B4800910FF9 /* EnterThingsViewController.swift in Sources */,
 				A062D8D31E82D5D100CA71FF /* LoginViewController.swift in Sources */,
+				A066AD7B1E8A666700D6D59B /* OnTheMapTools.swift in Sources */,
 				A06B34991E83C3A3000158EF /* UdacityClient.swift in Sources */,
 				A0D8BC221E8A37AE00910FF9 /* AddPointViewController.swift in Sources */,
 				A06B349B1E83C3D8000158EF /* UdacityClientConstants.swift in Sources */,

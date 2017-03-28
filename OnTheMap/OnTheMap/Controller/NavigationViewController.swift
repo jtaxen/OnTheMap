@@ -17,6 +17,9 @@ class NavigationViewController: UINavigationController {
         super.viewDidLoad()
 		
 		navigationBar.items = composeNavigationItem(title: "On the map")
+		navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: OnTheMapTools.Colors.DarkBlue]
+		view.backgroundColor = OnTheMapTools.Colors.White
+		view.layer.borderColor = OnTheMapTools.Colors.Red.cgColor
 	}
 	
 	// MARK: Design navigation items
@@ -26,7 +29,7 @@ class NavigationViewController: UINavigationController {
 		
 		let textAttributes = [
 			NSFontAttributeName: UIFont(name: "Futura", size: 14),
-			NSForegroundColorAttributeName: UIColor.blue
+			NSForegroundColorAttributeName: OnTheMapTools.Colors.Blue
 		]
 		
 		// Logout button
@@ -36,11 +39,12 @@ class NavigationViewController: UINavigationController {
 		
 		// Refresh button
 		let refreshButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: .plain, target: self, action: #selector(refresh))
+		refreshButton.tintColor = OnTheMapTools.Colors.Blue
 		
 		
 		// Add pin button
-		let addPinButton = UIBarButtonItem()
-		addPinButton.image = UIImage(named: "icon_addpin")
+		let addPinButton = UIBarButtonItem(image: UIImage(named: "icon_addpin"), style: .plain, target: self, action: #selector(addLocation))
+		addPinButton.tintColor = OnTheMapTools.Colors.Blue
 		
 		navigationItem.leftBarButtonItem = logoutButton
 		navigationItem.rightBarButtonItems = [refreshButton, addPinButton]
@@ -79,6 +83,12 @@ extension NavigationViewController {
 				return
 			}
 		}
+	}
+	
+	func addLocation() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let controller = storyboard.instantiateViewController(withIdentifier: "AddPointNavigation")
+		present(controller, animated: true, completion: nil)
 	}
 	
 	

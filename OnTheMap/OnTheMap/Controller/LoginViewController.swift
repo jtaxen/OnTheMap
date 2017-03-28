@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var loginButton: UIButton!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	@IBOutlet weak var labelView: UIView!
+	@IBOutlet weak var titleText: UILabel!
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -26,11 +27,19 @@ class LoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		view.backgroundColor = OnTheMapTools.Colors.White
+		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
+		titleText.textColor = OnTheMapTools.Colors.Blue
+		
 		labelView.layer.cornerRadius = 10
+		labelView.backgroundColor = OnTheMapTools.Colors.Gray
+		
 		loginButton.layer.cornerRadius = 5
+		loginButton.backgroundColor = OnTheMapTools.Colors.Gray
+		loginButton.setTitleColor(OnTheMapTools.Colors.DarkBlue, for: .normal)
 		
 		spinner.isHidden = true
 		

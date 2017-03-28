@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZVR-7x-N5A">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -83,7 +83,7 @@
                                         <color key="textColor" red="0.09871460497379303" green="0.77281457185745239" blue="0.77802228927612305" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="xgx-Y6-Bbe">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="xgx-Y6-Bbe">
                                         <rect key="frame" x="189" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="BBe-We-pi1"/>
@@ -130,13 +130,13 @@
                         <outlet property="loginButton" destination="EOO-MK-bpm" id="Bov-gc-KdH"/>
                         <outlet property="passwordTextField" destination="RBB-UR-ReV" id="YE1-fq-NOG"/>
                         <outlet property="spinner" destination="mSg-gt-bk9" id="M1d-QE-hBz"/>
-                        <outlet property="topTextField" destination="f7T-fn-CqZ" id="vTg-1S-jii"/>
+                        <outlet property="titleText" destination="SLW-x4-ano" id="ebI-qH-W4O"/>
                         <outlet property="usernameTextField" destination="f7T-fn-CqZ" id="w47-hN-Gdb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="183.75" y="6.3380281690140849"/>
+            <point key="canvasLocation" x="62" y="6"/>
         </scene>
         <!--Navigation View Controller-->
         <scene sceneID="6YC-YU-6OM">
@@ -191,10 +191,10 @@
             </objects>
             <point key="canvasLocation" x="2780" y="-338"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar View Controller-->
         <scene sceneID="5GR-sl-AXD">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="ZVR-7x-N5A" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZVR-7x-N5A" customClass="CustomTabBarViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="L0d-bH-FDf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -271,10 +271,10 @@
             </objects>
             <point key="canvasLocation" x="2780" y="353"/>
         </scene>
-        <!--Add Point View Controller-->
+        <!--Add location-->
         <scene sceneID="9nx-MJ-s8x">
             <objects>
-                <viewController id="SZq-dO-TrK" customClass="AddPointViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPoint" id="SZq-dO-TrK" customClass="AddPointViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="60z-Dc-VBw"/>
                         <viewControllerLayoutGuide type="bottom" id="R1E-T8-mbI"/>
@@ -286,8 +286,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
                                 <rect key="frame" x="20" y="124.5" width="280" height="130"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
-                                        <rect key="frame" x="30" y="20" width="220" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
+                                        <rect key="frame" x="32" y="35" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="9AF-dx-kLY"/>
                                         </constraints>
@@ -295,8 +295,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
-                                        <rect key="frame" x="20" y="80" width="240" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
+                                        <rect key="frame" x="-26" y="80" width="123" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="1Wd-Ao-XDf"/>
                                         </constraints>
@@ -305,15 +305,14 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ffY-Gt-8rs" secondAttribute="bottom" constant="20" id="89X-W7-gSe"/>
                                     <constraint firstAttribute="trailing" secondItem="ffY-Gt-8rs" secondAttribute="trailing" constant="20" id="8qJ-9G-ftV"/>
-                                    <constraint firstAttribute="trailing" secondItem="l3q-xP-pqx" secondAttribute="trailing" constant="30" id="FtU-Nr-9na"/>
+                                    <constraint firstAttribute="trailing" secondItem="l3q-xP-pqx" secondAttribute="trailing" constant="20" id="FtU-Nr-9na"/>
                                     <constraint firstItem="ffY-Gt-8rs" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="Q3G-Yu-j7d"/>
                                     <constraint firstItem="l3q-xP-pqx" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="top" constant="20" id="WNV-yD-2uW"/>
                                     <constraint firstAttribute="height" constant="130" id="Z2P-y7-CQg"/>
-                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="30" id="aJE-7N-NsK"/>
+                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="aJE-7N-NsK"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
@@ -331,14 +330,12 @@
                                         <rect key="frame" x="94" y="45" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Jml-SI-q0G" firstAttribute="centerX" secondItem="gKO-l9-cVU" secondAttribute="centerX" id="dxq-ZT-9ta"/>
                                     <constraint firstItem="Jml-SI-q0G" firstAttribute="centerY" secondItem="gKO-l9-cVU" secondAttribute="centerY" id="kaH-qZ-ljO"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="gKO-l9-cVU" secondAttribute="trailing" constant="40" id="PdV-TF-XqL"/>
                             <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerY" secondItem="a2n-yP-O2Q" secondAttribute="centerY" multiplier="1.333" constant="1" id="RK4-Eq-UHv"/>
@@ -351,15 +348,38 @@
                             <constraint firstAttribute="trailing" secondItem="yXI-JS-U8g" secondAttribute="trailing" constant="20" id="vUm-fI-qIt"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Add location" id="KeU-ut-6IK">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="xZY-fA-bNH">
+                            <color key="tintColor" red="0.098714604969999994" green="0.77281457190000002" blue="0.77802228929999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="locationField" destination="l3q-xP-pqx" id="LB2-jl-KM4"/>
+                        <outlet property="saveButton" destination="7Xe-Aw-YS6" id="fCQ-52-jBh"/>
+                        <outlet property="spinner" destination="Jml-SI-q0G" id="iTF-RX-szg"/>
                         <outlet property="textFieldContainer" destination="yXI-JS-U8g" id="Q66-V9-mXY"/>
                         <outlet property="websiteField" destination="ffY-Gt-8rs" id="jMU-1t-3Mo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W4r-nB-dqp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622" y="-338"/>
+            <point key="canvasLocation" x="4582.5" y="-183.80281690140845"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pc0-u3-WOU">
+            <objects>
+                <navigationController storyboardIdentifier="AddPointNavigation" id="ZyH-Kr-qfc" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="u9M-xT-f85">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="SZq-dO-TrK" kind="relationship" relationship="rootViewController" id="2O6-63-3NK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ykb-Uq-1ky" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3707" y="-182"/>
         </scene>
     </scenes>
     <resources>
