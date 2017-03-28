@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var passwordTextField: UITextField!
 	@IBOutlet weak var loginButton: UIButton!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
+	@IBOutlet weak var labelView: UIView!
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -27,6 +28,9 @@ class LoginViewController: UIViewController {
 		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		
+		labelView.layer.cornerRadius = 10
+		loginButton.layer.cornerRadius = 5
 		
 		spinner.isHidden = true
 		

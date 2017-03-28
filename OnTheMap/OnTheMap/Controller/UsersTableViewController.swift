@@ -47,6 +47,7 @@ class UsersTableViewController: UITableViewController {
 		let firstName = entry["firstName"] as? String ?? ""
 		let lastName = entry["lastName"] as? String ?? ""
 		let mediaUrl = entry["mediaURL"] as? String ?? ""
+		print(entry["objectId"] ?? "No Id")
 		
 		cell.textLabel?.text = firstName + " " + lastName
 		cell.detailTextLabel?.text = mediaUrl
