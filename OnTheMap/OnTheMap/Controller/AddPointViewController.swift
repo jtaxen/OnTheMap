@@ -10,10 +10,16 @@ import UIKit
 
 class AddPointViewController: UIViewController {
 
+	let enterThings = EnterThingsView()
+	
 	@IBOutlet weak var textFieldContainer: UIView!
 	@IBOutlet weak var locationField: UITextField!
 	@IBOutlet weak var websiteField: UITextField!
 	
-	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		
+	}
 	
 }

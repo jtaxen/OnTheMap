@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -282,59 +283,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
-                                <rect key="frame" x="99" y="143" width="147" height="119"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
+                                <rect key="frame" x="20" y="124.5" width="280" height="130"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
-                                        <rect key="frame" x="30" y="20" width="97" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
-                                        <rect key="frame" x="20" y="69" width="97" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Qc-yd-8mL">
-                                <rect key="frame" x="115" y="342" width="105" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V00-d8-CI6">
-                                        <rect key="frame" x="39" y="100" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
-                                        <rect key="frame" x="20" y="20" width="46" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
+                                        <rect key="frame" x="30" y="20" width="220" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="nKV-tz-6H2"/>
+                                            <constraint firstAttribute="height" constant="30" id="9AF-dx-kLY"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
-                                    </button>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
+                                        <rect key="frame" x="20" y="80" width="240" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="1Wd-Ao-XDf"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ffY-Gt-8rs" secondAttribute="bottom" constant="20" id="89X-W7-gSe"/>
+                                    <constraint firstAttribute="trailing" secondItem="ffY-Gt-8rs" secondAttribute="trailing" constant="20" id="8qJ-9G-ftV"/>
+                                    <constraint firstAttribute="trailing" secondItem="l3q-xP-pqx" secondAttribute="trailing" constant="30" id="FtU-Nr-9na"/>
+                                    <constraint firstItem="ffY-Gt-8rs" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="Q3G-Yu-j7d"/>
+                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="top" constant="20" id="WNV-yD-2uW"/>
+                                    <constraint firstAttribute="height" constant="130" id="Z2P-y7-CQg"/>
+                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="30" id="aJE-7N-NsK"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
-                                <rect key="frame" x="110" y="269" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
+                                <rect key="frame" x="89.5" y="364.5" width="141" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="141" id="HFM-Zq-Sw8"/>
+                                    <constraint firstAttribute="height" constant="30" id="nKV-tz-6H2"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
+                                <rect key="frame" x="56" y="254.5" width="208" height="110"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jml-SI-q0G">
-                                        <rect key="frame" x="20" y="20" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jml-SI-q0G">
+                                        <rect key="frame" x="94" y="45" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Jml-SI-q0G" firstAttribute="centerX" secondItem="gKO-l9-cVU" secondAttribute="centerX" id="dxq-ZT-9ta"/>
+                                    <constraint firstItem="Jml-SI-q0G" firstAttribute="centerY" secondItem="gKO-l9-cVU" secondAttribute="centerY" id="kaH-qZ-ljO"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="gKO-l9-cVU" secondAttribute="trailing" constant="40" id="PdV-TF-XqL"/>
+                            <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerY" secondItem="a2n-yP-O2Q" secondAttribute="centerY" multiplier="1.333" constant="1" id="RK4-Eq-UHv"/>
+                            <constraint firstItem="gKO-l9-cVU" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="bottom" id="Sef-vf-RBj"/>
+                            <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerX" secondItem="a2n-yP-O2Q" secondAttribute="centerX" id="UjX-Vr-Pqn"/>
+                            <constraint firstItem="gKO-l9-cVU" firstAttribute="leading" secondItem="a2n-yP-O2Q" secondAttribute="leadingMargin" constant="40" id="Vih-hl-rVQ"/>
+                            <constraint firstItem="yXI-JS-U8g" firstAttribute="centerY" secondItem="a2n-yP-O2Q" secondAttribute="centerY" multiplier="0.667" id="XjH-lS-VGM"/>
+                            <constraint firstItem="yXI-JS-U8g" firstAttribute="leading" secondItem="a2n-yP-O2Q" secondAttribute="leading" constant="20" id="qbn-wS-oOA"/>
+                            <constraint firstItem="7Xe-Aw-YS6" firstAttribute="top" secondItem="gKO-l9-cVU" secondAttribute="bottom" id="uAw-tb-Neb"/>
+                            <constraint firstAttribute="trailing" secondItem="yXI-JS-U8g" secondAttribute="trailing" constant="20" id="vUm-fI-qIt"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="locationField" destination="l3q-xP-pqx" id="LB2-jl-KM4"/>
