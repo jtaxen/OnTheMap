@@ -77,5 +77,3 @@ extension MapViewController {
 		}
 	}
 }
-
-

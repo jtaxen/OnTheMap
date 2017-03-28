@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 	
 	var appDelegate: AppDelegate!
 	
@@ -29,8 +29,10 @@ class LoginViewController: UIViewController {
 		
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		
-		// AppDelegate
+		// Delegates
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		usernameTextField.delegate = self
+		passwordTextField.delegate = self
 		
 		titleText.textColor = OnTheMapTools.Colors.Title
 		
@@ -93,4 +95,60 @@ class LoginViewController: UIViewController {
 		}
 	}
 	
+}
+
+// MARK: Handle keyboard
+extension LoginViewController {
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		subscribeToKeyboardNotifications()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		unsubscribeFromKeyboardNotification()
+	}
+	
+	func subscribeToKeyboardNotifications() {
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow , object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+	}
+	
+	func unsubscribeFromKeyboardNotification() {
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+	}
+	
+	func keyboardWillShow(_ notification: Notification) {
+//		view.frame.origin.y = -getKeyboardHeight(notification)
+	}
+	
+	func keyboardWillHide(_ notification: Notification) {
+//		view.frame.origin.y = 0
+	}
+	
+	func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+		let userInfo = notification.userInfo
+		let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+		return keyboardSize.cgRectValue.height
+	}
+}
+
+// MARK: Text field delegate
+extension LoginViewController {
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		if textField == usernameTextField {
+			passwordTextField.becomeFirstResponder()
+		} else {
+			loginButtonPressed(loginButton)
+		}
+		return true
+	}
 }
