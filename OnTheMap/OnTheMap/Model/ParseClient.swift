@@ -16,8 +16,6 @@ class ParseClient: NSObject {
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	func taskForGET(parameters: [String: String]? = nil, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-	
-		
 		
 		var urlComponents = URLComponents()
 		urlComponents.scheme = Constants.Scheme
@@ -59,7 +57,7 @@ class ParseClient: NSObject {
 		return task
 	}
 
-	func serverTask(parameters: [String: String], method: HTTPMethod, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func serverTask(parameters: [String: String], method: HTTPMethod, uniqueKey: String? = nil, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
 		var urlComponents = URLComponents()
@@ -70,12 +68,17 @@ class ParseClient: NSObject {
 		
 		/* 2. Build URL */
 		/* 3. Configure request */
-		let request = NSMutableURLRequest(url: urlComponents.url!)
+		let request = NSMutableURLRequest()
 		
 		if method == .GET {
 			for (key, value) in parameters {
 				let item = URLQueryItem(name: key, value: value)
 				urlComponents.queryItems?.append(item)
+			}
+			if uniqueKey != nil {
+				let item = URLQueryItem(name: "where", value: "{\"uniqueKey\":\"\(uniqueKey!)\"}")
+				urlComponents.queryItems?.append(item)
+				print(urlComponents.url!.absoluteString)
 			}
 		} else {
 			do {
@@ -88,6 +91,7 @@ class ParseClient: NSObject {
 			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 		}
 		
+		request.url = urlComponents.url!
 		request.httpMethod = method.rawValue
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")

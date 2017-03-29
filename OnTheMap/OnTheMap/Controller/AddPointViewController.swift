@@ -11,6 +11,7 @@ import UIKit
 class AddPointViewController: UIViewController {
 	
 	var appDelegate: AppDelegate!
+	var parseClient = ParseClient.sharedInstance()
 	
 	@IBOutlet weak var textFieldContainer: UIView!
 	@IBOutlet weak var locationField: UITextField!
@@ -61,9 +62,8 @@ class AddPointViewController: UIViewController {
 		spinner.isHidden = false
 		spinner.startAnimating()
 		
-		
-		
-		
-		
+		ParseClient.sharedInstance().updateLocation(location: locationField.text!, website: websiteField.text!) { (success, error) in
+			print("Wonderful is: \(success)")
+		}
 	}
 }
