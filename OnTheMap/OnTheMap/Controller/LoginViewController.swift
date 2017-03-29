@@ -64,11 +64,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 			let password = passwordTextField.text {
 			UdacityClient.sharedInstance().getSessionID(username: username, password: password) { (success, result, error) in
 				if success {
-					self.appDelegate.sessionID = result
 					print("Login successful.")
-					DispatchQueue.main.async {
-						self.pushToMapView()
-					}
+					self.pushToMapView()
 				} else {
 					DispatchQueue.main.async {
 						self.spinner.isHidden = true
@@ -124,11 +121,11 @@ extension LoginViewController {
 	}
 	
 	func keyboardWillShow(_ notification: Notification) {
-//		view.frame.origin.y = -getKeyboardHeight(notification)
+		//		view.frame.origin.y = -getKeyboardHeight(notification)
 	}
 	
 	func keyboardWillHide(_ notification: Notification) {
-//		view.frame.origin.y = 0
+		//		view.frame.origin.y = 0
 	}
 	
 	func getKeyboardHeight(_ notification: Notification) -> CGFloat {

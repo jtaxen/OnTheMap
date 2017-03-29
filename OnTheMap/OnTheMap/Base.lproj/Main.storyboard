@@ -303,6 +303,7 @@
                                             <constraint firstAttribute="height" constant="30" id="9AF-dx-kLY"/>
                                         </constraints>
                                         <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
@@ -338,7 +339,7 @@
                                 <rect key="frame" x="96" y="267" width="208" height="110"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jml-SI-q0G">
-                                        <rect key="frame" x="94" y="45" width="20" height="20"/>
+                                        <rect key="frame" x="94" y="46" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
@@ -366,7 +367,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="locationField" destination="l3q-xP-pqx" id="LB2-jl-KM4"/>
-                        <outlet property="saveButton" destination="7Xe-Aw-YS6" id="fCQ-52-jBh"/>
+                        <outlet property="postButton" destination="7Xe-Aw-YS6" id="gaG-sl-NxP"/>
                         <outlet property="spinner" destination="Jml-SI-q0G" id="iTF-RX-szg"/>
                         <outlet property="textFieldContainer" destination="yXI-JS-U8g" id="Q66-V9-mXY"/>
                         <outlet property="websiteField" destination="ffY-Gt-8rs" id="jMU-1t-3Mo"/>
@@ -379,7 +380,6 @@
         <!--Navigation Controller-->
         <scene sceneID="pc0-u3-WOU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ykb-Uq-1ky" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="AddPointNavigation" id="ZyH-Kr-qfc" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="u9M-xT-f85">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -389,6 +389,7 @@
                         <segue destination="SZq-dO-TrK" kind="relationship" relationship="rootViewController" id="2O6-63-3NK"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ykb-Uq-1ky" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3707" y="-182"/>
         </scene>

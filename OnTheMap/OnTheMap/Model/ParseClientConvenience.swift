@@ -18,7 +18,7 @@ extension ParseClient {
 			ParameterKeys.Order: StudentLocationKeys.UpdatedAt
 		]
 		
-		let _ = taskForGET(parameters: parameters) { (results, error) in
+		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
 			
 			guard error == nil else {
 				completionHandler(false, error)
@@ -34,11 +34,9 @@ extension ParseClient {
 		}
 	}
 	
-	func getOwnLocation (completionHandler(_ sucess: Bool, _ error: NSError?) -> Void ) {
+	func postLocation(completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 	
 		
-		
-		let _ = taskForGET()
 		
 	}
 	

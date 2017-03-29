@@ -21,9 +21,12 @@ extension UdacityClient {
 				completionHandler(false, nil, error)
 				return
 			}
-			if let session = results?["session"] as? [String: AnyObject] {
-				if let id = session["id"] as? String {
-					print("Session ID acquired: \(id)")
+			if let session = results?["session"] as? [String: AnyObject],
+				let account = results?["account"] as? [String: AnyObject] {
+				if let id = session["id"] as? String,
+					let key = account["key"] as? String {
+					self.appDelegate.sessionID = id
+					self.appDelegate.uniqueKey = key
 					completionHandler(true, id, nil)
 				} else {
 					let userInfo = [NSLocalizedDescriptionKey: "Error: key id not found in results"]
@@ -37,7 +40,7 @@ extension UdacityClient {
 	}
 	
 	func endSession(completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: NSError?) -> Void) {
-	
+		
 		let _ = taskForDELETE() { (results, error) in
 			
 			guard error == nil else {
