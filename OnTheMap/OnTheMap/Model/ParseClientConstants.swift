@@ -65,8 +65,13 @@ extension ParseClient {
 		static let CreatedAt = "createdAt"
 		static let UpdatedAt = "updatedAt"
 		static let ACL = "ACL"
-		
-		
 	}
-	
+}
+
+
+//MARK: HTTP Request methods
+enum HTTPMethod: String {
+	case GET = "GET"
+	case POST = "POST"
+	case PUT = "PUT"
 }

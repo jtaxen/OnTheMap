@@ -16,7 +16,7 @@ class AddPointViewController: UIViewController {
 	@IBOutlet weak var locationField: UITextField!
 	@IBOutlet weak var websiteField: UITextField!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
-	@IBOutlet weak var saveButton: UIButton!
+	@IBOutlet weak var postButton: UIButton!
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -26,21 +26,22 @@ class AddPointViewController: UIViewController {
 		super.viewDidLoad()
 		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissView))
+		postButton.addTarget(self, action: #selector(postButtonPressed), for: .touchUpInside)
 		
 		// UI Setup
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		textFieldContainer.backgroundColor = OnTheMapTools.Colors.Light
 		textFieldContainer.layer.cornerRadius = 10
 		
-		saveButton.layer.cornerRadius = 5
-		saveButton.backgroundColor = OnTheMapTools.Colors.Dark
-		saveButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
+		postButton.layer.cornerRadius = 5
+		postButton.backgroundColor = OnTheMapTools.Colors.Dark
+		postButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
 		
 		// AppDelegate
 		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
 		textFieldContainer.layer.cornerRadius = 10
-		saveButton.layer.cornerRadius = 5
+		postButton.layer.cornerRadius = 5
 		
 		spinner.isHidden = true
 		
@@ -53,5 +54,16 @@ class AddPointViewController: UIViewController {
 	
 	func dismissView() {
 		presentingViewController?.dismiss(animated: true, completion: nil)
+	}
+	
+	func postButtonPressed(_ sender: UIButton) {
+		
+		spinner.isHidden = false
+		spinner.startAnimating()
+		
+		
+		
+		
+		
 	}
 }

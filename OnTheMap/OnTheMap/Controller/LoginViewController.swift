@@ -73,6 +73,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 					DispatchQueue.main.async {
 						self.spinner.isHidden = true
 					}
+					let alert = UIAlertController(title: "Could not log in", message: "Please make sure that you entered the correct username and password.", preferredStyle: .actionSheet)
+					alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+					self.present(alert, animated: true, completion: nil)
+					
 					print("Login unsuccessful")
 					print(error!)
 				}
@@ -94,7 +98,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 			}
 		}
 	}
-	
 }
 
 // MARK: Handle keyboard

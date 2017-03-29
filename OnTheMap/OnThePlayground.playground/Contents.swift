@@ -3,8 +3,9 @@
 import UIKit
 import PlaygroundSupport
 
+
 // this line tells the Playground to execute indefinitely
-PlaygroundPage.current.needsIndefiniteExecution = true
+// PlaygroundPage.current.needsIndefiniteExecution = true
 
 /*
 let urlString = "http://quotes.rest/qod.json?category=inspire"
@@ -42,6 +43,7 @@ let s1 = "hej"
 let s2 = "Hej \(s1), hemskt mycket \(s1)"
 print(s2)*/
 
+/*
 struct g {
 	static let a = "alfa"
 	static let b = "beta"
@@ -81,7 +83,32 @@ let task = session.dataTask(with: request as URLRequest) { data, response, error
 	print(fafa[0]["mediaURL"]!)
 }
 task.resume()
+*/
 
+var newURLComponents = URLComponents()
 
+newURLComponents.scheme = "https"
+newURLComponents.host = "parse.udacity.com"
+newURLComponents.path = "/parse/classes/StudentLocation"
+newURLComponents.queryItems = []
+
+let parameters = ["Hej": "hopp",
+"krakel": "spektakel",
+"abra": "kadabra"]
+
+for (key, value) in parameters {
+
+	let item = URLQueryItem(name: key, value: value)
+	newURLComponents.queryItems?.append(item)
+}
+
+print(newURLComponents.url!)
+
+let st1 = "abcd"
+let st2: String? = nil
+print(st1 + (st2 ?? "ijk"))
+
+let dict = ["a":"1", "b":"2", "c":"3"]
+let jsonthing = try? JSONSerialization.data(withJSONObject: dict)
 
 

@@ -9,15 +9,16 @@
 import Foundation
 
 extension ParseClient {
-
+	
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
-		let parameters: [String: AnyObject] = [:] /*ParameterKeys.Limit: "100",
-		                  ParameterKeys.Skip: "0",
-		                  Para m eterKeys.Order: StudentLocationKeys.UpdatedAt*/
-//		]
+		let parameters: [String: String] = [
+			ParameterKeys.Limit: "100",
+			ParameterKeys.Skip: "0",
+			ParameterKeys.Order: StudentLocationKeys.UpdatedAt
+		]
 		
-		let _ = taskForGET() { (results, error) in
+		let _ = taskForGET(parameters: parameters) { (results, error) in
 			
 			guard error == nil else {
 				completionHandler(false, error)
@@ -32,4 +33,13 @@ extension ParseClient {
 			}
 		}
 	}
+	
+	func getOwnLocation (completionHandler(_ sucess: Bool, _ error: NSError?) -> Void ) {
+	
+		
+		
+		let _ = taskForGET()
+		
+	}
+	
 }

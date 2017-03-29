@@ -13,15 +13,28 @@ import UIKit
 
 class ParseClient: NSObject {
 	
-	let methodUrl = Constants.Scheme + "://" + Constants.Host + Constants.Path
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
-	func taskForGET(completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func taskForGET(parameters: [String: String]? = nil, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 	
+		
+		
+		var urlComponents = URLComponents()
+		urlComponents.scheme = Constants.Scheme
+		urlComponents.host = Constants.Host
+		urlComponents.path = Constants.Path + (objectID ?? "")
+		urlComponents.queryItems = []
+		
 		/* 1. Set parameters */
+		if parameters != nil {
+			for (key, value) in parameters! {
+				let queryItem = URLQueryItem(name: key, value: value)
+				urlComponents.queryItems?.append(queryItem)
+			}
+		}
 		
 		/* 2. Build URL */
-		let url = URL(string: methodUrl)
+		let url = urlComponents.url
 		let request = NSMutableURLRequest(url: url!)
 		
 		/* 3. Setup */
@@ -40,55 +53,44 @@ class ParseClient: NSObject {
 			}
 			print("Preparing to parse \(data)")
 			/* 5/6 Parse data */
-			self.appDelegate.parseLocationData(data!, completionHandlerForParsedData: completionHandler)
+			self.parseGETRequest(data!, completionHandlerForParsedData: completionHandler)
 		}
 		task.resume()
 		return task
 	}
 
-	func serverTask(parameters: [String: AnyObject], method: String, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func serverTask(parameters: [String: String], method: HTTPMethod, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
-		var parameterString: String
-		print("Method: \(method)")
-		// TODO: Create url with URLComponents instead
-		if method == "GET" {
-			parameterString = ""
-			for (key, value) in parameters {
-				parameterString += key + "=" + (value as! String) + "&"
-			}
-		} else {
-			parameterString = parameters.description
-			parameterString = parameterString.replacingOccurrences(of: "[", with: "{")
-			parameterString = parameterString.replacingOccurrences(of: "]", with: "}")
-		}
+		var urlComponents = URLComponents()
+		urlComponents.scheme = Constants.Scheme
+		urlComponents.host = Constants.Host
+		urlComponents.path = Constants.Path + (objectID ?? "")
+		urlComponents.queryItems = []
 		
 		/* 2. Build URL */
-		var url: URL?
-		switch method {
-		case "GET":
-			url = URL(string: methodUrl + parameterString)
-		case "POST":
-			url = URL(string: methodUrl)
-		case "PUT":
-			url = URL(string: methodUrl + objectID!)
-		default:
-			print("Error: HTTP method is not valid.")
-			break
+		/* 3. Configure request */
+		let request = NSMutableURLRequest(url: urlComponents.url!)
+		
+		if method == .GET {
+			for (key, value) in parameters {
+				let item = URLQueryItem(name: key, value: value)
+				urlComponents.queryItems?.append(item)
+			}
+		} else {
+			do {
+				let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+				request.httpBody = jsonData
+			} catch {
+				let userInfo = [NSLocalizedDescriptionKey:"Error: could not perform JSON deserialization"]
+				completionHandler(nil, NSError(domain: "JSONDeserialization", code: 9, userInfo: userInfo))
+			}
+			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 		}
 		
-		let request = NSMutableURLRequest(url: url!)
-		
-		/* 3. Configure request */
-		request.httpMethod = method
+		request.httpMethod = method.rawValue
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-		
-		if method != "GET" {
-			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-			request.httpBody = parameterString.data(using: String.Encoding.utf8)
-		}
-		
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")
@@ -103,7 +105,11 @@ class ParseClient: NSObject {
 			}
 			
 			/* 5/6 Parse data */
-			self.appDelegate.parseLocationData(data!, completionHandlerForParsedData: completionHandler)
+			switch method {
+			case .GET: self.parseGETRequest(data!, completionHandlerForParsedData: completionHandler)
+			case .POST: self.parsePOSTRequest(data!, completionHandlerForParsedData: completionHandler)
+			case .PUT: self.parsePOSTRequest(data!, completionHandlerForParsedData: completionHandler)
+			}
 		}
 		
 		/* 7. Start request */
