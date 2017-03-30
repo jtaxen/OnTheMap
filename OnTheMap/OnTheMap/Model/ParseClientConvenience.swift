@@ -15,7 +15,7 @@ extension ParseClient {
 		let parameters: [String: String] = [
 			ParameterKeys.Limit: "100",
 			ParameterKeys.Skip: "0",
-			ParameterKeys.Order: StudentLocationKeys.UpdatedAt
+			ParameterKeys.Order: StudentLocationKeys.MediaURL
 		]
 		
 		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
@@ -58,24 +58,48 @@ extension ParseClient {
 	
 	func updateLocation (location: String, website: String, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
 		
-		// TODO: Something is wrong here
-		if var parameters = appDelegate.userData[0] as? [String:String] {
-			parameters["mapString"] = location
-			parameters["mediaURL"] = website
+		
 			
-			let _ = serverTask(parameters: parameters, method: .PUT, objectID: parameters["objectId"]) { (results, error) in
+			// TEST
+			guard parameters != nil else {
+				print("Parameters are missing")
+				return
+			}
+			
+			var newParameters: [String: String] = [:]
+			
+			for (key, value) in parameters {
+				if let string = value as? String {
+					newParameters[key] = string
+				} else if let double = value as? Double {
+					newParameters[key] = "\(double)"
+				} else {
+					print("\(value) krånglar fortfarande")
+				}
+			}
+			
+			if let string = parameters["objectId"] as? String {
+				print(string)
+			} else {
+				print("Object id är det fel på")
+			}
+			
+			// TEST ENDS HERE
+			
+			let objectID: String? = parameters["objectId"] as! String?
+			
+			
+			let _ = serverTask(parameters: newParameters, method: .PUT, objectID: objectID) { (results, error) in
 				
 				guard error == nil else {
+					print("ERROR ERROR ERROR")
+					print(error!.domain)
+					print(error!.userInfo[NSLocalizedDescriptionKey] ?? "No-one knows")
 					completionHandler(false, error)
 					return
 				}
-				
-				self.refresh() { (success, error) in
-					print("The success was \(success)")
-				}
+				self.refresh(completionHandler: completionHandler)
 			}
-		} else {
-			print("OND BRÅD DÖD ☠️☠️☠️")
 		}
 	}
 }

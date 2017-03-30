@@ -63,14 +63,16 @@ class ParseClient: NSObject {
 		var urlComponents = URLComponents()
 		urlComponents.scheme = Constants.Scheme
 		urlComponents.host = Constants.Host
-		urlComponents.path = Constants.Path + (objectID ?? "")
-		urlComponents.queryItems = []
+		urlComponents.path = Constants.Path + ((objectID != nil)  ? "/\(objectID!)" : "")
+		print(urlComponents.url!)
+		
 		
 		/* 2. Build URL */
 		/* 3. Configure request */
 		let request = NSMutableURLRequest()
 		
 		if method == .GET {
+			urlComponents.queryItems = []
 			for (key, value) in parameters {
 				let item = URLQueryItem(name: key, value: value)
 				urlComponents.queryItems?.append(item)
