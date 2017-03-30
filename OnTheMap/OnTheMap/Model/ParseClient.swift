@@ -64,12 +64,12 @@ class ParseClient: NSObject {
 		urlComponents.scheme = Constants.Scheme
 		urlComponents.host = Constants.Host
 		urlComponents.path = Constants.Path + ((objectID != nil)  ? "/\(objectID!)" : "")
-		print(urlComponents.url!)
 		
 		
 		/* 2. Build URL */
 		/* 3. Configure request */
 		let request = NSMutableURLRequest()
+		request.httpBody = Data()
 		
 		if method == .GET {
 			urlComponents.queryItems = []
@@ -84,7 +84,7 @@ class ParseClient: NSObject {
 			}
 		} else {
 			do {
-				let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+				let jsonData = try JSONSerialization.data(withJSONObject: parameters)
 				request.httpBody = jsonData
 			} catch {
 				let userInfo = [NSLocalizedDescriptionKey:"Error: could not perform JSON deserialization"]
@@ -97,6 +97,10 @@ class ParseClient: NSObject {
 		request.httpMethod = method.rawValue
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+		
+		print(request.httpMethod)
+		print(request.allHTTPHeaderFields!)
+		print(NSString(data: request.httpBody!, encoding: String.Encoding.utf8.rawValue)!)
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")

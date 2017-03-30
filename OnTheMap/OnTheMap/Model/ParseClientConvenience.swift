@@ -17,7 +17,7 @@ extension ParseClient {
 		let parameters: [String: String] = [
 			ParameterKeys.Limit: "100",
 			ParameterKeys.Skip: "0",
-			ParameterKeys.Order: StudentLocationKeys.MediaURL
+			ParameterKeys.Order: StudentLocationKeys.UpdatedAt
 		]
 		
 		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
@@ -49,7 +49,7 @@ extension ParseClient {
 			
 			if let userData = results {
 				self.appDelegate.userData = userData
-				self.appDelegate.objectID = results?[0]["objectId"] as? String
+				self.appDelegate.objectID = results?[1]["objectId"] as? String
 				
 				completionHandler(true, error)
 				return
@@ -67,7 +67,6 @@ extension ParseClient {
 			
 			guard error == nil else {
 				completionHandler(false, error as NSError?)
-				print(error?.localizedDescription ?? "Core Location error")
 				print(error.debugDescription)
 				return
 			}
@@ -95,7 +94,8 @@ extension ParseClient {
 			let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in
 				
 				guard error == nil else {
-					completionHandler(false, nil)
+					completionHandler(false, error)
+					print(error!.debugDescription)
 					return
 				}
 				
