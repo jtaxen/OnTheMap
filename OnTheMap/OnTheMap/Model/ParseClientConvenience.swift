@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreLocation
+import UIKit
 
 extension ParseClient {
 	
@@ -47,6 +49,8 @@ extension ParseClient {
 			
 			if let userData = results {
 				self.appDelegate.userData = userData
+				self.appDelegate.objectID = results?[0]["objectId"] as? String
+				
 				completionHandler(true, error)
 				return
 			} else {
@@ -58,47 +62,44 @@ extension ParseClient {
 	
 	func updateLocation (location: String, website: String, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
 		
-		
+		let geocoder = CLGeocoder()
+		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
 			
-			// TEST
-			guard parameters != nil else {
-				print("Parameters are missing")
+			guard error == nil else {
+				completionHandler(false, error as NSError?)
+				print(error?.localizedDescription ?? "Core Location error")
+				print(error.debugDescription)
 				return
 			}
 			
-			var newParameters: [String: String] = [:]
-			
-			for (key, value) in parameters {
-				if let string = value as? String {
-					newParameters[key] = string
-				} else if let double = value as? Double {
-					newParameters[key] = "\(double)"
-				} else {
-					print("\(value) krånglar fortfarande")
-				}
+			guard clPlacemark?.count == 1 else {
+				let userInfo = [NSLocalizedDescriptionKey: "Ambiguous location"]
+				let error = NSError(domain: "ambiguousLocationError", code: 101, userInfo: userInfo)
+				completionHandler(false, error)
+				return
+			}
+			guard let latitude = clPlacemark![0].location?.coordinate.latitude,
+				let longitude = clPlacemark![0].location?.coordinate.longitude else {
+					let userInfo = [NSLocalizedDescriptionKey: "Request did not return coordinates."]
+					completionHandler(false, NSError(domain: "coordinateError", code: 102, userInfo: userInfo))
+					return
 			}
 			
-			if let string = parameters["objectId"] as? String {
-				print(string)
-			} else {
-				print("Object id är det fel på")
-			}
+			let parameters = [
+				StudentLocationKeys.MapString: location,
+				StudentLocationKeys.Latitude: "\(latitude)",
+				StudentLocationKeys.Longitude: "\(longitude)",
+				StudentLocationKeys.MediaURL: website
+			]
 			
-			// TEST ENDS HERE
-			
-			let objectID: String? = parameters["objectId"] as! String?
-			
-			
-			let _ = serverTask(parameters: newParameters, method: .PUT, objectID: objectID) { (results, error) in
+			let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in
 				
 				guard error == nil else {
-					print("ERROR ERROR ERROR")
-					print(error!.domain)
-					print(error!.userInfo[NSLocalizedDescriptionKey] ?? "No-one knows")
-					completionHandler(false, error)
+					completionHandler(false, nil)
 					return
 				}
-				self.refresh(completionHandler: completionHandler)
+				
+				completionHandler(true, nil)
 			}
 		}
 	}
