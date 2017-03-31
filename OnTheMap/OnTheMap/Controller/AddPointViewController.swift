@@ -44,7 +44,8 @@ class AddPointViewController: UIViewController {
 		textFieldContainer.layer.cornerRadius = 10
 		postButton.layer.cornerRadius = 5
 		
-		spinner.isHidden = true
+		spinner.hidesWhenStopped = true
+		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
 		// Set text field attributes
 		for field in [locationField, websiteField] {

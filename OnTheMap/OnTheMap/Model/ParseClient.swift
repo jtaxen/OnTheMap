@@ -74,7 +74,7 @@ class ParseClient: NSObject {
 		if method == .GET {
 			urlComponents.queryItems = []
 			for (key, value) in parameters {
-				let item = URLQueryItem(name: key, value: value as! String)
+				let item = URLQueryItem(name: key, value: value as? String)
 				urlComponents.queryItems?.append(item)
 			}
 			if uniqueKey != nil {
