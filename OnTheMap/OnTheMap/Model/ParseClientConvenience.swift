@@ -14,10 +14,10 @@ extension ParseClient {
 	
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
-		let parameters: [String: String] = [
-			ParameterKeys.Limit: "100",
-			ParameterKeys.Skip: "0",
-			ParameterKeys.Order: StudentLocationKeys.UpdatedAt
+		let parameters: [String: AnyObject] = [
+			ParameterKeys.Limit: "100" as AnyObject,
+			ParameterKeys.Skip: "0" as AnyObject,
+			ParameterKeys.Order: StudentLocationKeys.UpdatedAt as AnyObject
 		]
 		
 		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
@@ -38,7 +38,7 @@ extension ParseClient {
 	
 	func getUserData (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
-		let parameters: [String: String] = [:]
+		let parameters: [String: AnyObject] = [:]
 		
 		let _ = serverTask(parameters: parameters, method: .GET, uniqueKey: appDelegate.uniqueKey) { (results, error) in
 			
@@ -84,11 +84,11 @@ extension ParseClient {
 					return
 			}
 			
-			let parameters = [
-				StudentLocationKeys.MapString: location,
-				StudentLocationKeys.Latitude: "\(latitude)",
-				StudentLocationKeys.Longitude: "\(longitude)",
-				StudentLocationKeys.MediaURL: website
+			let parameters: [String: AnyObject] = [
+				StudentLocationKeys.MapString: location as AnyObject,
+				StudentLocationKeys.Latitude: latitude as AnyObject,
+				StudentLocationKeys.Longitude: longitude as AnyObject,
+				StudentLocationKeys.MediaURL: website as AnyObject
 			]
 			
 			let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in

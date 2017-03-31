@@ -57,7 +57,7 @@ class ParseClient: NSObject {
 		return task
 	}
 
-	func serverTask(parameters: [String: String], method: HTTPMethod, uniqueKey: String? = nil, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func serverTask(parameters: [String: AnyObject], method: HTTPMethod, uniqueKey: String? = nil, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
 		var urlComponents = URLComponents()
@@ -74,7 +74,7 @@ class ParseClient: NSObject {
 		if method == .GET {
 			urlComponents.queryItems = []
 			for (key, value) in parameters {
-				let item = URLQueryItem(name: key, value: value)
+				let item = URLQueryItem(name: key, value: value as! String)
 				urlComponents.queryItems?.append(item)
 			}
 			if uniqueKey != nil {

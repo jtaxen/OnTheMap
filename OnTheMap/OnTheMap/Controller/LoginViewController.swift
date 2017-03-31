@@ -43,7 +43,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		loginButton.backgroundColor = OnTheMapTools.Colors.Dark
 		loginButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
 		
-		spinner.isHidden = true
+		spinner.hidesWhenStopped = true
+		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
 		// Set text field attributes
 		for field in [usernameTextField, passwordTextField] {
