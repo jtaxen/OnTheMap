@@ -14,11 +14,11 @@ extension ParseClient {
 	
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
-		let parameters: [String: AnyObject] = [
-			ParameterKeys.Limit: "100" as AnyObject,
-			ParameterKeys.Skip: "0" as AnyObject,
-			ParameterKeys.Order: StudentLocationKeys.UpdatedAt as AnyObject
-		]
+		let parameters: [String: AnyObject] = [:]
+//			ParameterKeys.Limit: "100" as AnyObject,
+//			ParameterKeys.Skip: "0" as AnyObject,
+//			ParameterKeys.Order: StudentLocationKeys.UpdatedAt as AnyObject
+//		]
 		
 		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
 			

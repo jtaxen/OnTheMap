@@ -331,7 +331,7 @@
                                     <constraint firstAttribute="height" constant="30" id="nKV-tz-6H2"/>
                                 </constraints>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Update"/>
                             </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
                                 <rect key="frame" x="96" y="267" width="208" height="110"/>

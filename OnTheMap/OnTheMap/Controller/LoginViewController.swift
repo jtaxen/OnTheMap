@@ -152,7 +152,16 @@ extension LoginViewController {
 // MARK: Text field delegate
 extension LoginViewController {
 	
+	// If autocompletion adds a space after the username (which it does), this function makes sure to remove it, as it otherwise would hinder the login, and is easily missed by the user.
 	func textFieldDidEndEditing(_ textField: UITextField) {
+		guard textField == usernameTextField else {
+			return
+		}
+		if let username = textField.text {
+			if username.substring(from: username.index(before: username.endIndex)) == " " {
+				textField.text = username.substring(to: username.index(before: username.endIndex))
+			}
+		}
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {

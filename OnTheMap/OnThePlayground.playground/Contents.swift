@@ -84,6 +84,7 @@ let task = session.dataTask(with: request as URLRequest) { data, response, error
 }
 task.resume()
 */
+/*
 
 var newURLComponents = URLComponents()
 
@@ -112,3 +113,10 @@ let dict = ["a":"1", "b":"2", "c":"3"]
 let jsonthing = try? JSONSerialization.data(withJSONObject: dict)
 
 
+*/
+
+
+let string = "abcdefgh"
+
+print(string.substring(from: string.index(before: string.endIndex)))
+print(string.substring(to: string.index(before: string.endIndex)))
