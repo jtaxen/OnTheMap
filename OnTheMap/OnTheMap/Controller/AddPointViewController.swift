@@ -11,6 +11,7 @@ import UIKit
 class AddPointViewController: UIViewController {
 	
 	var appDelegate: AppDelegate!
+	var parseClient = ParseClient.sharedInstance()
 	
 	@IBOutlet weak var textFieldContainer: UIView!
 	@IBOutlet weak var locationField: UITextField!
@@ -43,7 +44,8 @@ class AddPointViewController: UIViewController {
 		textFieldContainer.layer.cornerRadius = 10
 		postButton.layer.cornerRadius = 5
 		
-		spinner.isHidden = true
+		spinner.hidesWhenStopped = true
+		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
 		// Set text field attributes
 		for field in [locationField, websiteField] {
@@ -61,9 +63,8 @@ class AddPointViewController: UIViewController {
 		spinner.isHidden = false
 		spinner.startAnimating()
 		
-		
-		
-		
-		
+		ParseClient.sharedInstance().updateLocation(location: locationField.text!, website: websiteField.text!) { (success, error) in
+			print("Wonderful is: \(success)")
+		}
 	}
 }

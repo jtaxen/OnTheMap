@@ -43,7 +43,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		loginButton.backgroundColor = OnTheMapTools.Colors.Dark
 		loginButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
 		
-		spinner.isHidden = true
+		spinner.hidesWhenStopped = true
+		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
 		// Set text field attributes
 		for field in [usernameTextField, passwordTextField] {
@@ -88,7 +89,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				DispatchQueue.main.async {
 					let storyboard = UIStoryboard(name: "Main", bundle: nil)
 					let controller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-					self.present(controller, animated: true, completion:  nil)
+					self.present(controller, animated: true) {
+						_ = parseClient.getUserData() { (success, error) in
+							if success {
+								print(self.appDelegate.userData!)
+							} else {
+								print(error?.localizedDescription)
+							}
+						}
+					}
 				}
 			} else {
 				print(error!.localizedDescription)

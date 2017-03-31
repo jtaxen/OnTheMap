@@ -26,10 +26,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		
 		for dictionary in locations {
 			
-			let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-			let lon = CLLocationDegrees(dictionary["longitude"] as! Double)
+			if let lat = dictionary["latitude"] as? Float,
+				let lon = dictionary["longitude"] as? Float {
 			
-			let coordinate = CLLocationCoordinate2DMake(lat, lon)
+			let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
 			
 			let firstName = dictionary["firstName"] as? String ?? ""
 			let lastName = dictionary["lastName"] as? String ?? ""
@@ -43,6 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 			annotations.append(annotation)
 		}
 		mapView.addAnnotations(annotations)
+		}
 	}
 }
 

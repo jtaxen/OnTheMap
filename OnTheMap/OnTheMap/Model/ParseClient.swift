@@ -16,8 +16,6 @@ class ParseClient: NSObject {
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	func taskForGET(parameters: [String: String]? = nil, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-	
-		
 		
 		var urlComponents = URLComponents()
 		urlComponents.scheme = Constants.Scheme
@@ -59,27 +57,34 @@ class ParseClient: NSObject {
 		return task
 	}
 
-	func serverTask(parameters: [String: String], method: HTTPMethod, _ objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+	func serverTask(parameters: [String: AnyObject], method: HTTPMethod, uniqueKey: String? = nil, objectID: String? = nil, completionHandler: @escaping (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
 		var urlComponents = URLComponents()
 		urlComponents.scheme = Constants.Scheme
 		urlComponents.host = Constants.Host
-		urlComponents.path = Constants.Path + (objectID ?? "")
-		urlComponents.queryItems = []
+		urlComponents.path = Constants.Path + ((objectID != nil)  ? "/\(objectID!)" : "")
+		
 		
 		/* 2. Build URL */
 		/* 3. Configure request */
-		let request = NSMutableURLRequest(url: urlComponents.url!)
+		let request = NSMutableURLRequest()
+		request.httpBody = Data()
 		
 		if method == .GET {
+			urlComponents.queryItems = []
 			for (key, value) in parameters {
-				let item = URLQueryItem(name: key, value: value)
+				let item = URLQueryItem(name: key, value: value as? String)
 				urlComponents.queryItems?.append(item)
+			}
+			if uniqueKey != nil {
+				let item = URLQueryItem(name: "where", value: "{\"uniqueKey\":\"\(uniqueKey!)\"}")
+				urlComponents.queryItems?.append(item)
+				print(urlComponents.url!.absoluteString)
 			}
 		} else {
 			do {
-				let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+				let jsonData = try JSONSerialization.data(withJSONObject: parameters)
 				request.httpBody = jsonData
 			} catch {
 				let userInfo = [NSLocalizedDescriptionKey:"Error: could not perform JSON deserialization"]
@@ -88,9 +93,14 @@ class ParseClient: NSObject {
 			request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 		}
 		
+		request.url = urlComponents.url!
 		request.httpMethod = method.rawValue
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+		
+		print(request.httpMethod)
+		print(request.allHTTPHeaderFields!)
+		print(NSString(data: request.httpBody!, encoding: String.Encoding.utf8.rawValue)!)
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")

@@ -15,8 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var sessionID: String? = nil
 	var locationData: [[String:AnyObject]]!
+	var userData: [[String:AnyObject]]?
 	var uniqueKey: String?
 	var objectID: String? = nil
+	
 	
 	func checkRequestResultsForError(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> NSError? {
 		
