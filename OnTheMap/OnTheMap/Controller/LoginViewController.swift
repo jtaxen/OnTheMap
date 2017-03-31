@@ -54,6 +54,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		}
 		passwordTextField.isSecureTextEntry = true
 		
+		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+		
 	}
 	
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -129,11 +131,11 @@ extension LoginViewController {
 	}
 	
 	func keyboardWillShow(_ notification: Notification) {
-		//		view.frame.origin.y = -getKeyboardHeight(notification)
+		view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.25)
 	}
 	
 	func keyboardWillHide(_ notification: Notification) {
-		//		view.frame.origin.y = 0
+		view.frame.origin.y = 0
 	}
 	
 	func getKeyboardHeight(_ notification: Notification) -> CGFloat {
@@ -141,13 +143,16 @@ extension LoginViewController {
 		let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
 		return keyboardSize.cgRectValue.height
 	}
+	
+	func dismissKeyboard() {
+		view.endEditing(true)
+	}
 }
 
 // MARK: Text field delegate
 extension LoginViewController {
 	
 	func textFieldDidEndEditing(_ textField: UITextField) {
-		
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {

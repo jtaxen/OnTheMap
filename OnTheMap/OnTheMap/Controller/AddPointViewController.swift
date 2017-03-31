@@ -52,6 +52,8 @@ class AddPointViewController: UIViewController {
 			field!.defaultTextAttributes = textFieldAttributes
 			field!.placeholder = (field == locationField) ? "Enter location" : "Enter website"
 		}
+		
+		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
 	}
 	
 	func dismissView() {
@@ -81,5 +83,59 @@ class AddPointViewController: UIViewController {
 				}
 			}
 		}
+	}
+}
+
+// MARK: Handle keyboard
+extension AddPointViewController {
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		subscribeToKeyboardNotifications()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		unsubscribeFromKeyboardNotification()
+	}
+	
+	func subscribeToKeyboardNotifications() {
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow , object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+	}
+	
+	func unsubscribeFromKeyboardNotification() {
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+	}
+	
+	func keyboardWillShow(_ notification: Notification) {
+		view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.25)
+	}
+	
+	func keyboardWillHide(_ notification: Notification) {
+		view.frame.origin.y = 0
+	}
+	
+	func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+		let userInfo = notification.userInfo
+		let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+		return keyboardSize.cgRectValue.height
+	}
+	
+	func dismissKeyboard() {
+		view.endEditing(true)
+	}
+}
+
+// MARK: Text field delegate
+extension AddPointViewController {
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		if textField == locationField {
+			websiteField.becomeFirstResponder()
+		}
+		return true
 	}
 }
