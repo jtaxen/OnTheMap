@@ -39,7 +39,6 @@ class ParseClient: NSObject {
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 		
-		print("Request being sent: \(request.url!)")
 		let session = URLSession.shared
 		let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
 			
@@ -49,7 +48,7 @@ class ParseClient: NSObject {
 				completionHandler(nil, returnedError)
 				return
 			}
-			print("Preparing to parse \(data)")
+			
 			/* 5/6 Parse data */
 			self.parseGETRequest(data!, completionHandlerForParsedData: completionHandler)
 		}
@@ -80,7 +79,6 @@ class ParseClient: NSObject {
 			if uniqueKey != nil {
 				let item = URLQueryItem(name: "where", value: "{\"uniqueKey\":\"\(uniqueKey!)\"}")
 				urlComponents.queryItems?.append(item)
-				print(urlComponents.url!.absoluteString)
 			}
 		} else {
 			do {
@@ -97,10 +95,6 @@ class ParseClient: NSObject {
 		request.httpMethod = method.rawValue
 		request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-		
-		print(request.httpMethod)
-		print(request.allHTTPHeaderFields!)
-		print(NSString(data: request.httpBody!, encoding: String.Encoding.utf8.rawValue)!)
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")

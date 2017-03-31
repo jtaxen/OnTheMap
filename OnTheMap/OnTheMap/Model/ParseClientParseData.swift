@@ -16,7 +16,6 @@ extension ParseClient {
 		var parsedData: [String: AnyObject]!
 		do {
 			parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
-			print("Data: \(data) successfully parsed.")
 			completionHandlerForParsedData(parsedData["results"]! as? [[String: AnyObject]], nil)
 		} catch {
 			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]

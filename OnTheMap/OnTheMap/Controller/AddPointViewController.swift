@@ -60,11 +60,26 @@ class AddPointViewController: UIViewController {
 	
 	func postButtonPressed(_ sender: UIButton) {
 		
-		spinner.isHidden = false
 		spinner.startAnimating()
 		
 		ParseClient.sharedInstance().updateLocation(location: locationField.text!, website: websiteField.text!) { (success, error) in
-			print("Wonderful is: \(success)")
+			
+			if success {
+				print("Location was successfully updated.")
+				
+				DispatchQueue.main.async {
+					self.dismissView()
+				}
+			} else {
+				print(error.debugDescription)
+				
+				DispatchQueue.main.async {
+					self.spinner.stopAnimating()
+					let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
+					let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+					alert.addAction(action)
+				}
+			}
 		}
 	}
 }

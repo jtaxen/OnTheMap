@@ -60,7 +60,7 @@ extension NavigationViewController {
 		udacityClient.endSession() { (success, results, error) in
 			
 			guard error == nil else {
-				print(error?.localizedDescription ?? "An error was detected while trying to end session.")
+				print(error.debugDescription)
 				return
 			}
 			if success {
@@ -79,7 +79,7 @@ extension NavigationViewController {
 		parseClient.refresh() { (success, error) in
 			
 			guard error == nil else {
-				print(error?.localizedDescription ?? "Unable to refresh.")
+				print(error.debugDescription)
 				return
 			}
 		}

@@ -67,7 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		do {
 			parsedData = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
 			print("Data parsing successful")
-			print(parsedData)
 		} catch {
 			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
 			completionHandlerForParsedData(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))

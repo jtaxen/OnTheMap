@@ -58,32 +58,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
 		
-		spinner.isHidden = false
 		spinner.startAnimating()
 		
 		if let username = usernameTextField.text,
 			let password = passwordTextField.text {
 			UdacityClient.sharedInstance().getSessionID(username: username, password: password) { (success, result, error) in
 				if success {
-					print("Login successful.")
-					self.pushToMapView()
+					DispatchQueue.main.async{
+						print("Login successful.")
+						self.pushToMapView()
+					}
 				} else {
 					DispatchQueue.main.async {
-						self.spinner.isHidden = true
+						self.spinner.stopAnimating()
+						
+						let alert = UIAlertController(title: "Could not log in", message: "Please make sure that you entered the correct username and password.", preferredStyle: .actionSheet)
+						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+						self.present(alert, animated: true, completion: nil)
 					}
-					let alert = UIAlertController(title: "Could not log in", message: "Please make sure that you entered the correct username and password.", preferredStyle: .actionSheet)
-					alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-					self.present(alert, animated: true, completion: nil)
-					
 					print("Login unsuccessful")
-					print(error!)
+					print(error.debugDescription)
 				}
 			}
 		}
 	}
 	
 	func pushToMapView() {
-		let parseClient = ParseClient()
+		let parseClient = ParseClient.sharedInstance()
 		_ = parseClient.refresh() { (success, error) in
 			if success {
 				DispatchQueue.main.async {
@@ -91,16 +92,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 					let controller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
 					self.present(controller, animated: true) {
 						_ = parseClient.getUserData() { (success, error) in
-							if success {
-								print(self.appDelegate.userData!)
-							} else {
-								print(error?.localizedDescription)
+							if !success {
+								print(error.debugDescription)
 							}
 						}
 					}
 				}
 			} else {
-				print(error!.localizedDescription)
+				print(error.debugDescription)
 			}
 		}
 	}
