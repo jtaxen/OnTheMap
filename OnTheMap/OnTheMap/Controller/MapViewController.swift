@@ -26,23 +26,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		
 		for dictionary in locations {
 			
-			let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-			let lon = CLLocationDegrees(dictionary["longitude"] as! Double)
-			
-			let coordinate = CLLocationCoordinate2DMake(lat, lon)
-			
-			let firstName = dictionary["firstName"] as? String ?? ""
-			let lastName = dictionary["lastName"] as? String ?? ""
-			let mediaUrl = dictionary["mediaURL"] as? String ?? ""
-			
-			let annotation = MKPointAnnotation()
-			annotation.coordinate = coordinate
-			annotation.title = "\(firstName) \(lastName)"
-			annotation.subtitle = mediaUrl
-			
-			annotations.append(annotation)
+			if let lat = dictionary["latitude"] as? Float,
+				let lon = dictionary["longitude"] as? Float {
+				
+				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
+				
+				let firstName = dictionary["firstName"] as? String ?? ""
+				let lastName = dictionary["lastName"] as? String ?? ""
+				let mediaUrl = dictionary["mediaURL"] as? String ?? ""
+				
+				let annotation = MKPointAnnotation()
+				annotation.coordinate = coordinate
+				annotation.title = "\(firstName) \(lastName)"
+				annotation.subtitle = mediaUrl
+				
+				annotations.append(annotation)
+			}
+			mapView.addAnnotations(annotations)
 		}
-		mapView.addAnnotations(annotations)
 	}
 }
 
@@ -77,5 +78,3 @@ extension MapViewController {
 		}
 	}
 }
-
-

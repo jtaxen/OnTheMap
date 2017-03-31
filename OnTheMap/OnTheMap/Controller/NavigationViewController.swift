@@ -17,6 +17,9 @@ class NavigationViewController: UINavigationController {
         super.viewDidLoad()
 		
 		navigationBar.items = composeNavigationItem(title: "On the map")
+		navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: OnTheMapTools.Colors.Title]
+		view.backgroundColor = OnTheMapTools.Colors.Background
+		view.layer.borderColor = OnTheMapTools.Colors.Dark.cgColor
 	}
 	
 	// MARK: Design navigation items
@@ -26,7 +29,7 @@ class NavigationViewController: UINavigationController {
 		
 		let textAttributes = [
 			NSFontAttributeName: UIFont(name: "Futura", size: 14),
-			NSForegroundColorAttributeName: UIColor.blue
+			NSForegroundColorAttributeName: OnTheMapTools.Colors.Icons
 		]
 		
 		// Logout button
@@ -36,11 +39,12 @@ class NavigationViewController: UINavigationController {
 		
 		// Refresh button
 		let refreshButton = UIBarButtonItem(image: UIImage(named: "icon_refresh"), style: .plain, target: self, action: #selector(refresh))
+		refreshButton.tintColor = OnTheMapTools.Colors.Icons
 		
 		
 		// Add pin button
-		let addPinButton = UIBarButtonItem()
-		addPinButton.image = UIImage(named: "icon_addpin")
+		let addPinButton = UIBarButtonItem(image: UIImage(named: "icon_addpin"), style: .plain, target: self, action: #selector(addLocation))
+		addPinButton.tintColor = OnTheMapTools.Colors.Icons
 		
 		navigationItem.leftBarButtonItem = logoutButton
 		navigationItem.rightBarButtonItems = [refreshButton, addPinButton]
@@ -56,7 +60,7 @@ extension NavigationViewController {
 		udacityClient.endSession() { (success, results, error) in
 			
 			guard error == nil else {
-				print(error?.localizedDescription ?? "An error was detected while trying to end session.")
+				print(error.debugDescription)
 				return
 			}
 			if success {
@@ -75,10 +79,16 @@ extension NavigationViewController {
 		parseClient.refresh() { (success, error) in
 			
 			guard error == nil else {
-				print(error?.localizedDescription ?? "Unable to refresh.")
+				print(error.debugDescription)
 				return
 			}
 		}
+	}
+	
+	func addLocation() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let controller = storyboard.instantiateViewController(withIdentifier: "AddPointNavigation") as! UINavigationController
+		present(controller, animated: true, completion: nil)
 	}
 	
 	

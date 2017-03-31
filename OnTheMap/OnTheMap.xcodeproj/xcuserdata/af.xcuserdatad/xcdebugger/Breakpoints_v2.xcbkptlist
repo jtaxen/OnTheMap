@@ -9,12 +9,60 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OnTheMap/Model/ParseClientConvenience.swift"
-            timestampString = "512311089.458029"
+            filePath = "OnTheMap/Model/ParseClient.swift"
+            timestampString = "512654529.360161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "serverTask(parameters:method:uniqueKey:objectID:completionHandler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "OnTheMap.ParseClient.(serverTask (parameters : Swift.Dictionary&lt;Swift.String, Swift.String&gt;, method : OnTheMap.HTTPMethod, uniqueKey : Swift.Optional&lt;Swift.String&gt;, objectID : Swift.Optional&lt;Swift.String&gt;, completionHandler : (Swift.Optional&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;&gt;&gt;, Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()) -&gt; __ObjC.URLSessionDataTask).(default argument 2)"
+                  moduleName = "OnTheMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/af/Udacity/del4/OnTheMap/OnTheMap/OnTheMap/Model/ParseClient.swift"
+                  timestampString = "512578780.936205"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "7">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "OnTheMap.ParseClient.(serverTask (parameters : Swift.Dictionary&lt;Swift.String, Swift.String&gt;, method : OnTheMap.HTTPMethod, uniqueKey : Swift.Optional&lt;Swift.String&gt;, objectID : Swift.Optional&lt;Swift.String&gt;, completionHandler : (Swift.Optional&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;&gt;&gt;, Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()) -&gt; __ObjC.URLSessionDataTask).(default argument 3)"
+                  moduleName = "OnTheMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/af/Udacity/del4/OnTheMap/OnTheMap/OnTheMap/Model/ParseClient.swift"
+                  timestampString = "512578780.938163"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "7">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OnTheMap/Model/ParseClientConvenience.swift"
+            timestampString = "512574403.474087"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
             landmarkName = "refresh(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -25,29 +73,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OnTheMap/AppDelegate.swift"
-            timestampString = "512311196.52537"
+            filePath = "OnTheMap/Model/ParseClientConvenience.swift"
+            timestampString = "512574404.725518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "parseLocationData(_:completionHandlerForParsedData:)"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "refresh(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OnTheMap/AppDelegate.swift"
-            timestampString = "512311202.499448"
+            filePath = "OnTheMap/Model/ParseClient.swift"
+            timestampString = "512654529.360161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "parseLocationData(_:completionHandlerForParsedData:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "serverTask(parameters:method:uniqueKey:objectID:completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OnTheMap/Model/ParseClient.swift"
+            timestampString = "512654529.360161"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "serverTask(parameters:method:uniqueKey:objectID:completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OnTheMap/Model/ParseClient.swift"
+            timestampString = "512654529.360161"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "serverTask(parameters:method:uniqueKey:objectID:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

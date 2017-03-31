@@ -10,11 +10,15 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+	
 	var window: UIWindow?
 	
 	var sessionID: String? = nil
 	var locationData: [[String:AnyObject]]!
+	var userData: [[String:AnyObject]]?
+	var uniqueKey: String?
+	var objectID: String? = nil
+	
 	
 	func checkRequestResultsForError(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> NSError? {
 		
@@ -63,25 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		do {
 			parsedData = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
 			print("Data parsing successful")
-			print(parsedData)
 		} catch {
 			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
 			completionHandlerForParsedData(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))
 		}
 		completionHandlerForParsedData(parsedData, nil)
-	}
-	
-	func parseLocationData(_ data: Data, completionHandlerForParsedData: (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) {
-	
-		var parsedData: [String: AnyObject]!
-		do {
-			parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
-			print("Data: \(data) successfully parsed.")
-			completionHandlerForParsedData(parsedData["results"]! as! [[String: AnyObject]], nil)
-		} catch {
-			let userInfo = [NSLocalizedDescriptionKey: "Error: JSON results could not be parsed: \(data)"]
-			completionHandlerForParsedData(nil, NSError(domain: "parsedDataError", code: 8, userInfo: userInfo))
-		}
 	}
 	
 	func hardCodedLocationData() -> [[String : AnyObject]] {
