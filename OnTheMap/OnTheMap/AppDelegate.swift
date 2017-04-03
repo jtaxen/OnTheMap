@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -72,6 +73,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			completionHandlerForParsedData(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))
 		}
 		completionHandlerForParsedData(parsedData, nil)
+	}
+	
+	func drawPins() -> [MKPointAnnotation] {
+		
+		let locations = locationData ?? hardCodedLocationData()
+		var annotations = [MKPointAnnotation]()
+		
+		for item in locations {
+			if let lat = item["latitude"] as? Float,
+				let lon = item["longitude"] as? Float {
+				
+				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
+				
+				let firstName = item["firstName"] as? String ?? ""
+				let lastName = item["lastName"] as? String ?? ""
+				let mediaUrl = item["mediaUrl"] as? String ?? ""
+				
+				let annotation = MKPointAnnotation()
+				annotation.coordinate = coordinate
+				annotation.title = "\(firstName) \(lastName)"
+				annotation.subtitle = mediaUrl
+				
+				annotations.append(annotation)
+			}
+		}
+		return annotations
 	}
 	
 	func hardCodedLocationData() -> [[String : AnyObject]] {

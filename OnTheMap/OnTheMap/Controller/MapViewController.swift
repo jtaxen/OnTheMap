@@ -13,37 +13,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	
 	@IBOutlet weak var mapView: MKMapView!
 	
-	var appDelegate: AppDelegate!
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
-		
-		let locations = appDelegate.locationData ?? appDelegate.hardCodedLocationData()
-		
-		var annotations = [MKPointAnnotation]()
-		
-		for dictionary in locations {
-			
-			if let lat = dictionary["latitude"] as? Float,
-				let lon = dictionary["longitude"] as? Float {
-				
-				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
-				
-				let firstName = dictionary["firstName"] as? String ?? ""
-				let lastName = dictionary["lastName"] as? String ?? ""
-				let mediaUrl = dictionary["mediaURL"] as? String ?? ""
-				
-				let annotation = MKPointAnnotation()
-				annotation.coordinate = coordinate
-				annotation.title = "\(firstName) \(lastName)"
-				annotation.subtitle = mediaUrl
-				
-				annotations.append(annotation)
-			}
-			mapView.addAnnotations(annotations)
-		}
+		let annotations = appDelegate.drawPins()
+		mapView.addAnnotations(annotations)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		let annotations = appDelegate.drawPins()
+		mapView.addAnnotations(annotations)
 	}
 }
 
