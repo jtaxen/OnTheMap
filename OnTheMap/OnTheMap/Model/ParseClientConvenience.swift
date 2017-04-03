@@ -19,12 +19,6 @@ extension ParseClient {
 	*/
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
-		let oldMapString = appDelegate.userData[0]["mapString"]!
-		let oldLatitude = appDelegate.userData[0]["latitude"]!
-		let oldLongitude = appDelegate.userData[0]["longitude"]!
-		
-		print("Old location: \(oldMapString) lat: \(oldLatitude), lon: \(oldLongitude)")
-		
 		let parameters: [String: AnyObject] = [
 			ParameterKeys.Limit: "200" as AnyObject,
 			ParameterKeys.Skip: "0" as AnyObject,
@@ -42,12 +36,6 @@ extension ParseClient {
 				self.getUserData() { (succ, err) in
 					completionHandler(succ, err)
 				}
-				
-				let newMapString = self.appDelegate.userData[0]["mapString"]!
-				let newLatitude = self.appDelegate.userData[0]["latitude"]!
-				let newLongitude = self.appDelegate.userData[0]["longitude"]!
-				
-				print("New location: \(newMapString) lat: \(newLatitude), lon: \(newLongitude)")
 			} else {
 				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get location data: \(results)."]
 				completionHandler(false, NSError(domain: "couldNotGetData", code: 7, userInfo: userInfo))
@@ -136,8 +124,6 @@ extension ParseClient {
 			if website != "" {
 				parameters[StudentLocationKeys.MediaURL] = website as AnyObject
 			}
-			
-			print(parameters)
 			
 			let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in
 				

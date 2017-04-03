@@ -23,8 +23,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="American-flag-2a" translatesAutoresizingMaskIntoConstraints="NO" id="mp7-0d-NFB">
-                                <rect key="frame" x="0.0" y="328" width="320" height="240"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="American-flag-2a" translatesAutoresizingMaskIntoConstraints="NO" id="mp7-0d-NFB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOO-MK-bpm">
                                 <rect key="frame" x="90" y="364" width="141" height="30"/>
@@ -176,8 +176,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cJd-jg-gvz">
-                                <rect key="frame" x="87" y="323" width="240" height="128"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cJd-jg-gvz">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <connections>
                                     <outlet property="delegate" destination="tuR-nw-113" id="i6X-Ls-WwW"/>
                                 </connections>
@@ -292,11 +292,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
-                                <rect key="frame" x="-16" y="108" width="280" height="130"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
+                                <rect key="frame" x="20" y="124.5" width="280" height="130"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
-                                        <rect key="frame" x="32" y="35" width="240" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
+                                        <rect key="frame" x="20" y="20" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="9AF-dx-kLY"/>
                                         </constraints>
@@ -304,8 +304,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
-                                        <rect key="frame" x="-26" y="80" width="123" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
+                                        <rect key="frame" x="20" y="80" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="1Wd-Ao-XDf"/>
                                         </constraints>
@@ -324,8 +324,8 @@
                                     <constraint firstItem="l3q-xP-pqx" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="aJE-7N-NsK"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
-                                <rect key="frame" x="82" y="395" width="141" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
+                                <rect key="frame" x="89.5" y="364.5" width="141" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="141" id="HFM-Zq-Sw8"/>
                                     <constraint firstAttribute="height" constant="30" id="nKV-tz-6H2"/>
@@ -333,11 +333,11 @@
                                 <size key="titleShadowOffset" width="2" height="2"/>
                                 <state key="normal" title="Update"/>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
-                                <rect key="frame" x="96" y="267" width="208" height="110"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
+                                <rect key="frame" x="56" y="254.5" width="208" height="110"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jml-SI-q0G">
-                                        <rect key="frame" x="94" y="46" width="20" height="20"/>
+                                        <rect key="frame" x="94" y="45" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>

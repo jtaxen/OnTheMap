@@ -50,7 +50,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 				
 				let firstName = item["firstName"] as? String ?? ""
 				let lastName = item["lastName"] as? String ?? ""
-				let mediaUrl = item["mediaUrl"] as? String ?? ""
+				let mediaUrl = item["mediaURL"] as? String ?? ""
 				
 				let annotation = MKPointAnnotation()
 				annotation.coordinate = coordinate
@@ -95,6 +95,10 @@ extension MapViewController {
 				let url = URL(string: toOpen!),
 				app.canOpenURL(url) {
 				app.open(url, options: [:], completionHandler: nil)
+			} else {
+				let controller = UIAlertController(title: "Unable to open link", message: "The link you have chosen does not work.", preferredStyle: .alert)
+				controller.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+				present(controller, animated: true, completion: nil)
 			}
 		}
 	}
