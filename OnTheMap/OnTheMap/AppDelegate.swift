@@ -20,7 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var uniqueKey: String?
 	var objectID: String? = nil
 	
-	
+	/**
+	Function for checking server responses for different possible errors. This function prints the error if it finds any.
+	- Parameter data: Data returned from the server, or nil if no data was returned.
+	- Parameter response: Response from server including status code.
+	- Parameter error: Error sent by the server.
+	- Returns: The error if any, or nil if everything is in order.
+	*/
 	func checkRequestResultsForError(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> NSError? {
 		
 		// Check to see if an error was returned
@@ -51,6 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return nil
 	}
 	
+	/**
+	Parses the JSON response from the server to an array of dictionaries.
+	- Parameter data: The data which is to be parsed.
+	- Parameter isUdacityData: If set to true, the function removes the first five characters from the data before it parses.
+	- Parameter results: The results of the parsing.
+	- Parameter error: The error information, or nil, if everything went well.
+	*/
 	func parseData(_ data: Data, isUdacityData: Bool, completionHandlerForParsedData: (_ results: AnyObject?, _ error: NSError?) -> Void) {
 		
 		var newData: Data
@@ -75,32 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		completionHandlerForParsedData(parsedData, nil)
 	}
 	
-	func drawPins() -> [MKPointAnnotation] {
-		
-		let locations = locationData ?? hardCodedLocationData()
-		var annotations = [MKPointAnnotation]()
-		
-		for item in locations {
-			if let lat = item["latitude"] as? Float,
-				let lon = item["longitude"] as? Float {
-				
-				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
-				
-				let firstName = item["firstName"] as? String ?? ""
-				let lastName = item["lastName"] as? String ?? ""
-				let mediaUrl = item["mediaUrl"] as? String ?? ""
-				
-				let annotation = MKPointAnnotation()
-				annotation.coordinate = coordinate
-				annotation.title = "\(firstName) \(lastName)"
-				annotation.subtitle = mediaUrl
-				
-				annotations.append(annotation)
-			}
-		}
-		return annotations
-	}
-	
+	/// Hard coded locations, so that there is something to fill the map with in case of no internet connection.
+	/// - Returns: an array of dictionaries with location data for default people.
 	func hardCodedLocationData() -> [[String : AnyObject]] {
 		return  [
 			[

@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 	
-	var appDelegate: AppDelegate!
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	@IBOutlet weak var usernameTextField: UITextField!
 	@IBOutlet weak var passwordTextField: UITextField!
@@ -30,7 +30,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		
 		// Delegates
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		usernameTextField.delegate = self
 		passwordTextField.delegate = self
 		
@@ -46,7 +45,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		spinner.hidesWhenStopped = true
 		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
-		// Set text field attributes
+		/// Set text field attributes
 		for field in [usernameTextField, passwordTextField] {
 			field!.defaultTextAttributes = textFieldAttributes
 			field!.placeholder = (field == usernameTextField) ? "Username (email address)" : "Password"
@@ -58,6 +57,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		
 	}
 	
+	/// When the login button is pressed, a call to the server is made. If the username and the password match with the user's API Key, the map view is presented.
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
 		
 		spinner.startAnimating()
@@ -66,8 +66,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 			let password = passwordTextField.text {
 			UdacityClient.sharedInstance().getSessionID(username: username, password: password) { (success, result, error) in
 				if success {
+					print("Login successful.")
 					DispatchQueue.main.async{
-						print("Login successful.")
 						self.pushToMapView()
 					}
 				} else {
@@ -85,6 +85,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		}
 	}
 	
+	/// Presents the map view
 	func pushToMapView() {
 		let parseClient = ParseClient.sharedInstance()
 		_ = parseClient.refresh() { (success, error) in
@@ -107,7 +108,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	}
 }
 
-// MARK: Handle keyboard
+/// MARK: Handle keyboard
 extension LoginViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -149,10 +150,10 @@ extension LoginViewController {
 	}
 }
 
-// MARK: Text field delegate
+/// MARK: Text field delegate
 extension LoginViewController {
 	
-	// If autocompletion adds a space after the username (which it does), this function makes sure to remove it, as it otherwise would hinder the login, and is easily missed by the user.
+	/// If autocompletion adds a space after the username (which it does), this function makes sure to remove it, as it otherwise would hinder the login, and is easily missed by the user.
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		guard textField == usernameTextField else {
 			return
@@ -164,6 +165,8 @@ extension LoginViewController {
 		}
 	}
 	
+	/// Pressing enter in the username field moves focus to the password field.
+	/// Pressing enter in the password field is equivalent to touching the login button.
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		if textField == usernameTextField {

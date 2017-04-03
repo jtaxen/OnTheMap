@@ -8,6 +8,11 @@
 
 import UIKit
 
+/**
+Tab bar class that includes a delimiter between the buttons.
+*/
+
+
 class CustomTabBarViewController: UITabBarController {
 	
 	override func viewDidLoad() {

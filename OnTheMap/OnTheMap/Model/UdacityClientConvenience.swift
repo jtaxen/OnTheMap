@@ -10,6 +10,14 @@ import Foundation
 
 extension UdacityClient {
 	
+	/**
+	Creates a session for the user and returns the session ID needed for requests to the Parse server.
+	- Parameter username: The user's Udacity username.
+	- Parameter password: The user's Udacity password.
+	- Parameter success: Returns true if the request was successfull, false otherwise.
+	- Parameter result: Results from the server.
+	- Parameter error: Error information if the request is unsuccessful.
+	*/
 	func getSessionID(username: String, password: String , completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: NSError?) -> Void ) {
 		
 		let parameters = [ParameterKeys.Username: username,
@@ -39,6 +47,12 @@ extension UdacityClient {
 		}
 	}
 	
+	/**
+	Ends the current session.
+	- Parameter success: Returns true if the request was successfull, false otherwise.
+	- Parameter result: Results from the server.
+	- Parameter error: Error information if the request is unsuccessful.
+	*/
 	func endSession(completionHandler: @escaping (_ success: Bool, _ result: String?, _ error: NSError?) -> Void) {
 		
 		let _ = taskForDELETE() { (results, error) in
