@@ -19,10 +19,16 @@ extension ParseClient {
 	*/
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
+		let oldMapString = appDelegate.userData[0]["mapString"]!
+		let oldLatitude = appDelegate.userData[0]["latitude"]!
+		let oldLongitude = appDelegate.userData[0]["longitude"]!
+		
+		print("Old location: \(oldMapString) lat: \(oldLatitude), lon: \(oldLongitude)")
+		
 		let parameters: [String: AnyObject] = [
 			ParameterKeys.Limit: "200" as AnyObject,
 			ParameterKeys.Skip: "0" as AnyObject,
-			ParameterKeys.Order: "-"+StudentLocationKeys.UpdatedAt as AnyObject
+			ParameterKeys.Order: "-" + StudentLocationKeys.UpdatedAt as AnyObject
 		]
 		
 		let _ = serverTask(parameters: parameters, method: .GET) { (results, error) in
@@ -33,7 +39,15 @@ extension ParseClient {
 			}
 			if let locationData = results {
 				self.appDelegate.locationData = locationData
-				completionHandler(true, nil)
+				self.getUserData() { (succ, err) in
+					completionHandler(succ, err)
+				}
+				
+				let newMapString = self.appDelegate.userData[0]["mapString"]!
+				let newLatitude = self.appDelegate.userData[0]["latitude"]!
+				let newLongitude = self.appDelegate.userData[0]["longitude"]!
+				
+				print("New location: \(newMapString) lat: \(newLatitude), lon: \(newLongitude)")
 			} else {
 				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get location data: \(results)."]
 				completionHandler(false, NSError(domain: "couldNotGetData", code: 7, userInfo: userInfo))
@@ -57,10 +71,10 @@ extension ParseClient {
 				return
 			}
 			
-			if let userData = results {
-				self.appDelegate.userData = userData
-				self.appDelegate.objectID = results?[1]["objectId"] as? String
-				self.appDelegate.locationData.append(userData[0])
+			if results != nil {
+				self.appDelegate.userData = results!
+				self.appDelegate.objectID = results![0]["objectId"] as? String
+				self.appDelegate.locationData.append(results![0])
 				
 				completionHandler(true, error)
 				return
@@ -70,6 +84,7 @@ extension ParseClient {
 			}
 		}
 	}
+	
 	
 	/**
 	Posts a new location and web site for the current user.
@@ -81,48 +96,59 @@ extension ParseClient {
 	func updateLocation (location: String, website: String, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
 		
 		var parameters: [String: AnyObject] = [:]
+		var newLocation: String
 		
-		if location != "" {
-			let geocoder = CLGeocoder()
-			geocoder.geocodeAddressString(location) { (clPlacemark, error) in
-				
-				guard error == nil else {
-					completionHandler(false, error as NSError?)
-					print(error.debugDescription)
-					return
-				}
-				
-				guard clPlacemark?.count == 1 else {
-					let userInfo = [NSLocalizedDescriptionKey: "Ambiguous location"]
-					let error = NSError(domain: "ambiguousLocationError", code: 101, userInfo: userInfo)
-					completionHandler(false, error)
-					return
-				}
-				guard let latitude = clPlacemark![0].location?.coordinate.latitude,
-					let longitude = clPlacemark![0].location?.coordinate.longitude else {
-						let userInfo = [NSLocalizedDescriptionKey: "Request did not return coordinates."]
-						completionHandler(false, NSError(domain: "coordinateError", code: 102, userInfo: userInfo))
-						return
-				}
-				
-				parameters[StudentLocationKeys.MapString] = location as AnyObject
-				parameters[StudentLocationKeys.Latitude] = latitude as AnyObject
-				parameters[StudentLocationKeys.Longitude] = longitude as AnyObject
-			}
-		}
-		if website != "" {
-			parameters[StudentLocationKeys.MediaURL] = website as AnyObject
+		if location == "" {
+			newLocation = appDelegate.userData[0]["mapString"] as! String
+		} else {
+			newLocation = location
 		}
 		
-		let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in
-			
-			guard error == nil else {
-				completionHandler(false, error)
-				print(error!.debugDescription)
+		
+		let geocoder = CLGeocoder()
+		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
+				
+			guard error == nil && clPlacemark != nil else {
+				completionHandler(false, error as NSError?)
+				print(error.debugDescription)
 				return
 			}
 			
-			completionHandler(true, nil)
+			guard clPlacemark?.count == 1 else {
+				let userInfo = [NSLocalizedDescriptionKey: "Ambiguous location"]
+				let error = NSError(domain: "ambiguousLocationError", code: 101, userInfo: userInfo)
+				completionHandler(false, error)
+				return
+			}
+			
+			let placemark = clPlacemark![0]
+			if let latitude = (placemark.location?.coordinate.latitude),
+				let longitude = (placemark.location?.coordinate.longitude) {
+				
+				print("Updating to new location: lat: \(latitude), lon: \(longitude)")
+				parameters[StudentLocationKeys.Latitude] = latitude as AnyObject
+				parameters[StudentLocationKeys.Longitude] = longitude as AnyObject
+			}
+			
+			
+			parameters[StudentLocationKeys.MapString] = newLocation as AnyObject
+			
+			if website != "" {
+				parameters[StudentLocationKeys.MediaURL] = website as AnyObject
+			}
+			
+			print(parameters)
+			
+			let _ = self.serverTask(parameters: parameters, method: .PUT, objectID: self.appDelegate.objectID!) { (results, error) in
+				
+				guard error == nil else {
+					completionHandler(false, error)
+					print(error!.debugDescription)
+					return
+				}
+				
+				completionHandler(true, nil)
+			}
 		}
 	}
 }

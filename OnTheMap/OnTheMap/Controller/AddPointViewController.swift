@@ -56,7 +56,7 @@ class AddPointViewController: UIViewController {
 			field!.defaultTextAttributes = textFieldAttributes
 			field!.placeholder = (field == locationField) ? "Enter location" : "Enter website"
 		}
-
+		
 		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
 	}
 	
@@ -75,8 +75,25 @@ class AddPointViewController: UIViewController {
 			if success {
 				print("Location was successfully updated.")
 				
+				
 				DispatchQueue.main.async {
 					self.dismissView()
+					ParseClient.sharedInstance().refresh() { (success, error) in
+						
+						guard error == nil else {
+							print(error.debugDescription)
+							DispatchQueue.main.async {
+								self.spinner.stopAnimating()
+								let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
+								let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+								alert.addAction(action)
+							}
+							return
+						}
+						DispatchQueue.main.async {
+							NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
+						}
+					}
 				}
 			} else {
 				print(error.debugDescription)

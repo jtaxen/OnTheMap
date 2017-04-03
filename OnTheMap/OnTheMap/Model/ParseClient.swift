@@ -67,6 +67,7 @@ class ParseClient: NSObject {
 		
 		/* 4. Make request */
 		print("Request being sent: \(request.url!)")
+		print("\(request.httpBody)")
 		let session = URLSession.shared
 		let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
 			

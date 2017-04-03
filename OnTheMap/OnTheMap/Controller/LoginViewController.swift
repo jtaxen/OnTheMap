@@ -27,6 +27,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		appDelegate.userData = [appDelegate.hardCodedLocationData()[0]]
+		
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		
 		// Delegates
@@ -159,7 +161,8 @@ extension LoginViewController {
 			return
 		}
 		if let username = textField.text {
-			if username.substring(from: username.index(before: username.endIndex)) == " " {
+			
+			if username != "" && username.substring(from: username.index(before: username.endIndex)) == " " {
 				textField.text = username.substring(to: username.index(before: username.endIndex))
 			}
 		}

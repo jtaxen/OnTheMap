@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var sessionID: String? = nil
 	var locationData: [[String:AnyObject]]!
-	var userData: [[String:AnyObject]]?
+	var userData: [[String:AnyObject]]!
 	var uniqueKey: String?
 	var objectID: String? = nil
 	
@@ -93,16 +93,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func hardCodedLocationData() -> [[String : AnyObject]] {
 		return  [
 			[
-				"createdAt" : "2015-02-24T22:27:14.456Z" as AnyObject,
-				"firstName" : "Jessica" as AnyObject,
-				"lastName" : "Uelmen" as AnyObject,
-				"latitude" : 28.1461248 as AnyObject,
-				"longitude" : -82.75676799999999 as AnyObject,
-				"mapString" : "Tarpon Springs, FL" as AnyObject,
-				"mediaURL" : "www.linkedin.com/in/jessicauelmen/en" as AnyObject,
-				"objectId" : "kj18GEaWD8" as AnyObject,
-				"uniqueKey" : 872458750 as AnyObject,
-				"updatedAt" : "2015-03-09T22:07:09.593Z" as AnyObject
+				"createdAt" : "2001-01-01T00:00:00.1" as AnyObject,
+				"firstName" : "Default" as AnyObject,
+				"lastName" : "McDefaultface" as AnyObject,
+				"latitude" : 0.0 as AnyObject,
+				"longitude" : 0.0 as AnyObject,
+				"mapString" : "Default City, DF" as AnyObject,
+				"mediaURL" : "www.default.df" as AnyObject,
+				"objectId" : "abc123" as AnyObject,
+				"uniqueKey" : 1234567890 as AnyObject,
+				"updatedAt" : "2001-01-01T00:00:00.1" as AnyObject
 			], [
 				"createdAt" : "2015-02-24T22:35:30.639Z" as AnyObject,
 				"firstName" : "Gabrielle" as AnyObject,
