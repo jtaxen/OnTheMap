@@ -82,6 +82,7 @@ extension NavigationViewController {
 				print(error.debugDescription)
 				return
 			}
+			NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
 		}
 	}
 	

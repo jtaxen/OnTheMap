@@ -10,24 +10,20 @@ import UIKit
 
 class UsersTableViewController: UITableViewController {
 	
-	var appDelegate: AppDelegate!
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		NotificationCenter.default.addObserver(self, selector: #selector(refresh) , name: Notification.Name(rawValue: "refresh"), object: nil)
 		
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		
     }
+	
+	func refresh() {
+		tableView.reloadData()
+	}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 

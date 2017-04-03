@@ -17,16 +17,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "refresh"), object: nil)
 		
 		let annotations = appDelegate.drawPins()
 		mapView.addAnnotations(annotations)
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
+	@objc private func refresh() {
+		mapView.removeAnnotations(mapView.annotations)
 		let annotations = appDelegate.drawPins()
 		mapView.addAnnotations(annotations)
 	}
+	
 }
 
 // MARK: Map view delegate
