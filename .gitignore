@@ -2,5 +2,6 @@ on-the-map-assets-new.zip
 OnTheMap/OnTheMap/Keys/*
 *.xcuserstate
 project.xcworkspace/
-xcuserdata/
+xcuserdata/*
 *TODO*
+*.xcbkptlist
