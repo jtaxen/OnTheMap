@@ -113,18 +113,29 @@
                                     <constraint firstItem="mSg-gt-bk9" firstAttribute="centerX" secondItem="MP0-y4-ZCI" secondAttribute="centerX" id="yVm-n4-cQN"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWM-PJ-JyS">
+                                <rect key="frame" x="20" y="269" width="280" height="54"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="signUpPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YqM-N4-bn5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.85343968868255615" green="1" blue="0.99975305795669556" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="HWM-PJ-JyS" firstAttribute="width" secondItem="2XN-mB-xji" secondAttribute="width" id="1jA-7q-aQf"/>
                             <constraint firstItem="w6X-Os-NLN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4L8-zd-BL4"/>
                             <constraint firstItem="mp7-0d-NFB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="74R-VK-yfc"/>
                             <constraint firstItem="EOO-MK-bpm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Tz-Rk-fXo"/>
                             <constraint firstAttribute="trailing" secondItem="mp7-0d-NFB" secondAttribute="trailing" id="CDc-Xi-fsU"/>
+                            <constraint firstItem="EOO-MK-bpm" firstAttribute="top" secondItem="HWM-PJ-JyS" secondAttribute="bottom" constant="41" id="Crb-dF-R44"/>
                             <constraint firstItem="w6X-Os-NLN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.333" id="HtR-8r-8et"/>
                             <constraint firstAttribute="trailing" secondItem="MP0-y4-ZCI" secondAttribute="trailing" constant="130" id="ILT-RN-H3L"/>
+                            <constraint firstItem="HWM-PJ-JyS" firstAttribute="top" secondItem="2XN-mB-xji" secondAttribute="bottom" constant="14" id="JPZ-Da-q0Q"/>
                             <constraint firstItem="EOO-MK-bpm" firstAttribute="top" secondItem="MP0-y4-ZCI" secondAttribute="bottom" id="L2K-b5-VCd"/>
                             <constraint firstItem="EOO-MK-bpm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.333" id="NaH-aL-JTi"/>
                             <constraint firstItem="2XN-mB-xji" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Qh3-68-OFg"/>
+                            <constraint firstItem="HWM-PJ-JyS" firstAttribute="leading" secondItem="2XN-mB-xji" secondAttribute="leading" id="YcP-qp-kEI"/>
                             <constraint firstItem="MP0-y4-ZCI" firstAttribute="top" secondItem="2XN-mB-xji" secondAttribute="bottom" id="aNe-fq-fAs"/>
                             <constraint firstItem="MP0-y4-ZCI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="130" id="f4w-mq-3OV"/>
                             <constraint firstItem="mp7-0d-NFB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fAF-Pa-Pnj"/>
@@ -138,6 +149,7 @@
                         <outlet property="labelView" destination="2XN-mB-xji" id="Whb-It-4eG"/>
                         <outlet property="loginButton" destination="EOO-MK-bpm" id="Bov-gc-KdH"/>
                         <outlet property="passwordTextField" destination="RBB-UR-ReV" id="YE1-fq-NOG"/>
+                        <outlet property="signUpButton" destination="HWM-PJ-JyS" id="kxC-zP-IMM"/>
                         <outlet property="spinner" destination="mSg-gt-bk9" id="M1d-QE-hBz"/>
                         <outlet property="titleText" destination="SLW-x4-ano" id="ebI-qH-W4O"/>
                         <outlet property="usernameTextField" destination="f7T-fn-CqZ" id="w47-hN-Gdb"/>

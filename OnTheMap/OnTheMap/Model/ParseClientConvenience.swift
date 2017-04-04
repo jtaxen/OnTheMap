@@ -32,7 +32,7 @@ extension ParseClient {
 				return
 			}
 			if let locationData = results {
-				self.appDelegate.locationData = locationData
+				self.appDelegate.locationData = self.appDelegate.extractStudentLocations(from: locationData)
 				self.getUserData() { (succ, err) in
 					completionHandler(succ, err)
 				}
@@ -62,7 +62,6 @@ extension ParseClient {
 			if results != nil {
 				self.appDelegate.userData = StudentLocation(results![0])
 				self.appDelegate.objectID = results![0]["objectId"] as? String
-				self.appDelegate.locationData.append(results![0])
 				
 				completionHandler(true, error)
 				return

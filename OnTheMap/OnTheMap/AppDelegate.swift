@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	var sessionID: String? = nil
-	var locationData: [[String: AnyObject]]!
+	var locationData: [StudentLocation]!
 	var userData: StudentLocation!
 	var uniqueKey: String?
 	var objectID: String? = nil
@@ -86,6 +86,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			completionHandlerForParsedData(nil, NSError(domain: "parseJSONData", code: 1, userInfo: userInfo))
 		}
 		completionHandlerForParsedData(parsedData, nil)
+	}
+	
+	/**
+	Converts a list of dictionaries to a list of student locations.
+	*/
+	func extractStudentLocations(from parameters: [[String: AnyObject]]) -> [StudentLocation] {
+		
+		var list: [StudentLocation] = []
+		
+		for item in parameters {
+			list.append(StudentLocation(item))
+		}
+		return list
 	}
 	
 	/// Hard coded locations, so that there is something to fill the map with in case of no internet connection.

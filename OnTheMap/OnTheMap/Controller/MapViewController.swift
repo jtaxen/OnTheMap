@@ -18,6 +18,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	
+	var center: CLLocationCoordinate2D!
+	var span: MKCoordinateSpan!
+	
 	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	override func viewDidLoad() {
@@ -27,9 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol
 		spinner.hidesWhenStopped = true
 		spinner.stopAnimating()
 		
-		/// Draws and presents the pins on the map.
-		let annotations = drawPins()
-		mapView.addAnnotations(annotations)
+		refresh()
+		
 	}
 	
 	/// Updates the map view with new pins when the location array has been updated.
@@ -37,24 +39,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol
 		mapView.removeAnnotations(mapView.annotations)
 		let annotations = drawPins()
 		mapView.addAnnotations(annotations)
+		
+		center = CLLocationCoordinate2D(latitude: appDelegate.userData.Latitude as! CLLocationDegrees , longitude: appDelegate.userData.Longitude as! CLLocationDegrees)
+		span = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(5), longitudeDelta: CLLocationDegrees(5))
+		mapView.region = MKCoordinateRegion(center: center, span: span)
 	}
 	
 	/// Draws the pins onto the map.
 	/// - Returns: an array of annotations to be added to the map view.
 	func drawPins() -> [MKPointAnnotation] {
 		
-		let locations = appDelegate.locationData ?? appDelegate.hardCodedLocationData()
+		let locations = appDelegate.locationData ?? appDelegate.extractStudentLocations(from: appDelegate.hardCodedLocationData())
 		var annotations = [MKPointAnnotation]()
 		
 		for item in locations {
-			if let lat = item["latitude"] as? Float,
-				let lon = item["longitude"] as? Float {
+			if let lat = item.Latitude as? Float,
+				let lon = item.Longitude as? Float {
 				
 				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
 				
-				let firstName = item["firstName"] as? String ?? ""
-				let lastName = item["lastName"] as? String ?? ""
-				let mediaUrl = item["mediaURL"] as? String ?? ""
+				let firstName = item.FirstName as? String ?? ""
+				let lastName = item.LastName as? String ?? ""
+				let mediaUrl = item.MediaURL as? String ?? ""
 				
 				let annotation = MKPointAnnotation()
 				annotation.coordinate = coordinate
@@ -66,7 +72,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol
 		}
 		return annotations
 	}
-	
 }
 
 /// MARK: Map view delegate

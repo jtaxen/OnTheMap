@@ -18,6 +18,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	@IBOutlet weak var labelView: UIView!
 	@IBOutlet weak var titleText: UILabel!
+	@IBOutlet weak var signUpButton: UIButton!
+	
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -37,12 +39,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		
 		titleText.textColor = OnTheMapTools.Colors.Title
 		
+		signUpButton.setTitle("Not a member yet? Sign up!", for: .normal)
+		signUpButton.titleLabel?.font = textFieldAttributes[NSFontAttributeName]
+		signUpButton.tintColor = OnTheMapTools.Colors.Light
+		
 		labelView.layer.cornerRadius = 10
 		labelView.backgroundColor = OnTheMapTools.Colors.Light
 		
 		loginButton.layer.cornerRadius = 5
 		loginButton.backgroundColor = OnTheMapTools.Colors.Dark
 		loginButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
+
 		
 		spinner.hidesWhenStopped = true
 		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
@@ -97,6 +104,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				}
 			}
 		}
+	}
+	
+	@IBAction func signUpPressed(_ sender: UIButton) {
+		let app = UIApplication.shared
+		let url = URL(string: "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated")!
+		app.open(url, completionHandler: nil)
 	}
 	
 	/// Presents the map view

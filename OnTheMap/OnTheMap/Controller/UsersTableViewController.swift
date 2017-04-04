@@ -43,9 +43,9 @@ class UsersTableViewController: UITableViewController, ControllerProtocol {
 		
 		let entry = appDelegate.locationData[indexPath.row]
 		
-		let firstName = entry["firstName"] as? String ?? ""
-		let lastName = entry["lastName"] as? String ?? ""
-		let mediaUrl = entry["mediaURL"] as? String ?? ""
+		let firstName = entry.FirstName as? String ?? ""
+		let lastName = entry.LastName as? String ?? ""
+		let mediaUrl = entry.MediaURL as? String ?? ""
 		
 		cell.textLabel?.text = firstName + " " + lastName
 		cell.detailTextLabel?.text = mediaUrl
