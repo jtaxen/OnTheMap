@@ -9,10 +9,20 @@
 import UIKit
 import Foundation
 
+/**
+Handles requests to the Udacity server.
+*/
 class UdacityClient: NSObject {
 	
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
+	/**
+	Sends a POST request, required for logging in.
+	- Parameter parameters: Array containing username and password together with their API keys: ["username": *username*, "password": *password*]
+	- Parameter completionHandler:
+	- Parameter results: The response from the server in JSON format.
+	- Parameter error: Error from failed server request or from failed parsing of the JSON results. If nothing goes wrong, this is `nil`.
+	*/
 	func taskForPOST(parameters: [String: AnyObject], completionHandler: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void ) -> URLSessionDataTask {
 		
 		/* 1. Set parameters */
@@ -23,6 +33,7 @@ class UdacityClient: NSObject {
 		/* 2. Build URL */
 		let url = URL(string: Constants.Scheme + "://" + Constants.Host + Constants.Path)
 		let request = NSMutableURLRequest(url: url!)
+		request.timeoutInterval = Timer.Timeout
 		
 		/* 3. Configure request */
 		request.httpMethod = "POST"
@@ -46,10 +57,16 @@ class UdacityClient: NSObject {
 			self.appDelegate.parseData(data!, isUdacityData: true, completionHandlerForParsedData: completionHandler)
 		}
 		/* 7. Start request */
+		
 		task.resume()
 		return task
 	}
 	
+	/**
+	Deletes the current session.
+	- Parameter results: The response from the server in JSON format.
+	- Parameter error: Error from failed server request or from failed parsing of the JSON results. If nothing goes wrong, this is `nil`.
+	*/
 	func taskForDELETE(completionHandler: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionTask {
 		
 		/* 1. No parameters */
@@ -57,6 +74,7 @@ class UdacityClient: NSObject {
 		/* 2. Build URL */
 		let url = URL(string: Constants.Scheme + "://" + Constants.Host + Constants.Path)
 		let request = NSMutableURLRequest(url: url!)
+		request.timeoutInterval = Timer.Timeout
 		
 		/* 3. Configure request */
 		request.httpMethod = "DELETE"
@@ -88,14 +106,11 @@ class UdacityClient: NSObject {
 		return task
 	}
 	
-
-	
-	// MARK: Shared instance
+	/// MARK: Shared instance
 	class func sharedInstance() -> UdacityClient {
 		struct Singelton {
 			static var sharedInstance = UdacityClient()
 		}
 		return Singelton.sharedInstance
 	}
-	
 }

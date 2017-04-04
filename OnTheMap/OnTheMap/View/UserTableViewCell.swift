@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+Table view cells.
+*/
 class UserTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -20,11 +23,4 @@ class UserTableViewCell: UITableViewCell {
 		imageView?.image = UIImage(named: "icon_pin")
 		imageView?.tintColor = OnTheMapTools.Colors.Background
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

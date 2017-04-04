@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 	
-	var appDelegate: AppDelegate!
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	@IBOutlet weak var usernameTextField: UITextField!
 	@IBOutlet weak var passwordTextField: UITextField!
@@ -18,6 +18,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	@IBOutlet weak var labelView: UIView!
 	@IBOutlet weak var titleText: UILabel!
+	@IBOutlet weak var signUpButton: UIButton!
+	
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -27,14 +29,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		appDelegate.userData = StudentLocation(appDelegate.hardCodedLocationData()[0])
+		
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		
 		// Delegates
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		usernameTextField.delegate = self
 		passwordTextField.delegate = self
 		
 		titleText.textColor = OnTheMapTools.Colors.Title
+		
+		signUpButton.setTitle("Not a member yet? Sign up!", for: .normal)
+		signUpButton.titleLabel?.font = textFieldAttributes[NSFontAttributeName]
+		signUpButton.tintColor = OnTheMapTools.Colors.Light
 		
 		labelView.layer.cornerRadius = 10
 		labelView.backgroundColor = OnTheMapTools.Colors.Light
@@ -42,11 +49,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		loginButton.layer.cornerRadius = 5
 		loginButton.backgroundColor = OnTheMapTools.Colors.Dark
 		loginButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
+
 		
 		spinner.hidesWhenStopped = true
 		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
-		// Set text field attributes
+		/// Set text field attributes
 		for field in [usernameTextField, passwordTextField] {
 			field!.defaultTextAttributes = textFieldAttributes
 			field!.placeholder = (field == usernameTextField) ? "Username (email address)" : "Password"
@@ -58,23 +66,36 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		
 	}
 	
+	/// When the login button is pressed, a call to the server is made. If the username and the password match with the user's API Key, the map view is presented.
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
 		
+		view.isUserInteractionEnabled = false
 		spinner.startAnimating()
 		
 		if let username = usernameTextField.text,
 			let password = passwordTextField.text {
 			UdacityClient.sharedInstance().getSessionID(username: username, password: password) { (success, result, error) in
 				if success {
+					print("Login successful.")
 					DispatchQueue.main.async{
-						print("Login successful.")
 						self.pushToMapView()
 					}
 				} else {
 					DispatchQueue.main.async {
+						
+						self.view.isUserInteractionEnabled = true
 						self.spinner.stopAnimating()
 						
-						let alert = UIAlertController(title: "Could not log in", message: "Please make sure that you entered the correct username and password.", preferredStyle: .actionSheet)
+						
+						let alert = UIAlertController()
+						if error?.code == -1001 {
+							alert.title = "Bad network"
+							alert.message = "Please check your internet connection and try again."
+						} else {        // if error?.code == 2
+							alert.title = "Failed to log in"
+							alert.message = "Please make sure that you entered the correct username and password."
+						}
+						
 						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 						self.present(alert, animated: true, completion: nil)
 					}
@@ -85,6 +106,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		}
 	}
 	
+	@IBAction func signUpPressed(_ sender: UIButton) {
+		let app = UIApplication.shared
+		let url = URL(string: "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated")!
+		app.open(url, completionHandler: nil)
+	}
+	
+	/// Presents the map view
 	func pushToMapView() {
 		let parseClient = ParseClient.sharedInstance()
 		_ = parseClient.refresh() { (success, error) in
@@ -107,7 +135,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	}
 }
 
-// MARK: Handle keyboard
+/// MARK: Handle keyboard
 extension LoginViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -149,21 +177,24 @@ extension LoginViewController {
 	}
 }
 
-// MARK: Text field delegate
+/// MARK: Text field delegate
 extension LoginViewController {
 	
-	// If autocompletion adds a space after the username (which it does), this function makes sure to remove it, as it otherwise would hinder the login, and is easily missed by the user.
+	/// If autocompletion adds a space after the username (which it does), this function makes sure to remove it, as it otherwise would hinder the login, and is easily missed by the user.
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		guard textField == usernameTextField else {
 			return
 		}
 		if let username = textField.text {
-			if username.substring(from: username.index(before: username.endIndex)) == " " {
+			
+			if username != "" && username.substring(from: username.index(before: username.endIndex)) == " " {
 				textField.text = username.substring(to: username.index(before: username.endIndex))
 			}
 		}
 	}
 	
+	/// Pressing enter in the username field moves focus to the password field.
+	/// Pressing enter in the password field is equivalent to touching the login button.
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		if textField == usernameTextField {

@@ -12,21 +12,21 @@ import Foundation
 
 extension ParseClient {
 
-	// MARK: Constants
+	/// MARK: Constants
 	struct Constants {
 		
-		// MARK: Keys
+		/// MARK: Keys
 		static let ApplicationID = Keys.ParseApplicationID
 		static let APIKey = Keys.ParseRESTAPIKey
 		
-		// MARK: Method URL
+		/// MARK: Method URL
 		static let Scheme = "https"
 		static let Host = "parse.udacity.com"
 		static let Path = "/parse/classes/StudentLocation"
 		
 	}
 	
-	// MARK: HTTP methods
+	/// MARK: HTTP methods
 	
 	struct Methods {
 		static let GET = "GET"
@@ -36,23 +36,23 @@ extension ParseClient {
 	
 	
 	
-	// MARK: Parameter keys
+	/// MARK: Parameter keys
 	struct ParameterKeys {
 		
-		// MARK: GET parameters
+		/// MARK: GET parameters
 		static let Limit = "limit"
 		static let Skip = "skip"
 		static let Order = "order"
 		static let Where = "where"
 		
-		//MARK: PUT parameters
+		/// MARK: PUT parameters
 		static let ObjectID = "objectId"
 		
 	}
 	
-	// MARK: StudentLocation object keys
-	// These are used as parameter value for parameter key "Order"
-	// Negative sign in front of the value indicates reverse order
+	/// MARK: StudentLocation object keys
+	/// These are used as parameter value for parameter key "Order"
+	/// Negative sign in front of the value indicates reverse order
 	struct StudentLocationKeys {
 		static let ObjectID = "objectId"
 		static let UniqueKey = Keys.UniqueKey
@@ -66,10 +66,16 @@ extension ParseClient {
 		static let UpdatedAt = "updatedAt"
 		static let ACL = "ACL"
 	}
+	
+	/// MARK: Server response time limit
+	struct Timer {
+		static let Timeout: Double = 10
+	}
+	
 }
 
 
-//MARK: HTTP Request methods
+/// MARK: HTTP Request methods
 enum HTTPMethod: String {
 	case GET = "GET"
 	case POST = "POST"

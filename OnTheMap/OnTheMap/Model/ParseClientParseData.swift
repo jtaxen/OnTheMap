@@ -8,9 +8,15 @@
 
 import Foundation
 
-// MARK: Methods for parsing JSON data
+/// MARK: Methods for parsing JSON data
 extension ParseClient {
-
+	
+	/**
+	Parses the results from a GET request and turns it into an array of dictionaries.
+	- Parameter data: Server response in JSON format to be parsed.
+	- Parameter results: Array of dictionaries if parsing is successful, nil otherwise.
+	- Parameter error: Error information if the parsing fails.
+	*/
 	func parseGETRequest(_ data: Data, completionHandlerForParsedData: (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) {
 		
 		var parsedData: [String: AnyObject]!
@@ -23,8 +29,14 @@ extension ParseClient {
 		}
 	}
 	
+	/**
+	Parses the results from a POST request and turns it into an array of dictionaries.
+	- Parameter data: Server response in JSON format to be parsed.
+	- Parameter results: Array of dictionaries if parsing is successful, nil otherwise.
+	- Parameter error: Error information if the parsing fails.
+	*/
 	func parsePOSTRequest(_ data: Data, completionHandlerForParsedData: (_ results: [[String: AnyObject]]?, _ error: NSError?) -> Void) {
-	
+		
 		var parsedData: [String: AnyObject]!
 		do {
 			parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]

@@ -2,10 +2,11 @@
 
 import UIKit
 import PlaygroundSupport
+import CoreLocation
 
 
 // this line tells the Playground to execute indefinitely
-// PlaygroundPage.current.needsIndefiniteExecution = true
+ PlaygroundPage.current.needsIndefiniteExecution = true
 
 /*
 let urlString = "http://quotes.rest/qod.json?category=inspire"
@@ -115,8 +116,14 @@ let jsonthing = try? JSONSerialization.data(withJSONObject: dict)
 
 */
 
-
-let string = "abcdefgh"
-
-print(string.substring(from: string.index(before: string.endIndex)))
-print(string.substring(to: string.index(before: string.endIndex)))
+let geocode = CLGeocoder()
+geocode.geocodeAddressString("Sto44ckholm") { (clPlacemark, error) in
+	guard clPlacemark != nil else {
+		print("Nonono")
+		return
+	}
+	
+	for item in clPlacemark! {
+		print(item.location!.coordinate.latitude)
+	}
+}

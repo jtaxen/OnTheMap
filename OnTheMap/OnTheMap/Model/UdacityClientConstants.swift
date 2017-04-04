@@ -10,15 +10,22 @@ import Foundation
 
 extension UdacityClient {
 
+	/// API location
 	struct Constants {
 		static let Scheme = "https"
 		static let Host = "www.udacity.com"
 		static let Path = "/api/session"
 	}
 	
+	/// Parameter keys
 	struct ParameterKeys {
 		static let Udacity = "udacity"
 		static let Username = "username"
 		static let Password = "password"
+	}
+	
+	/// Server response time limit
+	struct Timer {
+		static let Timeout: Double = 10
 	}
 }

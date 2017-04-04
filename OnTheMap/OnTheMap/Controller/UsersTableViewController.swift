@@ -8,29 +8,27 @@
 
 import UIKit
 
-class UsersTableViewController: UITableViewController {
+class UsersTableViewController: UITableViewController, ControllerProtocol {
 	
-	var appDelegate: AppDelegate!
+	@IBOutlet weak var spinner: UIActivityIndicatorView!
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
 		
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		spinner.hidesWhenStopped = true
+		spinner.stopAnimating()
+		
+		/// Listen for updates from the server.
+		NotificationCenter.default.addObserver(self, selector: #selector(refresh) , name: Notification.Name(rawValue: "refresh"), object: nil)
     }
+	
+	func refresh() {
+		tableView.reloadData()
+	}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
-    // MARK: - Table view data source
-
+    /// MARK: Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
     }
@@ -39,14 +37,15 @@ class UsersTableViewController: UITableViewController {
 		return appDelegate.locationData?.count ?? 0
     }
 
+	/// Cell layout
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserTableViewCell
 		
 		let entry = appDelegate.locationData[indexPath.row]
 		
-		let firstName = entry["firstName"] as? String ?? ""
-		let lastName = entry["lastName"] as? String ?? ""
-		let mediaUrl = entry["mediaURL"] as? String ?? ""
+		let firstName = entry.FirstName as? String ?? ""
+		let lastName = entry.LastName as? String ?? ""
+		let mediaUrl = entry.MediaURL as? String ?? ""
 		
 		cell.textLabel?.text = firstName + " " + lastName
 		cell.detailTextLabel?.text = mediaUrl
@@ -54,6 +53,8 @@ class UsersTableViewController: UITableViewController {
         return cell
 	}
 	
+	/// If a cell in the table view is tapped and the link is valid, it is opened in the system's default web browser.
+	/// If the link is invalid, an error message is shown to the user.
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath)
 		
@@ -64,7 +65,6 @@ class UsersTableViewController: UITableViewController {
 			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 			present(alert, animated: true, completion: nil)
 		}
-		
 	}
 
 }

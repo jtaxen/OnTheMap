@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,12 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	var sessionID: String? = nil
-	var locationData: [[String:AnyObject]]!
-	var userData: [[String:AnyObject]]?
+	var locationData: [StudentLocation]!
+	var userData: StudentLocation!
 	var uniqueKey: String?
 	var objectID: String? = nil
 	
-	
+	/**
+	Function for checking server responses for different possible errors. This function prints the error if it finds any.
+	- Parameter data: Data returned from the server, or nil if no data was returned.
+	- Parameter response: Response from server including status code.
+	- Parameter error: Error sent by the server.
+	- Returns: The error if any, or nil if everything is in order.
+	*/
 	func checkRequestResultsForError(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> NSError? {
 		
 		// Check to see if an error was returned
@@ -50,6 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return nil
 	}
 	
+	/**
+	Parses the JSON response from the server to an array of dictionaries.
+	- Parameter data: The data which is to be parsed.
+	- Parameter isUdacityData: If set to true, the function removes the first five characters from the data before it parses.
+	- Parameter results: The results of the parsing.
+	- Parameter error: The error information, or nil, if everything went well.
+	*/
 	func parseData(_ data: Data, isUdacityData: Bool, completionHandlerForParsedData: (_ results: AnyObject?, _ error: NSError?) -> Void) {
 		
 		var newData: Data
@@ -74,19 +88,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		completionHandlerForParsedData(parsedData, nil)
 	}
 	
+	/**
+	Converts a list of dictionaries to a list of student locations.
+	*/
+	func extractStudentLocations(from parameters: [[String: AnyObject]]) -> [StudentLocation] {
+		
+		var list: [StudentLocation] = []
+		
+		for item in parameters {
+			list.append(StudentLocation(item))
+		}
+		return list
+	}
+	
+	/// Hard coded locations, so that there is something to fill the map with in case of no internet connection.
+	/// - Returns: an array of dictionaries with location data for default people.
 	func hardCodedLocationData() -> [[String : AnyObject]] {
 		return  [
 			[
-				"createdAt" : "2015-02-24T22:27:14.456Z" as AnyObject,
-				"firstName" : "Jessica" as AnyObject,
-				"lastName" : "Uelmen" as AnyObject,
-				"latitude" : 28.1461248 as AnyObject,
-				"longitude" : -82.75676799999999 as AnyObject,
-				"mapString" : "Tarpon Springs, FL" as AnyObject,
-				"mediaURL" : "www.linkedin.com/in/jessicauelmen/en" as AnyObject,
-				"objectId" : "kj18GEaWD8" as AnyObject,
-				"uniqueKey" : 872458750 as AnyObject,
-				"updatedAt" : "2015-03-09T22:07:09.593Z" as AnyObject
+				"createdAt" : "2001-01-01T00:00:00.1" as AnyObject,
+				"firstName" : "Default" as AnyObject,
+				"lastName" : "McDefaultface" as AnyObject,
+				"latitude" : 0.0 as AnyObject,
+				"longitude" : 0.0 as AnyObject,
+				"mapString" : "Default City, DF" as AnyObject,
+				"mediaURL" : "www.default.df" as AnyObject,
+				"objectId" : "abc123" as AnyObject,
+				"uniqueKey" : 1234567890 as AnyObject,
+				"updatedAt" : "2001-01-01T00:00:00.1" as AnyObject
 			], [
 				"createdAt" : "2015-02-24T22:35:30.639Z" as AnyObject,
 				"firstName" : "Gabrielle" as AnyObject,

@@ -9,31 +9,58 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+/**
+Map view controller
+*/
+
+class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol {
 	
 	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	
-	var appDelegate: AppDelegate!
+	var center: CLLocationCoordinate2D!
+	var span: MKCoordinateSpan!
+	
+	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "refresh"), object: nil)
 		
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		spinner.hidesWhenStopped = true
+		spinner.stopAnimating()
 		
-		let locations = appDelegate.locationData ?? appDelegate.hardCodedLocationData()
+		refresh()
 		
+	}
+	
+	/// Updates the map view with new pins when the location array has been updated.
+	@objc private func refresh() {
+		mapView.removeAnnotations(mapView.annotations)
+		let annotations = drawPins()
+		mapView.addAnnotations(annotations)
+		
+		center = CLLocationCoordinate2D(latitude: appDelegate.userData.Latitude as! CLLocationDegrees , longitude: appDelegate.userData.Longitude as! CLLocationDegrees)
+		span = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(5), longitudeDelta: CLLocationDegrees(5))
+		mapView.region = MKCoordinateRegion(center: center, span: span)
+	}
+	
+	/// Draws the pins onto the map.
+	/// - Returns: an array of annotations to be added to the map view.
+	func drawPins() -> [MKPointAnnotation] {
+		
+		let locations = appDelegate.locationData ?? appDelegate.extractStudentLocations(from: appDelegate.hardCodedLocationData())
 		var annotations = [MKPointAnnotation]()
 		
-		for dictionary in locations {
-			
-			if let lat = dictionary["latitude"] as? Float,
-				let lon = dictionary["longitude"] as? Float {
+		for item in locations {
+			if let lat = item.Latitude as? Float,
+				let lon = item.Longitude as? Float {
 				
 				let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(lat), CLLocationDegrees(lon))
 				
-				let firstName = dictionary["firstName"] as? String ?? ""
-				let lastName = dictionary["lastName"] as? String ?? ""
-				let mediaUrl = dictionary["mediaURL"] as? String ?? ""
+				let firstName = item.FirstName as? String ?? ""
+				let lastName = item.LastName as? String ?? ""
+				let mediaUrl = item.MediaURL as? String ?? ""
 				
 				let annotation = MKPointAnnotation()
 				annotation.coordinate = coordinate
@@ -42,14 +69,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 				
 				annotations.append(annotation)
 			}
-			mapView.addAnnotations(annotations)
 		}
+		return annotations
 	}
 }
 
-// MARK: Map view delegate
+/// MARK: Map view delegate
 extension MapViewController {
 	
+	/// Design the pins. If pin is pushed, a bubble with the corresponding name and web site is shown.
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		
 		let reuseId = "pin"
@@ -68,12 +96,18 @@ extension MapViewController {
 		return pinView
 	}
 	
+	/// If a bubble is pressed, the link in it is opened in a web browser.
 	func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 		if control == view.rightCalloutAccessoryView {
 			let app = UIApplication.shared
-			if let toOpen = view.annotation?.subtitle! {
-				let url = URL(string: toOpen)!
+			if let toOpen = view.annotation?.subtitle,
+				let url = URL(string: toOpen!),
+				app.canOpenURL(url) {
 				app.open(url, options: [:], completionHandler: nil)
+			} else {
+				let controller = UIAlertController(title: "Unable to open link", message: "The link you have chosen does not work.", preferredStyle: .alert)
+				controller.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+				present(controller, animated: true, completion: nil)
 			}
 		}
 	}

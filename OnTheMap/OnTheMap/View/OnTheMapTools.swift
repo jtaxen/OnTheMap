@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+Struct for app design that applies in all the view controllers.
+*/
 struct OnTheMapTools {
 	
 	struct Colors {

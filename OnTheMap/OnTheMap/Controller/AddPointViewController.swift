@@ -8,6 +8,10 @@
 
 import UIKit
 
+/**
+View controller for creating or updating the location for a user.
+
+*/
 class AddPointViewController: UIViewController {
 	
 	var appDelegate: AppDelegate!
@@ -26,10 +30,13 @@ class AddPointViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		/// AppDelegate
+		appDelegate = UIApplication.shared.delegate as! AppDelegate
+		
+		/// UI Setup
 		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissView))
 		postButton.addTarget(self, action: #selector(postButtonPressed), for: .touchUpInside)
 		
-		// UI Setup
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		textFieldContainer.backgroundColor = OnTheMapTools.Colors.Light
 		textFieldContainer.layer.cornerRadius = 10
@@ -38,16 +45,13 @@ class AddPointViewController: UIViewController {
 		postButton.backgroundColor = OnTheMapTools.Colors.Dark
 		postButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
 		
-		// AppDelegate
-		appDelegate = UIApplication.shared.delegate as! AppDelegate
-		
 		textFieldContainer.layer.cornerRadius = 10
 		postButton.layer.cornerRadius = 5
 		
 		spinner.hidesWhenStopped = true
 		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
-		// Set text field attributes
+		/// Set text field attributes
 		for field in [locationField, websiteField] {
 			field!.defaultTextAttributes = textFieldAttributes
 			field!.placeholder = (field == locationField) ? "Enter location" : "Enter website"
@@ -56,10 +60,12 @@ class AddPointViewController: UIViewController {
 		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
 	}
 	
+	/// Keyboard is dismissed when the user taps outside of it.
 	func dismissView() {
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
+	/// Sends the updated user information to the server and dismisses the view.
 	func postButtonPressed(_ sender: UIButton) {
 		
 		spinner.startAnimating()
@@ -69,8 +75,25 @@ class AddPointViewController: UIViewController {
 			if success {
 				print("Location was successfully updated.")
 				
+				
 				DispatchQueue.main.async {
 					self.dismissView()
+					ParseClient.sharedInstance().refresh() { (success, error) in
+						
+						guard error == nil else {
+							print(error.debugDescription)
+							DispatchQueue.main.async {
+								self.spinner.stopAnimating()
+								let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
+								let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+								alert.addAction(action)
+							}
+							return
+						}
+						DispatchQueue.main.async {
+							NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
+						}
+					}
 				}
 			} else {
 				print(error.debugDescription)
@@ -80,13 +103,14 @@ class AddPointViewController: UIViewController {
 					let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
 					let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
 					alert.addAction(action)
+					self.present(alert, animated: true, completion: nil)
 				}
 			}
 		}
 	}
 }
 
-// MARK: Handle keyboard
+/// MARK: Handle keyboard
 extension AddPointViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -110,7 +134,11 @@ extension AddPointViewController {
 	}
 	
 	func keyboardWillShow(_ notification: Notification) {
+		if locationField.isFirstResponder {
 		view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.25)
+		} else {
+			view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.3)
+		}
 	}
 	
 	func keyboardWillHide(_ notification: Notification) {
@@ -128,9 +156,10 @@ extension AddPointViewController {
 	}
 }
 
-// MARK: Text field delegate
+/// MARK: Text field delegate
 extension AddPointViewController {
 	
+	/// Pressing enter in the first text field automatically moves focus to the next one.
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		if textField == locationField {
