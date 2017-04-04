@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	var sessionID: String? = nil
-	var locationData: [[String:AnyObject]]!
-	var userData: [[String:AnyObject]]!
+	var locationData: [[String: AnyObject]]!
+	var userData: StudentLocation!
 	var uniqueKey: String?
 	var objectID: String? = nil
 	

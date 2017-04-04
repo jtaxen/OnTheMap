@@ -27,7 +27,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		appDelegate.userData = [appDelegate.hardCodedLocationData()[0]]
+		appDelegate.userData = StudentLocation(appDelegate.hardCodedLocationData()[0])
 		
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		

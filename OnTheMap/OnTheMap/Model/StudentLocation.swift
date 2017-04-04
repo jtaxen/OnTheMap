@@ -18,7 +18,6 @@ struct StudentLocation {
 		Latitude = parameters["latitude"]
 		Longitude = parameters["longitude"]
 		MediaURL = parameters["mediaURL"]
-		
 	}
 	
 	let FirstName: AnyObject?

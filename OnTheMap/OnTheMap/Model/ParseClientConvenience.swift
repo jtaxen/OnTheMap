@@ -60,7 +60,7 @@ extension ParseClient {
 			}
 			
 			if results != nil {
-				self.appDelegate.userData = results!
+				self.appDelegate.userData = StudentLocation(results![0])
 				self.appDelegate.objectID = results![0]["objectId"] as? String
 				self.appDelegate.locationData.append(results![0])
 				
@@ -87,7 +87,7 @@ extension ParseClient {
 		var newLocation: String
 		
 		if location == "" {
-			newLocation = appDelegate.userData[0]["mapString"] as! String
+			newLocation = appDelegate.userData.MapString as! String
 		} else {
 			newLocation = location
 		}
