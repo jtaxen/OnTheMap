@@ -38,6 +38,7 @@ class ParseClient: NSObject {
 		/* 3. Configure request */
 		let request = NSMutableURLRequest()
 		request.httpBody = Data()
+		request.timeoutInterval = Timer.Timeout
 		
 		if method == .GET {
 			urlComponents.queryItems = []

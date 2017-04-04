@@ -66,6 +66,12 @@ extension ParseClient {
 		static let UpdatedAt = "updatedAt"
 		static let ACL = "ACL"
 	}
+	
+	/// MARK: Server response time limit
+	struct Timer {
+		static let Timeout: Double = 10
+	}
+	
 }
 
 

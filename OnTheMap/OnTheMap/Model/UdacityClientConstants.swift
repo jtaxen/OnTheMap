@@ -23,4 +23,9 @@ extension UdacityClient {
 		static let Username = "username"
 		static let Password = "password"
 	}
+	
+	/// Server response time limit
+	struct Timer {
+		static let Timeout: Double = 10
+	}
 }

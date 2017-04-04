@@ -103,6 +103,7 @@ class AddPointViewController: UIViewController {
 					let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
 					let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
 					alert.addAction(action)
+					self.present(alert, animated: true, completion: nil)
 				}
 			}
 		}
@@ -133,7 +134,11 @@ extension AddPointViewController {
 	}
 	
 	func keyboardWillShow(_ notification: Notification) {
+		if locationField.isFirstResponder {
 		view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.25)
+		} else {
+			view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.3)
+		}
 	}
 	
 	func keyboardWillHide(_ notification: Notification) {

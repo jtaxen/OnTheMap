@@ -62,6 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	/// When the login button is pressed, a call to the server is made. If the username and the password match with the user's API Key, the map view is presented.
 	@IBAction func loginButtonPressed(_ sender: UIButton) {
 		
+		view.isUserInteractionEnabled = false
 		spinner.startAnimating()
 		
 		if let username = usernameTextField.text,
@@ -74,9 +75,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 					}
 				} else {
 					DispatchQueue.main.async {
+						
+						self.view.isUserInteractionEnabled = true
 						self.spinner.stopAnimating()
 						
-						let alert = UIAlertController(title: "Could not log in", message: "Please make sure that you entered the correct username and password.", preferredStyle: .actionSheet)
+						
+						let alert = UIAlertController()
+						if error?.code == -1001 {
+							alert.title = "Bad network"
+							alert.message = "Please check your internet connection and try again."
+						} else {        // if error?.code == 2
+							alert.title = "Failed to log in"
+							alert.message = "Please make sure that you entered the correct username and password."
+						}
+						
 						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 						self.present(alert, animated: true, completion: nil)
 					}

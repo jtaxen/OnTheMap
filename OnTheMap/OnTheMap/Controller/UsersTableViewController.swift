@@ -8,12 +8,16 @@
 
 import UIKit
 
-class UsersTableViewController: UITableViewController {
+class UsersTableViewController: UITableViewController, ControllerProtocol {
 	
+	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		spinner.hidesWhenStopped = true
+		spinner.stopAnimating()
 		
 		/// Listen for updates from the server.
 		NotificationCenter.default.addObserver(self, selector: #selector(refresh) , name: Notification.Name(rawValue: "refresh"), object: nil)

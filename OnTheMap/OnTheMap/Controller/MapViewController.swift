@@ -13,15 +13,19 @@ import MapKit
 Map view controller
 */
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol {
 	
 	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	
 	var appDelegate = UIApplication.shared.delegate as! AppDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: "refresh"), object: nil)
+		
+		spinner.hidesWhenStopped = true
+		spinner.stopAnimating()
 		
 		/// Draws and presents the pins on the map.
 		let annotations = drawPins()

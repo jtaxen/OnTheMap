@@ -67,9 +67,19 @@ extension NavigationViewController {
 	
 	/// Ends session and logs out the user, and returns to login view.
 	func endSession() {
+		
+		let child = childViewControllers[0] as! MapViewController
+		child.spinner.startAnimating()
+		
+		view.isUserInteractionEnabled = false
+		
 		udacityClient.endSession() { (success, results, error) in
 			
 			guard error == nil else {
+				DispatchQueue.main.async {
+					child.spinner.stopAnimating()
+					self.view.isUserInteractionEnabled = true
+				}
 				print(error.debugDescription)
 				return
 			}
@@ -87,13 +97,22 @@ extension NavigationViewController {
 	
 	/// Updates the location array by calling the server, and sends a notification to map and table view to update themselves.
 	func refresh() {
+		view.isUserInteractionEnabled = false
 		parseClient.refresh() { (success, error) in
-			
 			guard error == nil else {
+				DispatchQueue.main.async{
+					let alert = UIAlertController(title: "Update failed", message: "Please make sure that your network is working and try again", preferredStyle: .alert)
+					let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+					alert.addAction(action)
+					self.present(alert, animated: true, completion: nil)
+					
+					self.view.isUserInteractionEnabled = true
+				}
 				print(error.debugDescription)
 				return
 			}
 			DispatchQueue.main.async {
+				self.view.isUserInteractionEnabled = true
 				NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
 			}
 		}

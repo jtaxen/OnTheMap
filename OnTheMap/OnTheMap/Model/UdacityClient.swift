@@ -33,6 +33,7 @@ class UdacityClient: NSObject {
 		/* 2. Build URL */
 		let url = URL(string: Constants.Scheme + "://" + Constants.Host + Constants.Path)
 		let request = NSMutableURLRequest(url: url!)
+		request.timeoutInterval = Timer.Timeout
 		
 		/* 3. Configure request */
 		request.httpMethod = "POST"
@@ -56,6 +57,7 @@ class UdacityClient: NSObject {
 			self.appDelegate.parseData(data!, isUdacityData: true, completionHandlerForParsedData: completionHandler)
 		}
 		/* 7. Start request */
+		
 		task.resume()
 		return task
 	}
@@ -72,6 +74,7 @@ class UdacityClient: NSObject {
 		/* 2. Build URL */
 		let url = URL(string: Constants.Scheme + "://" + Constants.Host + Constants.Path)
 		let request = NSMutableURLRequest(url: url!)
+		request.timeoutInterval = Timer.Timeout
 		
 		/* 3. Configure request */
 		request.httpMethod = "DELETE"
