@@ -87,9 +87,7 @@ extension NavigationViewController {
 				print("Logout was successful.")
 				
 				DispatchQueue.main.async {
-					let storyboard = UIStoryboard(name: "Main", bundle: nil)
-					let controller = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-					self.present(controller, animated: true, completion: nil)
+					self.dismiss(animated: true, completion: nil)
 				}
 			}
 		}
