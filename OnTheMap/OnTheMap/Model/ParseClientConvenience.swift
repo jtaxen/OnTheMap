@@ -136,4 +136,16 @@ extension ParseClient {
 			}
 		}
 	}
+	
+	func findLocation(_ location: String) -> CLLocationCoordinate2D? {
+		var locationCoordinates: CLLocationCoordinate2D?
+		let geocoder = CLGeocoder()
+		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
+			if clPlacemark != nil {
+				let placemark = clPlacemark![0]
+				locationCoordinates = placemark.location?.coordinate
+			}
+		}
+		return locationCoordinates
+	}
 }
