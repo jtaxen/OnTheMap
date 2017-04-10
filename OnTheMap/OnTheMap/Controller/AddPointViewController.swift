@@ -112,7 +112,7 @@ class AddPointViewController: UIViewController {
 		} else {
 			if textField.text != nil {
 				websiteString = textField.text
-				parseClient.updateLocation(location: locationString, website: websiteString) { (success, error) in
+				parseClient.updateLocation(location: locationString, website: websiteString!) { (success, error) in
 				}
 				
 			}
