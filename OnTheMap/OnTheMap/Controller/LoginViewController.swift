@@ -120,6 +120,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				DispatchQueue.main.async {
 					let storyboard = UIStoryboard(name: "Main", bundle: nil)
 					let controller = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+					self.spinner.stopAnimating()
 					self.present(controller, animated: true) {
 						_ = parseClient.getUserData() { (success, error) in
 							if !success {

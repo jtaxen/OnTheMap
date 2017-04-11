@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -318,18 +318,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ey2-rN-Atw">
+                                <rect key="frame" x="20" y="88" width="284" height="472"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXI-JS-U8g">
                                 <rect key="frame" x="20" y="124.5" width="280" height="130"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l3q-xP-pqx">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsR-rr-zcl">
                                         <rect key="frame" x="20" y="20" width="240" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="9AF-dx-kLY"/>
+                                            <constraint firstAttribute="height" constant="30" id="jKm-oS-ir0"/>
                                         </constraints>
-                                        <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Gt-8rs">
                                         <rect key="frame" x="20" y="80" width="240" height="30"/>
                                         <constraints>
@@ -343,15 +347,15 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ffY-Gt-8rs" secondAttribute="bottom" constant="20" id="89X-W7-gSe"/>
                                     <constraint firstAttribute="trailing" secondItem="ffY-Gt-8rs" secondAttribute="trailing" constant="20" id="8qJ-9G-ftV"/>
-                                    <constraint firstAttribute="trailing" secondItem="l3q-xP-pqx" secondAttribute="trailing" constant="20" id="FtU-Nr-9na"/>
                                     <constraint firstItem="ffY-Gt-8rs" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="Q3G-Yu-j7d"/>
-                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="top" constant="20" id="WNV-yD-2uW"/>
+                                    <constraint firstAttribute="trailing" secondItem="wsR-rr-zcl" secondAttribute="trailing" constant="20" id="WSs-Ga-mAO"/>
                                     <constraint firstAttribute="height" constant="130" id="Z2P-y7-CQg"/>
-                                    <constraint firstItem="l3q-xP-pqx" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="aJE-7N-NsK"/>
+                                    <constraint firstItem="wsR-rr-zcl" firstAttribute="leading" secondItem="yXI-JS-U8g" secondAttribute="leading" constant="20" id="gei-g1-wUa"/>
+                                    <constraint firstItem="wsR-rr-zcl" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="top" constant="20" id="n75-dm-IhU"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-Aw-YS6">
-                                <rect key="frame" x="89.5" y="364.5" width="141" height="30"/>
+                                <rect key="frame" x="89.5" y="269" width="141" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="141" id="HFM-Zq-Sw8"/>
                                     <constraint firstAttribute="height" constant="30" id="nKV-tz-6H2"/>
@@ -360,10 +364,10 @@
                                 <state key="normal" title="Update"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKO-l9-cVU">
-                                <rect key="frame" x="56" y="254.5" width="208" height="110"/>
+                                <rect key="frame" x="56" y="254.5" width="208" height="14.5"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jml-SI-q0G">
-                                        <rect key="frame" x="94" y="45" width="20" height="20"/>
+                                        <rect key="frame" x="94" y="-2.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
@@ -374,7 +378,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="gKO-l9-cVU" secondAttribute="trailing" constant="40" id="PdV-TF-XqL"/>
-                            <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerY" secondItem="a2n-yP-O2Q" secondAttribute="centerY" multiplier="1.333" constant="1" id="RK4-Eq-UHv"/>
+                            <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerY" secondItem="a2n-yP-O2Q" secondAttribute="centerY" id="RK4-Eq-UHv"/>
                             <constraint firstItem="gKO-l9-cVU" firstAttribute="top" secondItem="yXI-JS-U8g" secondAttribute="bottom" id="Sef-vf-RBj"/>
                             <constraint firstItem="7Xe-Aw-YS6" firstAttribute="centerX" secondItem="a2n-yP-O2Q" secondAttribute="centerX" id="UjX-Vr-Pqn"/>
                             <constraint firstItem="gKO-l9-cVU" firstAttribute="leading" secondItem="a2n-yP-O2Q" secondAttribute="leadingMargin" constant="40" id="Vih-hl-rVQ"/>
@@ -390,11 +394,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="locationField" destination="l3q-xP-pqx" id="LB2-jl-KM4"/>
+                        <outlet property="label" destination="wsR-rr-zcl" id="vDg-Qk-pKt"/>
+                        <outlet property="map" destination="Ey2-rN-Atw" id="77G-JP-uQ9"/>
                         <outlet property="postButton" destination="7Xe-Aw-YS6" id="gaG-sl-NxP"/>
                         <outlet property="spinner" destination="Jml-SI-q0G" id="iTF-RX-szg"/>
+                        <outlet property="textField" destination="ffY-Gt-8rs" id="yFo-Zi-c4Q"/>
                         <outlet property="textFieldContainer" destination="yXI-JS-U8g" id="Q66-V9-mXY"/>
-                        <outlet property="websiteField" destination="ffY-Gt-8rs" id="jMU-1t-3Mo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W4r-nB-dqp" userLabel="First Responder" sceneMemberID="firstResponder"/>
