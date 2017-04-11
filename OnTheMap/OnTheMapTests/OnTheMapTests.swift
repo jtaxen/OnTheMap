@@ -7,29 +7,34 @@
 //
 
 import XCTest
+import CoreLocation
+@testable import OnTheMap
 
 class OnTheMapTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
+	
+	var parseClient: ParseClient?
+	
+	override func setUp() {
+		super.setUp()
+		parseClient = ParseClient.sharedInstance()
+	}
+	
+	override func tearDown() {
+		parseClient = nil
+		super.tearDown()
+	}
+	
+	func testCorrectCoordinatesAreReturnedFromFindLocation() {
+		let locationString = "1 Infinite Loop, Cupertino, CA"
+		parseClient?.findLocation(locationString) { (location, error) in
+			XCTAssertNotNil(location, "Coordinates are nil")
+			
+			let clLocation = CLLocation(latitude: location!.latitude, longitude: location!.longitude)
+			CLGeocoder().reverseGeocodeLocation(clLocation) { (clPlacemark, error) in
+				guard clPlacemark != nil else { return }
+				print("completion")
+				XCTAssertEqual(locationString, clPlacemark![0].name, error.debugDescription)
+			}
+		}
+	}
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UsersTableViewController: UITableViewController, ControllerProtocol {
+class UsersTableViewController: UITableViewController {
 	
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	var appDelegate = UIApplication.shared.delegate as! AppDelegate

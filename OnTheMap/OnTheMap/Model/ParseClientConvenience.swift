@@ -94,7 +94,7 @@ extension ParseClient {
 		
 		let geocoder = CLGeocoder()
 		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
-				
+			
 			guard error == nil && clPlacemark != nil else {
 				completionHandler(false, error as NSError?)
 				print(error.debugDescription)
@@ -137,15 +137,18 @@ extension ParseClient {
 		}
 	}
 	
-	func findLocation(_ location: String) -> CLLocationCoordinate2D? {
+	func findLocation(_ location: String, completionHandler: @escaping ((_ location: CLLocationCoordinate2D?, _ error: NSError?) -> Void )) {
 		var locationCoordinates: CLLocationCoordinate2D?
 		let geocoder = CLGeocoder()
 		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
-			if clPlacemark != nil {
-				let placemark = clPlacemark![0]
-				locationCoordinates = placemark.location?.coordinate
+			guard clPlacemark != nil && error == nil else {
+				debugPrint(error.debugDescription)
+				completionHandler(nil, error as NSError?)
+				return
 			}
+			let placemark = clPlacemark![0]
+			locationCoordinates = placemark.location?.coordinate
+			completionHandler(locationCoordinates, error as NSError?)
 		}
-		return locationCoordinates
 	}
 }

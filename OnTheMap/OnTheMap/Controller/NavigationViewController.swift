@@ -68,8 +68,8 @@ extension NavigationViewController {
 	/// Ends session and logs out the user, and returns to login view.
 	func endSession() {
 		
-		let child = childViewControllers[0] as! MapViewController
-		child.spinner.startAnimating()
+		//		let child = childViewControllers[0] as! MapViewController
+		//		child.spinner.startAnimating()
 		
 		view.isUserInteractionEnabled = false
 		
@@ -77,7 +77,7 @@ extension NavigationViewController {
 			
 			guard error == nil else {
 				DispatchQueue.main.async {
-					child.spinner.stopAnimating()
+					//					child.spinner.stopAnimating()
 					self.view.isUserInteractionEnabled = true
 				}
 				print(error.debugDescription)

@@ -89,32 +89,81 @@ class AddPointViewController: UIViewController {
 	func postButtonPressed(_ sender: UIButton) {
 		
 		if locationIsNotFound {
-			if textField.text != nil {
-				locationString = textField.text
-				if let coordinates = ParseClient.sharedInstance().findLocation(locationString!) {
-					label.text = "What do you want to share?"
-					textField.text = ""
-					textField.placeholder = "Enter a website"
-					postButton.titleLabel?.text = "Submit"
-					map.centerCoordinate = coordinates
-					showMap()
-					locationIsNotFound = false
-				} else {
-					textField.text = ""
-					let alert = UIAlertController(title: "Location not found", message: "Your location was not recognized. Please try again.", preferredStyle: .alert)
-					let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-					alert.addAction(action)
-					present(alert, animated: true, completion: nil)
-				}
-			} else {
-				return
-			}
-		} else {
-			if textField.text != nil {
-				websiteString = textField.text
-				parseClient.updateLocation(location: locationString, website: websiteString!) { (success, error) in
+			spinner.startAnimating()
+			guard textField.text != nil else { return }
+			locationString = textField.text
+			ParseClient.sharedInstance().findLocation(locationString!) { (coordinates, error) in
+				
+				guard error == nil else {
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						self.textField.text = ""
+						let alert = UIAlertController(title: "Location not found", message: "Your location was not recognized. Please try again.", preferredStyle: .alert)
+						let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+						alert.addAction(action)
+						self.present(alert, animated: true, completion: nil)
+					}
+					debugPrint(error.debugDescription)
+					return
 				}
 				
+				DispatchQueue.main.async {
+					self.spinner.stopAnimating()
+					
+					self.label.text = "What do you want to share?"
+					self.textField.text = ""
+					self.textField.placeholder = "Enter a website"
+					self.postButton.titleLabel?.text = "Submit"
+					
+					let span = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(2.0), longitudeDelta: CLLocationDegrees(2.0))
+					var center = coordinates!
+					let offset = span.latitudeDelta * 0.25
+					center.latitude.add(offset)
+					let region = MKCoordinateRegion(center: center, span: span)
+					self.map.setRegion(region, animated: false)
+					
+					let annotation = MKPointAnnotation()
+					annotation.coordinate = coordinates!
+					
+					self.map.addAnnotation(annotation)
+					
+					self.showMap()
+					self.locationIsNotFound = false
+				}
+			}
+		}
+		
+		if !locationIsNotFound {
+			guard textField.text != nil else { return }
+			spinner.startAnimating()
+			websiteString = textField.text
+			parseClient.updateLocation(location: locationString!, website: websiteString!) { (success, error) in
+				
+				guard error == nil else {
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						let alert = UIAlertController(title: "Could not save location", message: "The location could not be updated. Please check your network and try again.", preferredStyle: .actionSheet)
+						let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel , handler: nil)
+						alert.addAction(action)
+						self.present(alert, animated: true, completion: nil)
+					}
+					debugPrint(error.debugDescription)
+					return
+				}
+				
+				self.parseClient.refresh() { (success, error) in
+					
+					guard error == nil else {
+						debugPrint(error.debugDescription)
+						return
+					}
+					
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						self.dismissView()
+						NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
+					}
+				}
 			}
 		}
 	}
