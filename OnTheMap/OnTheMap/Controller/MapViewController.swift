@@ -13,7 +13,7 @@ import MapKit
 Map view controller
 */
 
-class MapViewController: UIViewController, MKMapViewDelegate, ControllerProtocol {
+class MapViewController: UIViewController, MKMapViewDelegate {
 	
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 /**
 View controller for creating or updating the location for a user.
@@ -17,11 +18,16 @@ class AddPointViewController: UIViewController {
 	var appDelegate: AppDelegate!
 	var parseClient = ParseClient.sharedInstance()
 	
+	var locationIsNotFound = true
+	var locationString: String? = nil
+	var websiteString: String? = nil
+	
 	@IBOutlet weak var textFieldContainer: UIView!
-	@IBOutlet weak var locationField: UITextField!
-	@IBOutlet weak var websiteField: UITextField!
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var textField: UITextField!
 	@IBOutlet weak var spinner: UIActivityIndicatorView!
 	@IBOutlet weak var postButton: UIButton!
+	@IBOutlet weak var map: MKMapView!
 	
 	let textFieldAttributes = [
 		NSFontAttributeName: UIFont(name: "Futura", size: 17)!
@@ -41,6 +47,7 @@ class AddPointViewController: UIViewController {
 		textFieldContainer.backgroundColor = OnTheMapTools.Colors.Light
 		textFieldContainer.layer.cornerRadius = 10
 		
+		postButton.titleLabel?.text = "Find"
 		postButton.layer.cornerRadius = 5
 		postButton.backgroundColor = OnTheMapTools.Colors.Dark
 		postButton.setTitleColor(OnTheMapTools.Colors.Light, for: .normal)
@@ -52,10 +59,14 @@ class AddPointViewController: UIViewController {
 		spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
 		
 		/// Set text field attributes
-		for field in [locationField, websiteField] {
-			field!.defaultTextAttributes = textFieldAttributes
-			field!.placeholder = (field == locationField) ? "Enter location" : "Enter website"
-		}
+		textField.defaultTextAttributes = textFieldAttributes
+		textField.placeholder = "Enter your location"
+		
+		label.text = "Where are you right now?"
+		
+		// Prepare map
+		let frame = CGRect(x: CGFloat(0) , y: view.frame.height , width: view.frame.width, height: CGFloat(0))
+		map.frame = frame
 		
 		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
 	}
@@ -65,45 +76,93 @@ class AddPointViewController: UIViewController {
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
+	func showMap() {
+		map.layoutIfNeeded()
+		
+		UIView.animate(withDuration: 0.5) { () -> Void in
+			self.map.frame = self.view.frame
+			self.map.layoutIfNeeded()
+		}
+	}
+	
 	/// Sends the updated user information to the server and dismisses the view.
 	func postButtonPressed(_ sender: UIButton) {
 		
-		spinner.startAnimating()
-		
-		ParseClient.sharedInstance().updateLocation(location: locationField.text!, website: websiteField.text!) { (success, error) in
-			
-			if success {
-				print("Location was successfully updated.")
+		if locationIsNotFound {
+			spinner.startAnimating()
+			guard textField.text != nil else { return }
+			locationString = textField.text
+			ParseClient.sharedInstance().findLocation(locationString!) { (coordinates, error) in
 				
-				
-				DispatchQueue.main.async {
-					self.dismissView()
-					ParseClient.sharedInstance().refresh() { (success, error) in
-						
-						guard error == nil else {
-							print(error.debugDescription)
-							DispatchQueue.main.async {
-								self.spinner.stopAnimating()
-								let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
-								let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-								alert.addAction(action)
-							}
-							return
-						}
-						DispatchQueue.main.async {
-							NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
-						}
+				guard error == nil else {
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						self.textField.text = ""
+						let alert = UIAlertController(title: "Location not found", message: "Your location was not recognized. Please try again.", preferredStyle: .alert)
+						let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+						alert.addAction(action)
+						self.present(alert, animated: true, completion: nil)
 					}
+					debugPrint(error.debugDescription)
+					return
 				}
-			} else {
-				print(error.debugDescription)
 				
 				DispatchQueue.main.async {
 					self.spinner.stopAnimating()
-					let alert = UIAlertController(title: "Update failed", message: "The location could not be updated. Please try again", preferredStyle: .alert)
-					let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-					alert.addAction(action)
-					self.present(alert, animated: true, completion: nil)
+					
+					self.label.text = "What do you want to share?"
+					self.textField.text = ""
+					self.textField.placeholder = "Enter a website"
+					self.postButton.titleLabel?.text = "Submit"
+					
+					let span = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(2.0), longitudeDelta: CLLocationDegrees(2.0))
+					var center = coordinates!
+					let offset = span.latitudeDelta * 0.25
+					center.latitude.add(offset)
+					let region = MKCoordinateRegion(center: center, span: span)
+					self.map.setRegion(region, animated: false)
+					
+					let annotation = MKPointAnnotation()
+					annotation.coordinate = coordinates!
+					
+					self.map.addAnnotation(annotation)
+					
+					self.showMap()
+					self.locationIsNotFound = false
+				}
+			}
+		}
+		
+		if !locationIsNotFound {
+			guard textField.text != nil else { return }
+			spinner.startAnimating()
+			websiteString = textField.text
+			parseClient.updateLocation(location: locationString!, website: websiteString!) { (success, error) in
+				
+				guard error == nil else {
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						let alert = UIAlertController(title: "Could not save location", message: "The location could not be updated. Please check your network and try again.", preferredStyle: .actionSheet)
+						let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel , handler: nil)
+						alert.addAction(action)
+						self.present(alert, animated: true, completion: nil)
+					}
+					debugPrint(error.debugDescription)
+					return
+				}
+				
+				self.parseClient.refresh() { (success, error) in
+					
+					guard error == nil else {
+						debugPrint(error.debugDescription)
+						return
+					}
+					
+					DispatchQueue.main.async {
+						self.spinner.stopAnimating()
+						self.dismissView()
+						NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: self)
+					}
 				}
 			}
 		}
@@ -134,11 +193,7 @@ extension AddPointViewController {
 	}
 	
 	func keyboardWillShow(_ notification: Notification) {
-		if locationField.isFirstResponder {
 		view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.25)
-		} else {
-			view.frame.origin.y = (-getKeyboardHeight(notification)).multiplied(by: 0.3)
-		}
 	}
 	
 	func keyboardWillHide(_ notification: Notification) {
@@ -159,12 +214,9 @@ extension AddPointViewController {
 /// MARK: Text field delegate
 extension AddPointViewController {
 	
-	/// Pressing enter in the first text field automatically moves focus to the next one.
+	/// Pressing enter is like pushing the button
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		textField.resignFirstResponder()
-		if textField == locationField {
-			websiteField.becomeFirstResponder()
-		}
+		postButtonPressed(postButton)
 		return true
 	}
 }

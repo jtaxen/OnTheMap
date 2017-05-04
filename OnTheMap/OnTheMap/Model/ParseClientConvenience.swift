@@ -20,7 +20,7 @@ extension ParseClient {
 	func refresh (completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void ) {
 		
 		let parameters: [String: AnyObject] = [
-			ParameterKeys.Limit: "200" as AnyObject,
+			ParameterKeys.Limit: "100" as AnyObject,
 			ParameterKeys.Skip: "0" as AnyObject,
 			ParameterKeys.Order: "-" + StudentLocationKeys.UpdatedAt as AnyObject
 		]
@@ -94,7 +94,7 @@ extension ParseClient {
 		
 		let geocoder = CLGeocoder()
 		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
-				
+			
 			guard error == nil && clPlacemark != nil else {
 				completionHandler(false, error as NSError?)
 				print(error.debugDescription)
@@ -134,6 +134,21 @@ extension ParseClient {
 				
 				completionHandler(true, nil)
 			}
+		}
+	}
+	
+	func findLocation(_ location: String, completionHandler: @escaping ((_ location: CLLocationCoordinate2D?, _ error: NSError?) -> Void )) {
+		var locationCoordinates: CLLocationCoordinate2D?
+		let geocoder = CLGeocoder()
+		geocoder.geocodeAddressString(location) { (clPlacemark, error) in
+			guard clPlacemark != nil && error == nil else {
+				debugPrint(error.debugDescription)
+				completionHandler(nil, error as NSError?)
+				return
+			}
+			let placemark = clPlacemark![0]
+			locationCoordinates = placemark.location?.coordinate
+			completionHandler(locationCoordinates, error as NSError?)
 		}
 	}
 }
