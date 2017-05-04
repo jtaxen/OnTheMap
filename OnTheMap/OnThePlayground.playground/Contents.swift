@@ -115,7 +115,7 @@ let jsonthing = try? JSONSerialization.data(withJSONObject: dict)
 
 
 */
-
+/*
 let geocode = CLGeocoder()
 geocode.geocodeAddressString("Sto44ckholm") { (clPlacemark, error) in
 	guard clPlacemark != nil else {
@@ -126,4 +126,4 @@ geocode.geocodeAddressString("Sto44ckholm") { (clPlacemark, error) in
 	for item in clPlacemark! {
 		print(item.location!.coordinate.latitude)
 	}
-}
+} */
