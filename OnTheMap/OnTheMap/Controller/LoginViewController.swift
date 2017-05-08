@@ -29,7 +29,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		appDelegate.userData = StudentLocation(appDelegate.hardCodedLocationData()[0])
+		StudentDataSource.shared.userData = StudentLocation(StudentDataSource.shared.hardCodedLocationData()[0])
 		
 		view.backgroundColor = OnTheMapTools.Colors.Background
 		
@@ -88,7 +88,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 						
 						
 						let alert = UIAlertController()
-						if error?.code == -1001 {
+						// According to the code review, the error code for bad connection is -1009, but when I run it on my computer, I get -1001, so I simply added both error codes and hope it helps.
+						if error?.code == -1001 || error?.code == -1009 {
 							alert.title = "Bad network"
 							alert.message = "Please check your internet connection and try again."
 						} else {        // if error?.code == 2

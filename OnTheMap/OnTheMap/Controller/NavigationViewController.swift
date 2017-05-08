@@ -36,9 +36,9 @@ class NavigationViewController: UINavigationController {
 		
 		let navigationItem = UINavigationItem(title: title)
 		
-		let textAttributes = [
-			NSFontAttributeName: UIFont(name: "Futura", size: 14),
-			NSForegroundColorAttributeName: OnTheMapTools.Colors.Icons
+		let textAttributes: [String: Any] = [
+			NSFontAttributeName: UIFont(name: "Futura", size: 14) as Any,
+			NSForegroundColorAttributeName: OnTheMapTools.Colors.Icons as Any
 		]
 		
 		/// Logout button
