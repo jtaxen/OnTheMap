@@ -34,14 +34,14 @@ class UsersTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return appDelegate.locationData?.count ?? 0
+		return StudentDataSource.shared.locationData.count
     }
 
 	/// Cell layout
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserTableViewCell
 		
-		let entry = appDelegate.locationData[indexPath.row]
+		let entry = StudentDataSource.shared.locationData[indexPath.row]
 		
 		let firstName = entry.FirstName as? String ?? ""
 		let lastName = entry.LastName as? String ?? ""

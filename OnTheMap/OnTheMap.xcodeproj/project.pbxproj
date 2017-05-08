@@ -23,6 +23,7 @@
 		A06B34991E83C3A3000158EF /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B34981E83C3A3000158EF /* UdacityClient.swift */; };
 		A06B349B1E83C3D8000158EF /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B349A1E83C3D8000158EF /* UdacityClientConstants.swift */; };
 		A06B34A11E83D0E7000158EF /* UdacityClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B34A01E83D0E7000158EF /* UdacityClientConvenience.swift */; };
+		A09837E51EBCAC94008D6793 /* StudentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09837E41EBCAC94008D6793 /* StudentDataSource.swift */; };
 		A0A6F20E1E9B76250078323E /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A6F20D1E9B76250078323E /* OnTheMapTests.swift */; };
 		A0D8BC221E8A37AE00910FF9 /* AddPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D8BC211E8A37AE00910FF9 /* AddPointViewController.swift */; };
 		A0DC7D821E83B0EE00C058AE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DC7D811E83B0EE00C058AE /* MapViewController.swift */; };
@@ -61,6 +62,7 @@
 		A06B34981E83C3A3000158EF /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClient.swift; path = OnTheMap/Model/UdacityClient.swift; sourceTree = "<group>"; };
 		A06B349A1E83C3D8000158EF /* UdacityClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClientConstants.swift; path = OnTheMap/Model/UdacityClientConstants.swift; sourceTree = "<group>"; };
 		A06B34A01E83D0E7000158EF /* UdacityClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityClientConvenience.swift; path = OnTheMap/Model/UdacityClientConvenience.swift; sourceTree = "<group>"; };
+		A09837E41EBCAC94008D6793 /* StudentDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudentDataSource.swift; path = OnTheMap/Model/StudentDataSource.swift; sourceTree = "<group>"; };
 		A0A6F20B1E9B76250078323E /* OnTheMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0A6F20D1E9B76250078323E /* OnTheMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapTests.swift; sourceTree = "<group>"; };
 		A0A6F20F1E9B76250078323E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				A062D8C61E82B5E000CA71FF /* Parse */,
 				A062D8C31E82B59900CA71FF /* Keys */,
 				A0EE9B3E1E93B73300517CA1 /* StudentLocation.swift */,
+				A09837E41EBCAC94008D6793 /* StudentDataSource.swift */,
 			);
 			name = Model;
 			path = ..;
@@ -328,6 +331,7 @@
 				A059CB731E8959A100A60C0C /* UserTableViewCell.swift in Sources */,
 				A0025CD01E890AAA00019E52 /* ParseClientConvenience.swift in Sources */,
 				A062D8D01E82CB1800CA71FF /* ParseClient.swift in Sources */,
+				A09837E51EBCAC94008D6793 /* StudentDataSource.swift in Sources */,
 				A062D8AC1E82AF4700CA71FF /* AppDelegate.swift in Sources */,
 				A06B34A11E83D0E7000158EF /* UdacityClientConvenience.swift in Sources */,
 				A0F0A51F1E8BD9BC00B0A641 /* ParseClientParseData.swift in Sources */,

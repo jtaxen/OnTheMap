@@ -40,7 +40,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		let annotations = drawPins()
 		mapView.addAnnotations(annotations)
 		
-		center = CLLocationCoordinate2D(latitude: appDelegate.userData.Latitude as! CLLocationDegrees , longitude: appDelegate.userData.Longitude as! CLLocationDegrees)
+		center = CLLocationCoordinate2D(latitude: StudentDataSource.shared.userData.Latitude as! CLLocationDegrees , longitude: StudentDataSource.shared.userData.Longitude as! CLLocationDegrees)
 		span = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(5), longitudeDelta: CLLocationDegrees(5))
 		mapView.region = MKCoordinateRegion(center: center, span: span)
 	}
@@ -49,7 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	/// - Returns: an array of annotations to be added to the map view.
 	func drawPins() -> [MKPointAnnotation] {
 		
-		let locations = appDelegate.locationData ?? appDelegate.extractStudentLocations(from: appDelegate.hardCodedLocationData())
+		let locations = StudentDataSource.shared.locationData
 		var annotations = [MKPointAnnotation]()
 		
 		for item in locations {

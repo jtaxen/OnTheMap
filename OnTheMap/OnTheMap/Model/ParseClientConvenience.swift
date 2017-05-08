@@ -32,12 +32,12 @@ extension ParseClient {
 				return
 			}
 			if let locationData = results {
-				self.appDelegate.locationData = self.appDelegate.extractStudentLocations(from: locationData)
+				StudentDataSource.shared.locationData = self.appDelegate.extractStudentLocations(from: locationData)
 				self.getUserData() { (succ, err) in
 					completionHandler(succ, err)
 				}
 			} else {
-				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get location data: \(results)."]
+				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get location data: \(String(describing: results))."]
 				completionHandler(false, NSError(domain: "couldNotGetData", code: 7, userInfo: userInfo))
 			}
 		}
@@ -60,13 +60,13 @@ extension ParseClient {
 			}
 			
 			if results != nil {
-				self.appDelegate.userData = StudentLocation(results![0])
+				StudentDataSource.shared.userData = StudentLocation(results![0])
 				self.appDelegate.objectID = results![0]["objectId"] as? String
 				
 				completionHandler(true, error)
 				return
 			} else {
-				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get user data: \(results)."]
+				let userInfo = [NSLocalizedDescriptionKey: "Error: could not get user data: \(String(describing: results))."]
 				completionHandler(false, NSError(domain: "couldNotGetData", code: 7, userInfo: userInfo))
 			}
 		}
@@ -86,7 +86,7 @@ extension ParseClient {
 		var newLocation: String
 		
 		if location == "" {
-			newLocation = appDelegate.userData.MapString as! String
+			newLocation = StudentDataSource.shared.userData.MapString as! String
 		} else {
 			newLocation = location
 		}
